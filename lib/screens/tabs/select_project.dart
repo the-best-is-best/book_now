@@ -1,0 +1,55 @@
+import 'package:book_now/provider/my_project.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+Widget selectProjectTab() {
+  return Column(
+    children: [
+      Builder(builder: (context) {
+        final query = MediaQuery.of(context).size;
+        final myProjectWatch = context.watch<MyProjectProvider>();
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+                child: Text(
+              "Select Project",
+              style: Theme.of(context).textTheme.headline4,
+            )),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 3,
+            ),
+            Center(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: myProjectWatch.myProject.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Center(
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Container(
+                        width: query.width,
+                        child: ElevatedButton(
+                          child:
+                              Text(myProjectWatch.myProject[index].projectName),
+                          onPressed: () {},
+                        )),
+                  ));
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    thickness: 2,
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      }),
+    ],
+  );
+}
