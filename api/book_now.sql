@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2021 at 08:31 PM
+-- Generation Time: Jul 05, 2021 at 09:48 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -31,7 +31,8 @@ CREATE TABLE `book_now_log` (
   `id` int(11) NOT NULL,
   `record_id` int(11) NOT NULL,
   `action` varchar(255) NOT NULL,
-  `table_name` varchar(255) NOT NULL
+  `table_name` varchar(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -54,11 +55,11 @@ CREATE TRIGGER `deleted_houses` BEFORE DELETE ON `houses` FOR EACH ROW DELETE FR
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_houses` AFTER INSERT ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "houses" )
+CREATE TRIGGER `insert_houses` AFTER INSERT ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "houses",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_houses` AFTER UPDATE ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null , NEW.id , "updated" ,"houses")
+CREATE TRIGGER `update_houses` AFTER UPDATE ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null , NEW.id , "updated" ,"houses" , NOW())
 $$
 DELIMITER ;
 
@@ -71,7 +72,7 @@ DELIMITER ;
 CREATE TABLE `project_name` (
   `id` int(11) NOT NULL,
   `project_name` varchar(255) NOT NULL,
-  `end_date` datetime NOT NULL
+  `end_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -82,11 +83,11 @@ CREATE TRIGGER `deleted_project_name` BEFORE DELETE ON `project_name` FOR EACH R
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_project_name` AFTER INSERT ON `project_name` FOR EACH ROW INSERT INTO book_now_log VALUES(null,NEW.id , "inserted", "project_name" )
+CREATE TRIGGER `insert_project_name` AFTER INSERT ON `project_name` FOR EACH ROW INSERT INTO book_now_log VALUES(null,NEW.id , "inserted", "project_name",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_project_name` AFTER UPDATE ON `project_name` FOR EACH ROW INSERT INTO book_now_log VALUES(null,NEW.id,"updated" ,"project_name" )
+CREATE TRIGGER `update_project_name` AFTER UPDATE ON `project_name` FOR EACH ROW INSERT INTO book_now_log VALUES(null,NEW.id,"updated" ,"project_name",NOW() )
 $$
 DELIMITER ;
 

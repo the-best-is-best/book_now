@@ -1,5 +1,8 @@
-import 'package:book_now/provider/my_project.dart';
+import 'package:book_now/provider/my_project_provider.dart';
+import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/screens/reports_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 Widget selectProjectTab() {
@@ -8,6 +11,8 @@ Widget selectProjectTab() {
       Builder(builder: (context) {
         final query = MediaQuery.of(context).size;
         final myProjectWatch = context.watch<MyProjectProvider>();
+        final reportsRead = context.read<ReportsProvider>();
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +41,16 @@ Widget selectProjectTab() {
                         child: ElevatedButton(
                           child:
                               Text(myProjectWatch.myProject[index].projectName),
-                          onPressed: () {},
+                          onPressed: () {
+                            reportsRead
+                                .goToProject(myProjectWatch.myProject[index]);
+                            Navigator.pushReplacement(
+                                context,
+                                PageTransition(
+                                    duration: Duration(microseconds: 500),
+                                    type: PageTransitionType.fade,
+                                    child: ReportsScreen()));
+                          },
                         )),
                   ));
                 },

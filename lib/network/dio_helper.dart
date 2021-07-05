@@ -17,6 +17,12 @@ class DioHelper {
 
   static Future<Response> postData(
       {required String url, required Map<String, dynamic> query}) async {
-    return await dio.post(url, queryParameters: query);
+    return await dio.post(
+      url,
+      data: query,
+      options: Options(
+          headers: {"Content-Type": "application/json"},
+          validateStatus: (_) => true),
+    );
   }
 }
