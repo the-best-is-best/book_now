@@ -6,7 +6,7 @@ import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Widget createHouseTab() {
+Widget createRoomtab() {
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
   TextEditingController houseNameController = TextEditingController();
   TextEditingController floorNamberController = TextEditingController();
@@ -53,20 +53,6 @@ Widget createHouseTab() {
                   SizedBox(
                     height: 15,
                   ),
-                  defaultFormField(
-                      context: context,
-                      controller: floorNamberController,
-                      label: 'Total floors',
-                      type: TextInputType.number,
-                      validate: (String? val) {
-                        if (val == null || val.isEmpty) {
-                          return "empty !!";
-                        }
-                        return null;
-                      }),
-                  SizedBox(
-                    height: 15,
-                  ),
                   myHousesWatch.loading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
@@ -79,9 +65,10 @@ Widget createHouseTab() {
                             _keyForm.currentState!.save();
                             CreateHouseModel createHouseModel =
                                 CreateHouseModel(
-                              name: houseNameController.text,
-                              floor: int.parse(floorNamberController.text),
-                            );
+                                    name: houseNameController.text,
+                                    floor: int.parse(
+                                      floorNamberController.text,
+                                    ));
                             myHousesRead
                                 .createHouseClicked(createHouseModel)
                                 .then(
@@ -92,8 +79,7 @@ Widget createHouseTab() {
                                   HouseModel projects =
                                       HouseModel.fromJson(project);
                                   myHousesRead.insertToList(projects);
-                                  houseNameController.text =
-                                      floorNamberController.text = "";
+                                  houseNameController.text = "";
 
                                   await Flushbar(
                                     title: 'Success',

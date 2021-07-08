@@ -4,14 +4,17 @@ import 'package:flutter/foundation.dart';
 
 class CheckDataProvider with ChangeNotifier {
   List<LisenDataModel> lisenData = [];
+  List<LisenDataModel> insertHouses = [];
 
   Future getLisenData() async {
-    Map<String, dynamic> data = {'book_now_log_count': 0};
-    var response = await DioHelper.postData(url: 'lisenDB.php', query: data);
-    print(response.toString());
-    if (response.statusCode == 201) {
-      var data = response.data;
-      return toList(data['data']);
+    if (lisenData.length == 0) {
+      Map<String, dynamic> data = {'book_now_log_count': 0};
+      var response = await DioHelper.postData(url: 'lisenDB.php', query: data);
+      print(response.toString());
+      if (response.data['messages'][0] == 'data changed') {
+        var data = response.data;
+        toList(data['data']);
+      }
     }
   }
 
@@ -21,26 +24,8 @@ class CheckDataProvider with ChangeNotifier {
     datas.forEach((k, data) {
       lisenData.add(LisenDataModel.fromJson(data));
     });
-    return lisenData;
-  }
-
-  Future getNewData() async {
-    List<LisenDataModel> getNewHouses = [];
-
-    getNewHouses = lisenData
-        .where((val) => val.action == "inserted" && val.tableName == "houses")
+    insertHouses = lisenData
+        .where((e) => e.action == "inserted" && e.tableName == "houses")
         .toList();
-
-    List<int> id = [];
-    getNewHouses.forEach((val) => id.add(val.recordId));
-    Map<String, dynamic> data = {};
-    data = Map.fromIterable(id, key: (e) => e.toString(), value: (e) => e);
-
-    var response = await DioHelper.postData(url: 'lisenDB.php', query: data);
-    print(response.toString());
-    if (response.statusCode == 201) {
-      var data = response.data;
-      return data['data'];
-    }
   }
 }

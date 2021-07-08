@@ -11,8 +11,8 @@ class LisenDataModel {
       required this.tableName});
 
   LisenDataModel.fromJson(Map<String, dynamic> json)
-      : id = int.parse(json['id'].toString()),
-        recordId = int.parse(json['record_id'].toString()),
+      : id = json['id'].toInt(),
+        recordId = json['record_id'].toInt(),
         tableName = json['table_name'],
         action = json['action'];
 }

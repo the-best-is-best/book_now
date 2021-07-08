@@ -2,6 +2,7 @@ import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/screens/create_select_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: CheckDataProvider()),
       ChangeNotifierProvider.value(value: MyProjectProvider()),
       ChangeNotifierProvider.value(value: HousesProvider()),
+      ChangeNotifierProvider.value(value: RoomsProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
     ], child: MyApp());
   }
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final checkDataRead = context.read<CheckDataProvider>();
+    final housesDataRead = context.read<HousesProvider>();
+
     return MaterialApp(
       supportedLocales: [
         Locale("en"),
@@ -62,7 +66,9 @@ class MyApp extends StatelessWidget {
       ),
       home: FutureBuilder(
           future: checkDataRead.getLisenData().then((_) {
-            checkDataRead.getNewData();
+            if (checkDataRead.insertHouses.length > 0) {
+              housesDataRead.getHouses(checkDataRead.insertHouses);
+            }
           }),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

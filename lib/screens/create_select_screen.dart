@@ -60,18 +60,21 @@ class _CreateSelectScreenState extends State<CreateSelectScreen> {
               );
             } else {
               return Center(
-                child: Container(
-                  width: myProjectWatch.tabIndex == 0
-                      ? MediaQuery.of(context).size.width / 1.1
-                      : null,
-                  height: myProjectWatch.tabIndex == 0
-                      ? MediaQuery.of(context).size.height / 1.5
-                      : null,
-                  child: Card(
-                    elevation: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: myProjectWatch.tabsWidget[myProjectWatch.tabIndex],
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: myProjectWatch.tabIndex == 0
+                        ? MediaQuery.of(context).size.width / 1.1
+                        : null,
+                    height: myProjectWatch.tabIndex == 0
+                        ? MediaQuery.of(context).size.height / 1.5
+                        : null,
+                    child: Card(
+                      elevation: 20,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child:
+                            myProjectWatch.tabsWidget[myProjectWatch.tabIndex],
+                      ),
                     ),
                   ),
                 ),
