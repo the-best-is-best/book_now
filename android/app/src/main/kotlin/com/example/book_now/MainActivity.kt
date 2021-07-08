@@ -1,4 +1,4 @@
-package com.example.book_now
+package com.lifechangingtruth.book_now
 
 import io.flutter.embedding.android.FlutterActivity
 

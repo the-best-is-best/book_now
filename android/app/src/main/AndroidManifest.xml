@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.book_now">
+    package="com.lifechangingtruth.book_now">
    <application
         android:label="book_now"
         android:icon="@mipmap/ic_launcher">

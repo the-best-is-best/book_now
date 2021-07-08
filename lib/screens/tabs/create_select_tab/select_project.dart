@@ -2,6 +2,7 @@ import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/reports_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,31 @@ Widget selectProjectTab() {
               thickness: 3,
             ),
             Center(
+              child: Container(
+                height: query.height - 229,
+                child: StaggeredGridView.countBuilder(
+                  shrinkWrap: true,
+                  crossAxisCount: 4,
+                  itemCount: myProjectWatch.myProject.length,
+                  itemBuilder: (_, int index) => ElevatedButton(
+                    onPressed: () {
+                      reportsRead.goToProject(myProjectWatch.myProject[index]);
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              duration: Duration(microseconds: 500),
+                              type: PageTransitionType.fade,
+                              child: ReportsScreen()));
+                    },
+                    child: (Text(myProjectWatch.myProject[index].projectName)),
+                  ),
+                  staggeredTileBuilder: (int index) =>
+                      StaggeredTile.count(1, 1),
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
+                ),
+              ),
+              /*
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: myProjectWatch.myProject.length,
@@ -59,7 +85,8 @@ Widget selectProjectTab() {
                     thickness: 2,
                   );
                 },
-              ),
+                
+              ),*/
             ),
           ],
         );
