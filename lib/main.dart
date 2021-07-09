@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final checkDataRead = context.read<CheckDataProvider>();
     final housesDataRead = context.read<HousesProvider>();
+    final roomsDataRead = context.read<RoomsProvider>();
 
     return MaterialApp(
       supportedLocales: [
@@ -67,7 +68,11 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
           future: checkDataRead.getLisenData().then((_) {
             if (checkDataRead.insertHouses.length > 0) {
-              housesDataRead.getHouses(checkDataRead.insertHouses);
+              housesDataRead.getHouses(checkDataRead.insertHouses).then((_) {
+                if (checkDataRead.insertRooms.length > 0) {
+                  roomsDataRead.getRooms(checkDataRead.insertRooms);
+                }
+              });
             }
           }),
           builder: (context, AsyncSnapshot snapshot) {

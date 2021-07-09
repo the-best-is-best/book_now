@@ -1,8 +1,10 @@
 import 'package:book_now/modals/lisen_data_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:book_now/extention/to_map.dart';
+import 'package:book_now/screens/tabs/rooms_tabs/create_room_tab.dart';
+import 'package:book_now/screens/tabs/rooms_tabs/select_room_tab.dart';
+import 'package:flutter/material.dart';
 
 class RoomsProvider with ChangeNotifier {
   List<RoomsModel> myRoomes = [];
@@ -32,5 +34,16 @@ class RoomsProvider with ChangeNotifier {
       myRoomes.add(RoomsModel.fromJson(data));
     });
     return myRoomes;
+  }
+
+  int tabIndex = 0;
+  List<Widget> tabsWidget = [
+    createRoomTab(),
+    selectRoomTab(),
+  ];
+
+  void changeTabIndex(index) {
+    tabIndex = index;
+    notifyListeners();
   }
 }

@@ -36,30 +36,37 @@ if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
 
 
 try {
-    $query = $readDB->prepare("SELECT * FROM project_name");
+    if (!isset($_GET['id'])) {
+        $response = new Response();
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
+        $response->addMessage('Not allowed');
+        $response->send();
+        exit;
+    }
+    $get_id_data =  $_GET["id"];
+
+    // exit;
+    $query = $readDB->prepare('SELECT * FROM rooms  WHERE id IN (' . implode(',', $get_id_data) . ')');
 
     $query->execute();
 
-    $rowCount = $query->rowCount();
-    if ($rowCount > 0) {
-        $row = $query->fetchAll();
 
-        $returnData = $row;
-        $response = new Response();
-        $response->setHttpStatusCode(201);
-        $response->setSuccess(true);
-        $response->setData($returnData);
-        $response->send();
-        exit;
-    } else {
-        exit;
-    }
+    $row = $query->fetchAll();
+
+    $returnData = $row;
+    $response = new Response();
+    $response->setHttpStatusCode(201);
+    $response->setSuccess(true);
+    $response->setData($returnData);
+    $response->send();
+    exit;
 } catch (PDOException $ex) {
     error_log("Database query error: " . $ex, 0);
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue creating Project - please try again' . $ex);
+    $response->addMessage('There was an issue Get Room - please try again' . $ex);
     $response->send();
     exit;
 }

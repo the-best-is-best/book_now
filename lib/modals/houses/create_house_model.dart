@@ -8,6 +8,6 @@ class CreateHouseModel {
   });
   Map<String, dynamic> toJson() => {
         'name': name,
-        'floor': floor.toInt(),
+        'floor': floor,
       };
 }

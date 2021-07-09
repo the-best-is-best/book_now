@@ -6,7 +6,7 @@ import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Widget createRoomtab() {
+Widget createRoomTab() {
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
   TextEditingController houseNameController = TextEditingController();
   TextEditingController floorNamberController = TextEditingController();

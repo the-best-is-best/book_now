@@ -25,6 +25,7 @@ class HousesProvider with ChangeNotifier {
         await DioHelper.getData(url: 'get_data/get_houses.php', query: data);
     if (response.statusCode == 201) {
       var data = response.data;
+
       return toList(data['data']);
     }
   }
@@ -48,6 +49,30 @@ class HousesProvider with ChangeNotifier {
       url: "insert_data/create_houses.php",
       query: createProject,
     );
+
+    return response;
+  }
+
+  Future updateFloor(int id, int floor) async {
+    loading = true;
+    notifyListeners();
+    Map<String, int> data = {
+      "id": id,
+      "floor": floor,
+    };
+    var response = await DioHelper.postData(
+      url: "update_data/floors_update.php",
+      query: data,
+    );
+    HouseModel? houseUpdated;
+    var resData = response.data;
+    if (resData['messages'][0] == "Floor updated") {
+      houseUpdated = myHouses.firstWhere((house) => house.id == id);
+      houseUpdated.floor = int.parse(resData['data']['floor']);
+    }
+
+    loading = false;
+    notifyListeners();
 
     return response;
   }

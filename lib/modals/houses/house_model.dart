@@ -10,7 +10,7 @@ class HouseModel {
   });
 
   HouseModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'].toInt(),
+      : id = int.parse(json['id'].toString()),
         name = json['name'],
-        floor = json['floor'].toInt();
+        floor = int.parse(json['floor'].toString());
 }

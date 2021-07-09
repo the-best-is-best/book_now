@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2021 at 09:48 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Jul 09, 2021 at 02:40 PM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,14 +44,14 @@ CREATE TABLE `book_now_log` (
 CREATE TABLE `houses` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `project_id` int(11) NOT NULL
+  `floor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `houses`
 --
 DELIMITER $$
-CREATE TRIGGER `deleted_houses` BEFORE DELETE ON `houses` FOR EACH ROW DELETE FROM book_now_log WHERE record_id = OLD.id AND table_name="houses"
+CREATE TRIGGER `deleted_houses` BEFORE DELETE ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "houses",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
@@ -79,7 +79,7 @@ CREATE TABLE `project_name` (
 -- Triggers `project_name`
 --
 DELIMITER $$
-CREATE TRIGGER `deleted_project_name` BEFORE DELETE ON `project_name` FOR EACH ROW DELETE FROM book_now_log WHERE record_id = OLD.id AND table_name = "project_name"
+CREATE TRIGGER `deleted_project_name` BEFORE DELETE ON `project_name` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "inserted" , "houses",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
@@ -94,22 +94,34 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rel_house`
+--
+
+CREATE TABLE `rel_house` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `houses_id` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rooms`
 --
 
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `house` int(11) NOT NULL,
-  `numbers_of_bed` int(11) NOT NULL,
-  `number_used` int(11) NOT NULL
+  `name` varchar(11) NOT NULL,
+  `house_id` int(11) NOT NULL,
+  `floor` int(11) NOT NULL,
+  `numbers_of_bed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `rooms`
 --
 DELIMITER $$
-CREATE TRIGGER `deleted_rooms` BEFORE DELETE ON `rooms` FOR EACH ROW DELETE FROM book_now_log WHERE project_id = OLD.id AND table_name ="rooms"
+CREATE TRIGGER `deleted_rooms` BEFORE DELETE ON `rooms` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "rooms",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
@@ -144,6 +156,12 @@ ALTER TABLE `project_name`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rel_house`
+--
+ALTER TABLE `rel_house`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
@@ -169,6 +187,12 @@ ALTER TABLE `houses`
 -- AUTO_INCREMENT for table `project_name`
 --
 ALTER TABLE `project_name`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rel_house`
+--
+ALTER TABLE `rel_house`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

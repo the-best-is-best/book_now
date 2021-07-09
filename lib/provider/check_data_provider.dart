@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 class CheckDataProvider with ChangeNotifier {
   List<LisenDataModel> lisenData = [];
   List<LisenDataModel> insertHouses = [];
+  List<LisenDataModel> insertRooms = [];
 
   Future getLisenData() async {
     if (lisenData.length == 0) {
       Map<String, dynamic> data = {'book_now_log_count': 0};
       var response = await DioHelper.postData(url: 'lisenDB.php', query: data);
-      print(response.toString());
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
         toList(data['data']);
@@ -26,6 +26,10 @@ class CheckDataProvider with ChangeNotifier {
     });
     insertHouses = lisenData
         .where((e) => e.action == "inserted" && e.tableName == "houses")
+        .toList();
+
+    insertRooms = lisenData
+        .where((e) => e.action == "inserted" && e.tableName == "roooms")
         .toList();
   }
 }

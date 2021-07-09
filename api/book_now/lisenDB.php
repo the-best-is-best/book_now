@@ -1,6 +1,6 @@
 <?php
-require_once('../Controller/db.php');
-require_once('../Models/Response.php');
+require_once('Controller/db.php');
+require_once('Models/Response.php');
 
 try {
     $readDB = DB::connectReadDB();
@@ -13,6 +13,7 @@ try {
     $response->send();
     exit;
 }
+
 if ($_SERVER['REQUEST_METHOD']  !== 'POST') {
     $response = new Response();
     $response->setHttpStatusCode(405);
@@ -41,16 +42,53 @@ if (!$jsonData = json_decode($rowPostData)) {
     $response->send();
     exit;
 }
-if ($jsonData->myData != null) {
-    try {
-        $sql = "SELECT COUNT(*) FROM fruit WHERE calories > 100";
-    } catch (PDOException $ex) {
-        error_log("Database query error: " . $ex, 0);
+try {
+    $row;
+    $query = $readDB->prepare("SELECT * FROM book_now_log");
+    $query->execute();
+    $rowCount = $query->rowCount();
+    if ($rowCount > 0) {
+        if ($jsonData->book_now_log_count < $rowCount) {
+            $countNewData =
+                $rowCount - $jsonData->book_now_log_count;
+            $query = $readDB->prepare("SELECT * FROM book_now_log ORDER BY id  desc Limit $countNewData ");
+            $query->execute();
+            $row = $query->fetchAll();
+        } else {
+            $response = new Response();
+            $response->setHttpStatusCode(201);
+            $response->setSuccess(true);
+            $response->addMessage("No data changed");
+            $response->send();
+        }
+        $returnData = [];
+        while ($countNewData > 0) {
+
+            $returnData[$countNewData] = $row[count($row) - $countNewData];
+            $countNewData--;
+        }
+
         $response = new Response();
-        $response->setHttpStatusCode(500);
-        $response->setSuccess(false);
-        $response->addMessage('There was an issue -  connect server' . $ex);
+        $response->setHttpStatusCode(201);
+        $response->setSuccess(true);
+        $response->addMessage("data changed");
+        $response->setData($returnData);
+        $response->send();
+        exit;
+    } else {
+        $response = new Response();
+        $response->setHttpStatusCode(201);
+        $response->setSuccess(true);
+        $response->addMessage("no data changed");
         $response->send();
         exit;
     }
+} catch (PDOException $ex) {
+    error_log("Database query error: " . $ex, 0);
+    $response = new Response();
+    $response->setHttpStatusCode(500);
+    $response->setSuccess(false);
+    $response->addMessage('There was an issue -  connect server' . $ex);
+    $response->send();
+    exit;
 }

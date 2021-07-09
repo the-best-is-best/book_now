@@ -47,6 +47,8 @@ if (!$jsonData = json_decode($rowPostData)) {
 }
 
 if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->house_name)) {
+
+    $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
@@ -61,6 +63,8 @@ if (
     strlen($jsonData->project_name) < 1 || strlen($jsonData->project_name) > 255 || strlen($jsonData->house_name) < 1
     || strlen($jsonData->house_name) > 255
 ) {
+    $response = new Response();
+
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
@@ -94,7 +98,6 @@ try {
     $query->execute();
 
     $rowCount = $query->rowCount();
-
     if ($rowCount !== 0) {
         $response = new Response();
         $response->setHttpStatusCode(409);
@@ -146,7 +149,7 @@ try {
     }
 
     $returnData = array();
-    $returnData['project_id'] = $last_id;
+    $returnData['id'] = $last_id;
     $returnData['project_name'] = $project_name;
     $returnData['house_name'] = $house_name;
 

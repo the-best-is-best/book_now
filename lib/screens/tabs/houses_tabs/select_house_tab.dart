@@ -2,7 +2,6 @@ import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/screens/expanded/floors_expanded.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 Widget selectHousesTab() {
@@ -28,33 +27,37 @@ Widget selectHousesTab() {
               thickness: 3,
             ),
             Center(
-              child: Container(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: myHousesWatch.myHouses.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Center(
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            child: Container(
-                              width: query.width,
-                              child: ExpandablePanel(
-                                header:
-                                    Text(myHousesWatch.myHouses[index].name),
-                                collapsed: Container(),
-                                expanded: Container(
-                                  child: buildFloorsExpanded(
-                                      myHousesWatch.myHouses[index]),
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: myHousesWatch.myHouses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Center(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Container(
+                            width: query.width,
+                            child: ExpandableNotifier(
+                              child: ScrollOnExpand(
+                                child: ExpandablePanel(
+                                  header:
+                                      Text(myHousesWatch.myHouses[index].name),
+                                  collapsed: Container(),
+                                  expanded: Container(
+                                    child: buildFloorsExpanded(
+                                        myHouses: myHousesWatch.myHouses[index],
+                                        context: context),
+                                  ),
                                 ),
                               ),
-                            )));
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      thickness: 2,
-                    );
-                  },
-                ),
+                            ),
+                          )));
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    thickness: 2,
+                  );
+                },
               ),
             ),
           ],
