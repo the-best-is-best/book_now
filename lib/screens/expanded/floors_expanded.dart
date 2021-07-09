@@ -1,20 +1,23 @@
+import 'package:book_now/modals/floot_model.dart';
 import 'package:book_now/modals/houses/house_model.dart';
+import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/screens/floor_screen.dart';
+import 'package:book_now/screens/room_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 Widget buildFloorsExpanded(
-        {required BuildContext context, required HouseModel myHouses}) =>
+        {required BuildContext context,
+        required HouseModel myHouses,
+        required int index}) =>
     Builder(
       builder: (context) {
-        List<int> floors = [];
-        if (myHouses.floor > 0) {
-          for (int i = 0; i < myHouses.floor; i++) {
-            floors.add(i + 1);
-          }
-        }
+        final floorWatch = context.watch<FloorProvider>();
+        FloorModel floors = floorWatch.myFloor[index];
+
         final query = MediaQuery.of(context).size;
         final widthGrid = query.width * 5 / 320;
         final itemRowCount = widthGrid.toInt();
@@ -63,13 +66,23 @@ Widget buildFloorsExpanded(
               //height: 50,
               child: StaggeredGridView.countBuilder(
                 shrinkWrap: true,
-                crossAxisCount: floors.length != 0 ? itemRowCount : 1,
-                itemCount: floors.length == 0 ? 1 : floors.length,
+                crossAxisCount: itemRowCount,
+                itemCount: floors.floor.length == 0 ? 1 : floors.floor.length,
                 itemBuilder: (_, int index) {
-                  return floors.length > 0
+                  return floors.floor[0] > 0
                       ? ElevatedButton(
-                          onPressed: () {},
-                          child: Text(floors[index].toString()),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    duration: Duration(microseconds: 500),
+                                    type: PageTransitionType.fade,
+                                    child: RoomScreen(
+                                      house: myHouses,
+                                      floor: floors.floor[index],
+                                    )));
+                          },
+                          child: Text(floors.floor[index].toString()),
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
                           ),

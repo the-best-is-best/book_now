@@ -1,6 +1,6 @@
 <?php
-require_once('../Controller/db.php');
-require_once('../Models/Response.php');
+require_once('../controller/db.php');
+require_once('../models/response.php');
 
 try {
     $writeDB = DB::connectionWriteDB();

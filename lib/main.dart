@@ -1,4 +1,5 @@
 import 'package:book_now/provider/check_data_provider.dart';
+import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
@@ -31,6 +32,7 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: CheckDataProvider()),
       ChangeNotifierProvider.value(value: MyProjectProvider()),
       ChangeNotifierProvider.value(value: HousesProvider()),
+      ChangeNotifierProvider.value(value: FloorProvider()),
       ChangeNotifierProvider.value(value: RoomsProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
     ], child: MyApp());
@@ -43,6 +45,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final checkDataRead = context.read<CheckDataProvider>();
     final housesDataRead = context.read<HousesProvider>();
+    final housesDataWatch = context.watch<HousesProvider>();
+
+    final floorDataRead = context.read<FloorProvider>();
+
     final roomsDataRead = context.read<RoomsProvider>();
 
     return MaterialApp(
@@ -68,7 +74,11 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
           future: checkDataRead.getLisenData().then((_) {
             if (checkDataRead.insertHouses.length > 0) {
-              housesDataRead.getHouses(checkDataRead.insertHouses).then((_) {
+              housesDataRead
+                  .getHouses(checkDataRead.insertHouses)
+                  .then(
+                      (_) => floorDataRead.getFloors(housesDataWatch.myHouses))
+                  .then((_) {
                 if (checkDataRead.insertRooms.length > 0) {
                   roomsDataRead.getRooms(checkDataRead.insertRooms);
                 }

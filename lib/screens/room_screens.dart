@@ -14,7 +14,7 @@ class RoomScreen extends StatelessWidget {
     final myRoomsWatch = context.watch<RoomsProvider>();
 
     return Scaffold(
-      appBar: buildAppBar("Rooms for - ${house.name} - floor: $floor ", null),
+      appBar: AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
       body: Center(
         child: SingleChildScrollView(
           child: Container(

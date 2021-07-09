@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
 
-class HousesRoomsScreen extends StatefulWidget {
+class HousesScreen extends StatefulWidget {
   @override
-  _HousesRoomsScreenState createState() => _HousesRoomsScreenState();
+  _HousesScreenState createState() => _HousesScreenState();
 }
 
-class _HousesRoomsScreenState extends State<HousesRoomsScreen> {
+class _HousesScreenState extends State<HousesScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override

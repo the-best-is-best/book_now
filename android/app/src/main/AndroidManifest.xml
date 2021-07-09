@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lifechangingtruth.book_now">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
-        android:label="book_now"
+        android:label="Book Now"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -40,13 +40,19 @@ Widget selectHousesTab() {
                             child: ExpandableNotifier(
                               child: ScrollOnExpand(
                                 child: ExpandablePanel(
-                                  header:
-                                      Text(myHousesWatch.myHouses[index].name),
+                                  header: Center(
+                                      child: Text(
+                                    "$index - ${myHousesWatch.myHouses[index].name}",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  )),
                                   collapsed: Container(),
                                   expanded: Container(
                                     child: buildFloorsExpanded(
-                                        myHouses: myHousesWatch.myHouses[index],
-                                        context: context),
+                                      myHouses: myHousesWatch.myHouses[index],
+                                      context: context,
+                                      index: index,
+                                    ),
                                   ),
                                 ),
                               ),

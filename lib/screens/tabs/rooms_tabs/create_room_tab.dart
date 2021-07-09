@@ -22,7 +22,7 @@ Widget createRoomTab() {
         children: [
           Center(
               child: Text(
-            "Create Houses",
+            "Create Room",
             style: Theme.of(context).textTheme.headline4,
           )),
           SizedBox(
@@ -42,11 +42,25 @@ Widget createRoomTab() {
                   defaultFormField(
                       context: context,
                       controller: houseNameController,
-                      label: 'House Name',
+                      label: 'Room Name',
                       type: TextInputType.text,
                       validate: (String? val) {
-                        if (val == null || val.isEmpty || val.length < 3) {
-                          return "min 3 characters";
+                        if (val == null || val.isEmpty) {
+                          return "Empty !!";
+                        }
+                        return null;
+                      }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  defaultFormField(
+                      context: context,
+                      controller: houseNameController,
+                      label: 'Last Room Name',
+                      type: TextInputType.text,
+                      validate: (String? val) {
+                        if (val == null || val.isEmpty) {
+                          return "Empty !!";
                         }
                         return null;
                       }),

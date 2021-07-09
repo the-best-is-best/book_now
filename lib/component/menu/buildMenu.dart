@@ -1,5 +1,5 @@
 import 'package:book_now/screens/create_select_screen.dart';
-import 'package:book_now/screens/houses_rooms_screen.dart';
+import 'package:book_now/screens/houses_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,7 +44,7 @@ Widget buildMenu(int curPage, BuildContext context) {
                         PageTransition(
                             duration: Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: HousesRoomsScreen()));
+                            child: HousesScreen()));
                   },
             leading: FaIcon(FontAwesomeIcons.houseUser),
             title: Text('Houses'),
