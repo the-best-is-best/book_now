@@ -1,4 +1,3 @@
-import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/modals/houses/house_model.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,6 @@ class RoomScreen extends StatelessWidget {
           child: Container(
             width: myRoomsWatch.tabIndex == 0
                 ? MediaQuery.of(context).size.width / 1.1
-                : null,
-            height: myRoomsWatch.tabIndex == 0
-                ? MediaQuery.of(context).size.height / 2
                 : null,
             child: Card(
               elevation: 20,

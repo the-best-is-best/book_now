@@ -72,8 +72,10 @@ if (
     $response->send();
     exit;
 }
-$name = trim($jsonData->name);
-
+$name = $jsonData->name;
+$house_id = $jsonData->house_id;
+$floor = $jsonData->floor;
+$numbers_of_bed = $jsonData->numbers_of_bed;
 
 try {
 
@@ -91,9 +93,12 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('insert into Room (name ) VALUES (:name)');
+    $query = $writeDB->prepare('INSERT INTO rooms (name , house_id , floor , numbers_of_bed ) VALUES (:name , :house_id , :floor , :numbers_of_bed)');
 
     $query->bindParam(':name', $name, PDO::PARAM_STR);
+    $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
+    $query->bindParam(':floor', $floor, PDO::PARAM_STR);
+    $query->bindParam(':numbers_of_bed', $numbers_of_bed, PDO::PARAM_STR);
 
     $query->execute();
     $rowCount = $query->rowCount();
@@ -113,6 +118,9 @@ try {
     $returnData = array();
     $returnData['id'] = $last_id;
     $returnData['name'] = $name;
+    $returnData['house_id'] = $house_id;
+    $returnData['floor'] = $floor;
+    $returnData['numbers_of_bed'] = $numbers_of_bed;
 
     $response = new Response();
     $response->setHttpStatusCode(201);

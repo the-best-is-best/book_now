@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2021 at 02:40 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Generation Time: Jul 11, 2021 at 08:08 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,7 @@ CREATE TABLE `houses` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `floor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Triggers `houses`
@@ -111,7 +111,7 @@ CREATE TABLE `rel_house` (
 
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
-  `name` varchar(11) NOT NULL,
+  `name` int(11) NOT NULL,
   `house_id` int(11) NOT NULL,
   `floor` int(11) NOT NULL,
   `numbers_of_bed` int(11) NOT NULL
@@ -125,7 +125,7 @@ CREATE TRIGGER `deleted_rooms` BEFORE DELETE ON `rooms` FOR EACH ROW INSERT INTO
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_rooms` AFTER INSERT ON `rooms` FOR EACH ROW INSERT INTO book_now_log VALUES(null,NEW.id , "inserted" , "rooms")
+CREATE TRIGGER `insert_rooms` AFTER INSERT ON `rooms` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "rooms",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$

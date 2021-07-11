@@ -93,7 +93,7 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('insert into houses (name , floor ) VALUES (:name , :floor)');
+    $query = $writeDB->prepare('INSERT into houses (name , floor ) VALUES (:name , :floor)');
 
     $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->bindParam(':floor', $floor, PDO::PARAM_STR);

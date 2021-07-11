@@ -10,7 +10,7 @@ class ProjectsModel {
   });
 
   ProjectsModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'].toInt(),
+      : id = int.parse(json['id'].toString()),
         projectName = json['project_name'],
         endDate = DateTime.parse(json['end_date']);
 }

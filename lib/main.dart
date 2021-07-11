@@ -10,17 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+
 import 'db/db_init.dart';
 import 'network/dio_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DBInit.init();
-  DioHelper.int();
+
+  DioHelper.init();
   initializeDateFormatting();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
+
   runApp(RunMyApp());
 }
 

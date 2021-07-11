@@ -1,5 +1,4 @@
 import 'package:book_now/provider/rooms_provider.dart';
-import 'package:book_now/screens/expanded/floors_expanded.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +39,8 @@ Widget selectRoomTab() {
                             child: Container(
                               width: query.width,
                               child: ExpandablePanel(
-                                header: Text(myRoomsWatch.myRoomes[index].name),
+                                header: Text(myRoomsWatch.myRoomes[index].name
+                                    .toString()),
                                 collapsed: Container(),
                                 expanded: Container(
                                   child: null,

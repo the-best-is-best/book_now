@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static late Dio dio;
 
-  static int() {
+  static init() {
     dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.6:5555/book_now/',
+      baseUrl: 'http://192.168.1.6/book_now/',
       receiveDataWhenStatusError: true,
     ));
   }

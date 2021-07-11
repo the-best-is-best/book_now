@@ -1,18 +1,21 @@
 class RoomsModel {
   int id;
-  String name;
+  int name;
   int houseId;
+  int floor;
   int numbersOfBed;
 
   RoomsModel({
     required this.id,
     required this.name,
     required this.houseId,
+    required this.floor,
     required this.numbersOfBed,
   });
   RoomsModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'].toInt(),
-        name = json['name'],
-        houseId = json['house_id'].toInt(),
-        numbersOfBed = json['numbers_of_bed'].toInt();
+      : id = int.parse(json['id'].toString()),
+        name = int.parse(json['name'].toString()),
+        houseId = int.parse(json['house_id'].toString()),
+        floor = int.parse(json['floor'].toString()),
+        numbersOfBed = int.parse(json['numbers_of_bed'].toString());
 }

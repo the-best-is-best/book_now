@@ -1,6 +1,7 @@
 import 'package:book_now/modals/floot_model.dart';
 import 'package:book_now/modals/houses/house_model.dart';
 import 'package:book_now/provider/floor_provider.dart';
+import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/screens/floor_screen.dart';
 import 'package:book_now/screens/room_screens.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ Widget buildFloorsExpanded(
     Builder(
       builder: (context) {
         final floorWatch = context.watch<FloorProvider>();
+        final roomRead = context.read<RoomsProvider>();
+
         FloorModel floors = floorWatch.myFloor[index];
 
         final query = MediaQuery.of(context).size;
@@ -72,15 +75,19 @@ Widget buildFloorsExpanded(
                   return floors.floor[0] > 0
                       ? ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    duration: Duration(microseconds: 500),
-                                    type: PageTransitionType.fade,
-                                    child: RoomScreen(
-                                      house: myHouses,
-                                      floor: floors.floor[index],
-                                    )));
+                            roomRead
+                                .gotToRoom(
+                                    house: myHouses.id,
+                                    floor: floors.floor[index])
+                                .then((_) => Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        duration: Duration(microseconds: 500),
+                                        type: PageTransitionType.fade,
+                                        child: RoomScreen(
+                                          house: myHouses,
+                                          floor: floors.floor[index],
+                                        ))));
                           },
                           child: Text(floors.floor[index].toString()),
                           style: ElevatedButton.styleFrom(

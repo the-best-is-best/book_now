@@ -43,14 +43,25 @@ class HousesProvider with ChangeNotifier {
   Future createHouseClicked(CreateHouseModel createHouseModel) async {
     loading = true;
     notifyListeners();
-    var createProject = createHouseModel.toJson();
+    var createHouse = createHouseModel.toJson();
 
     var response = await DioHelper.postData(
       url: "insert_data/create_houses.php",
-      query: createProject,
+      query: createHouse,
     );
 
     return response;
+  }
+
+  void insertToList(HouseModel data) {
+    myHouses.add(data);
+    loading = false;
+    notifyListeners();
+  }
+
+  void insertFiled() {
+    loading = false;
+    notifyListeners();
   }
 
   Future updateFloor(int id, int floor) async {
@@ -77,14 +88,16 @@ class HousesProvider with ChangeNotifier {
     return response;
   }
 
-  void insertToList(HouseModel data) {
-    myHouses.add(data);
-    loading = false;
+  bool loadingSearch = false;
+  List<HouseModel> searchMyHouse = [];
+  void searchHouse(String search) {
+    loadingSearch = true;
     notifyListeners();
-  }
-
-  void insertFiled() {
-    loading = false;
+    if (search != "") {
+      searchMyHouse =
+          myHouses.where((house) => house.name.contains(search)).toList();
+    }
+    loadingSearch = false;
     notifyListeners();
   }
 

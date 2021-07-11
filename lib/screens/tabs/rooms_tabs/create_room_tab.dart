@@ -1,20 +1,23 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/modals/houses/create_house_model.dart';
-import 'package:book_now/modals/houses/house_model.dart';
-import 'package:book_now/provider/houses_provider.dart';
+import 'package:book_now/modals/rooms/create_room_model.dart';
+import 'package:book_now/modals/rooms/rooms_model.dart';
+import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Widget createRoomTab() {
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
-  TextEditingController houseNameController = TextEditingController();
-  TextEditingController floorNamberController = TextEditingController();
+  final curRoomController = TextEditingController();
+  final lastRoomController = TextEditingController();
+  final numOfBedController = TextEditingController();
 
   return Builder(
     builder: (context) {
-      final myHousesRead = context.read<HousesProvider>();
-      final myHousesWatch = context.watch<HousesProvider>();
+      final myRoomRead = context.read<RoomsProvider>();
+      final myRoomWatch = context.watch<RoomsProvider>();
+      final houseId = myRoomWatch.curHouse;
+      final floor = myRoomWatch.curFloor;
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,9 +44,9 @@ Widget createRoomTab() {
                 children: [
                   defaultFormField(
                       context: context,
-                      controller: houseNameController,
-                      label: 'Room Name',
-                      type: TextInputType.text,
+                      controller: curRoomController,
+                      label: 'First Room Number',
+                      type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
@@ -55,9 +58,28 @@ Widget createRoomTab() {
                   ),
                   defaultFormField(
                       context: context,
-                      controller: houseNameController,
-                      label: 'Last Room Name',
-                      type: TextInputType.text,
+                      controller: lastRoomController,
+                      label: 'Last Room Number',
+                      type: TextInputType.number,
+                      validate: (String? val) {
+                        if (val == null || val.isEmpty) {
+                          return "Empty !!";
+                        }
+                        int last = int.parse(val);
+                        int cur = int.parse(curRoomController.text);
+                        if (last != 0 && last < cur) {
+                          return "Last is less than number of room please + ${last - cur}";
+                        }
+                        return null;
+                      }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  defaultFormField(
+                      context: context,
+                      controller: numOfBedController,
+                      label: 'Number of bed',
+                      type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
@@ -67,7 +89,7 @@ Widget createRoomTab() {
                   SizedBox(
                     height: 15,
                   ),
-                  myHousesWatch.loading
+                  myRoomWatch.loading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
                           child: Text("Create"),
@@ -77,31 +99,34 @@ Widget createRoomTab() {
                               return;
                             }
                             _keyForm.currentState!.save();
-                            CreateHouseModel createHouseModel =
-                                CreateHouseModel(
-                                    name: houseNameController.text,
-                                    floor: int.parse(
-                                      floorNamberController.text,
-                                    ));
-                            myHousesRead
-                                .createHouseClicked(createHouseModel)
-                                .then(
-                              (response) async {
+                            List<int> rooms = [];
+                            int last = int.parse(lastRoomController.text);
+                            int cur = int.parse(curRoomController.text);
+                            if (last == 0 || last == cur) {
+                              CreateRoomModel createRoomModel = CreateRoomModel(
+                                  houseId: houseId,
+                                  name: cur.toString(),
+                                  floor: floor,
+                                  numbersOfBed:
+                                      int.parse(numOfBedController.text));
+
+                              myRoomRead
+                                  .createRoomClicked(createRoomModel)
+                                  .then((response) async {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
-                                  var project = data['data'];
-                                  HouseModel projects =
-                                      HouseModel.fromJson(project);
-                                  myHousesRead.insertToList(projects);
-                                  houseNameController.text = "";
-
+                                  var room = data['data'];
+                                  RoomsModel rooms = RoomsModel.fromJson(room);
+                                  myRoomRead.insertToList(rooms);
+                                  curRoomController.text = lastRoomController
+                                      .text = numOfBedController.text = "";
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",
                                     duration: Duration(seconds: 3),
                                   ).show(context);
                                 } else {
-                                  myHousesRead.insertFiled();
+                                  myRoomRead.insertFiled();
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
                                     List<dynamic> messages = data['messages'];
@@ -114,13 +139,63 @@ Widget createRoomTab() {
                                     }
                                   }
                                 }
-                              },
-                            );
+                              });
+                            } else {
+                              for (int i = cur; i <= last; i++) {
+                                rooms.add(i);
+                              }
+                              for (int i = 0; i < rooms.length; i++) {
+                                CreateRoomModel createRoomModel =
+                                    CreateRoomModel(
+                                        houseId: houseId,
+                                        name: rooms[i].toString(),
+                                        floor: floor,
+                                        numbersOfBed:
+                                            int.parse(numOfBedController.text));
+
+                                myRoomRead
+                                    .createRoomClicked(createRoomModel)
+                                    .then((response) async {
+                                  var data = response.data;
+                                  if (response.statusCode == 201) {
+                                    var room = data['data'];
+                                    RoomsModel rooms =
+                                        RoomsModel.fromJson(room);
+                                    myRoomRead.insertToList(rooms);
+                                    curRoomController.text = lastRoomController
+                                        .text = numOfBedController.text = "";
+                                    await Flushbar(
+                                      title: 'Success',
+                                      message: "Added",
+                                      duration: Duration(seconds: 3),
+                                    ).show(context);
+                                  } else {
+                                    myRoomRead.insertFiled();
+                                    if (data['statusCode'] >= 400 &&
+                                        data['success'] == false) {
+                                      List<dynamic> messages = data['messages'];
+                                      for (int i = 0;
+                                          i < messages.length;
+                                          i++) {
+                                        await Flushbar(
+                                          title: 'Error',
+                                          message: messages[i],
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      }
+                                    }
+                                  }
+                                });
+                              }
+                            }
                           },
                         ),
                 ],
               ),
             ),
+          ),
+          SizedBox(
+            height: 20,
           )
         ],
       );

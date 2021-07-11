@@ -88,10 +88,10 @@ Widget createHouseTab() {
                               (response) async {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
-                                  var project = data['data'];
-                                  HouseModel projects =
-                                      HouseModel.fromJson(project);
-                                  myHousesRead.insertToList(projects);
+                                  var house = data['data'];
+                                  HouseModel houses =
+                                      HouseModel.fromJson(house);
+                                  myHousesRead.insertToList(houses);
                                   houseNameController.text =
                                       floorNamberController.text = "";
 
@@ -121,6 +121,9 @@ Widget createHouseTab() {
                 ],
               ),
             ),
+          ),
+          SizedBox(
+            height: 20,
           )
         ],
       );
