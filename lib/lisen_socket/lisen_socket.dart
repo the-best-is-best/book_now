@@ -10,7 +10,6 @@ class LisenSocket {
   }
 
   static lisen(String lisen) {
-    print("my channel  $channel");
     return channel.sink.add(lisen);
   }
 

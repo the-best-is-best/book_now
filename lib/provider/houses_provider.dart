@@ -11,22 +11,24 @@ class HousesProvider with ChangeNotifier {
   List<HouseModel> myHouses = [];
 
   Future getHouses(List<LisenDataModel> lisenData) async {
-    List<LisenDataModel> getNewHouses = [];
-    getNewHouses = lisenData
-        .where((val) => val.action == "inserted" && val.tableName == "houses")
-        .toList();
+    if (myHouses.length == 0) {
+      List<LisenDataModel> getNewHouses = [];
+      getNewHouses = lisenData
+          .where((val) => val.action == "inserted" && val.tableName == "houses")
+          .toList();
 
-    List<int> id = [];
-    getNewHouses.forEach((val) => id.add(val.recordId));
-    Map<String, dynamic> data = {};
-    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+      List<int> id = [];
+      getNewHouses.forEach((val) => id.add(val.recordId));
+      Map<String, dynamic> data = {};
+      data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
-    var response =
-        await DioHelper.getData(url: 'get_data/get_houses.php', query: data);
-    if (response.statusCode == 201) {
-      var data = response.data;
+      var response =
+          await DioHelper.getData(url: 'get_data/get_houses.php', query: data);
+      if (response.statusCode == 201) {
+        var data = response.data;
 
-      return toList(data['data']);
+        return toList(data['data']);
+      }
     }
   }
 
@@ -53,7 +55,7 @@ class HousesProvider with ChangeNotifier {
     return response;
   }
 
-  void insertToList(HouseModel data) {
+  insertToList(HouseModel data) {
     myHouses.add(data);
     loading = false;
     notifyListeners();

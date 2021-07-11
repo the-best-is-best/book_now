@@ -31,7 +31,6 @@ Widget selectProjectTab() {
             ),
             Center(
               child: Container(
-                height: query.height - 229,
                 child: StaggeredGridView.countBuilder(
                   shrinkWrap: true,
                   crossAxisCount: 4,

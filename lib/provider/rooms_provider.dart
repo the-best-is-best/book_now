@@ -15,21 +15,23 @@ class RoomsProvider with ChangeNotifier {
   List<RoomsModel> myRoomes = [];
 
   Future getRooms(List<LisenDataModel> lisenData) async {
-    List<LisenDataModel> getNewRooms = [];
-    getNewRooms = lisenData
-        .where((val) => val.action == "inserted" && val.tableName == "rooms")
-        .toList();
+    if (myRoomes.length == 0) {
+      List<LisenDataModel> getNewRooms = [];
+      getNewRooms = lisenData
+          .where((val) => val.action == "inserted" && val.tableName == "rooms")
+          .toList();
 
-    List<int> id = [];
-    getNewRooms.forEach((val) => id.add(val.recordId));
-    Map<String, dynamic> data = {};
-    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+      List<int> id = [];
+      getNewRooms.forEach((val) => id.add(val.recordId));
+      Map<String, dynamic> data = {};
+      data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
-    var response =
-        await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
-    if (response.statusCode == 201) {
-      var data = response.data;
-      return toList(data['data']);
+      var response =
+          await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
+      if (response.statusCode == 201) {
+        var data = response.data;
+        return toList(data['data']);
+      }
     }
   }
 
@@ -56,7 +58,6 @@ class RoomsProvider with ChangeNotifier {
       url: "insert_data/create_room.php",
       query: createRoom,
     );
-    print("response ${response.data['data']}");
     return response;
   }
 
@@ -68,6 +69,12 @@ class RoomsProvider with ChangeNotifier {
 
   void insertFiled() {
     loading = false;
+    notifyListeners();
+  }
+
+  bool editRoomActive = false;
+  void inEdit() {
+    editRoomActive = !editRoomActive;
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'package:book_now/modals/houses/house_model.dart';
 import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ class RoomScreen extends StatelessWidget {
   const RoomScreen({required this.house, required this.floor});
   @override
   Widget build(BuildContext context) {
+    final myRoomsRead = context.read<RoomsProvider>();
     final myRoomsWatch = context.watch<RoomsProvider>();
 
     return Scaffold(
@@ -29,6 +31,28 @@ class RoomScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 20,
+        onTap: (val) {
+          myRoomsRead.changeTabIndex(val);
+        },
+        currentIndex: myRoomsWatch.tabIndex,
+        unselectedFontSize: 15,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: mainColor,
+        fixedColor: Colors.black,
+        unselectedItemColor: Colors.brown,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.create),
+            label: 'Create',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.select_all),
+            label: 'Select',
+          ),
+        ],
       ),
     );
   }

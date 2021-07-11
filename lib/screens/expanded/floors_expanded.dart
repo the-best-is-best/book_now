@@ -20,11 +20,9 @@ Widget buildFloorsExpanded(
         final roomRead = context.read<RoomsProvider>();
 
         FloorModel floors = floorWatch.myFloor[index];
-
         final query = MediaQuery.of(context).size;
         final widthGrid = query.width * 5 / 320;
         final itemRowCount = widthGrid.toInt();
-        // final housesRead = context.read<HousesProvider>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,14 +64,14 @@ Widget buildFloorsExpanded(
               height: 5,
             ),
             Container(
-              //height: 50,
-              child: StaggeredGridView.countBuilder(
-                shrinkWrap: true,
-                crossAxisCount: itemRowCount,
-                itemCount: floors.floor.length == 0 ? 1 : floors.floor.length,
-                itemBuilder: (_, int index) {
-                  return floors.floor[0] > 0
-                      ? ElevatedButton(
+              child: floors.floor[0] > 0
+                  ? StaggeredGridView.countBuilder(
+                      shrinkWrap: true,
+                      crossAxisCount: itemRowCount,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: floors.floor.length,
+                      itemBuilder: (_, int index) {
+                        return ElevatedButton(
                           onPressed: () {
                             roomRead
                                 .gotToRoom(
@@ -93,17 +91,19 @@ Widget buildFloorsExpanded(
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
                           ),
-                        )
-                      : Center(
-                          child: Text(
-                          "No floors",
-                          style: Theme.of(context).textTheme.headline5,
-                        ));
-                },
-                staggeredTileBuilder: (int index) => StaggeredTile.count(1, 1),
-                mainAxisSpacing: 5.0,
-                crossAxisSpacing: 5.0,
-              ),
+                        );
+                      },
+                      staggeredTileBuilder: (int index) =>
+                          StaggeredTile.count(1, 1),
+                      mainAxisSpacing: 5.0,
+                      crossAxisSpacing: 5.0,
+                    )
+                  : Center(
+                      child: Text(
+                        "No floors",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
             ),
           ],
         );

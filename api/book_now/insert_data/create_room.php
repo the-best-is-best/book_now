@@ -79,8 +79,11 @@ $numbers_of_bed = $jsonData->numbers_of_bed;
 
 try {
 
-    $query = $writeDB->prepare('SELECT id FROM rooms WHERE name = :name');
+    $query = $writeDB->prepare('SELECT id FROM rooms WHERE name = :name && house_id = :house_id && floor= :floor');
     $query->bindParam(':name', $name, PDO::PARAM_STR);
+    $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
+    $query->bindParam(':floor', $floor, PDO::PARAM_STR);
+ 
     $query->execute();
 
     $rowCount = $query->rowCount();

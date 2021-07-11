@@ -29,7 +29,7 @@ class CheckDataProvider with ChangeNotifier {
         .toList();
 
     insertRooms = lisenData
-        .where((e) => e.action == "inserted" && e.tableName == "roooms")
+        .where((e) => e.action == "inserted" && e.tableName == "rooms")
         .toList();
   }
 }
