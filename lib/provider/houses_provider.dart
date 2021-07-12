@@ -73,7 +73,7 @@ class HousesProvider with ChangeNotifier {
       "id": id,
       "floor": floor,
     };
-    var response = await DioHelper.postData(
+    var response = await DioHelper.putData(
       url: "update_data/floors_update.php",
       query: data,
     );

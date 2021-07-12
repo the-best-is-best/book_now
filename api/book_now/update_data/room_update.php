@@ -46,43 +46,47 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->id) || !isset($jsonData->floor)) {
+if (
+    !isset($jsonData->id) || !isset($jsonData->floor) || !isset($jsonData->house_id) ||
+    !isset($jsonData->numbers_of_bed)
+) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
+    (!isset($jsonData->id) ?  $response->addMessage("room not supplied") : false);
     (!isset($jsonData->floor) ?  $response->addMessage("floor not supplied") : false);
+    (!isset($jsonData->house_id) ?  $response->addMessage("house not supplied") : false);
+    (!isset($jsonData->number_of_bed) ?  $response->addMessage("number of bed not supplied") : false);
 
     $response->send();
     exit;
 }
 
 $id = $jsonData->id;
+$house_id = $jsonData->house_id;
 $floor = $jsonData->floor;
+$numbers_of_bed = $jsonData->numbers_of_bed;
 
 
 try {
 
-    $query = $writeDB->prepare('SELECT floor FROM houses WHERE id = :id');
+    $query = $writeDB->prepare('UPDATE rooms SET numbers_of_bed = :numbers_of_bed WHERE name = :id AND  floor = :floor AND  house_id = :house_id');
+
     $query->bindParam(':id', $id, PDO::PARAM_STR);
-    $query->execute();
-    $row = $query->fetch();
-
-    $newTotalFloor = $row["floor"] + $floor;
-
-    $query = $writeDB->prepare('UPDATE houses SET floor = :floor WHERE id = :id');
-
-    $query->bindParam(':floor', $newTotalFloor, PDO::PARAM_STR);
-    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->bindParam(':floor', $floor, PDO::PARAM_STR);
+    $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
+    $query->bindParam(':numbers_of_bed', $numbers_of_bed, PDO::PARAM_STR);
 
     $query->execute();
+
     $rowCount = $query->rowCount();
     if ($rowCount === 0) {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue update floor - please try again');
+        $response->addMessage('There was an issue update rooms - please try again');
         $response->send();
         exit;
     }
@@ -90,13 +94,13 @@ try {
 
 
     $returnData = array();
-    $returnData['id'] = $id;
-    $returnData['floor'] = $newTotalFloor;
+    $returnData['numbers_of_bed'] = $numbers_of_bed;
+
 
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
-    $response->addMessage('Floor updated');
+    $response->addMessage('Room updated');
     $response->setData($returnData);
     $response->send();
     exit;
@@ -105,7 +109,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue update floor - please try again' . $ex);
+    $response->addMessage('There was an issue update rooms - please try again' . $ex);
     $response->send();
     exit;
 }

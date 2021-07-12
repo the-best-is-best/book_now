@@ -5,7 +5,7 @@ class DioHelper {
 
   static init() {
     dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.6/book_now/',
+      baseUrl: 'http://192.168.1.2/book_now/',
       receiveDataWhenStatusError: true,
     ));
   }
@@ -26,6 +26,17 @@ class DioHelper {
   static Future<Response> postData(
       {required String url, required Map<String, dynamic> query}) async {
     return await dio.post(
+      url,
+      data: query,
+      options: Options(
+          headers: {"Content-Type": "application/json"},
+          validateStatus: (_) => true),
+    );
+  }
+
+  static Future<Response> putData(
+      {required String url, required Map<String, dynamic> query}) async {
+    return await dio.put(
       url,
       data: query,
       options: Options(

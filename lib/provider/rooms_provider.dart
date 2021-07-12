@@ -12,10 +12,10 @@ class RoomsProvider with ChangeNotifier {
   late int curHouse;
   late int curFloor;
 
-  List<RoomsModel> myRoomes = [];
+  List<RoomsModel> myRooms = [];
 
   Future getRooms(List<LisenDataModel> lisenData) async {
-    if (myRoomes.length == 0) {
+    if (myRooms.length == 0) {
       List<LisenDataModel> getNewRooms = [];
       getNewRooms = lisenData
           .where((val) => val.action == "inserted" && val.tableName == "rooms")
@@ -36,11 +36,11 @@ class RoomsProvider with ChangeNotifier {
   }
 
   Future<dynamic> toList(List<dynamic> datas) async {
-    myRoomes = [];
+    myRooms = [];
     datas.forEach((data) {
-      myRoomes.add(RoomsModel.fromJson(data));
+      myRooms.add(RoomsModel.fromJson(data));
     });
-    return myRoomes;
+    return myRooms;
   }
 
   Future gotToRoom({required int house, required int floor}) async {
@@ -62,7 +62,7 @@ class RoomsProvider with ChangeNotifier {
   }
 
   void insertToList(RoomsModel data) {
-    myRoomes.add(data);
+    myRooms.add(data);
     loading = false;
     notifyListeners();
   }
@@ -70,6 +70,37 @@ class RoomsProvider with ChangeNotifier {
   void insertFiled() {
     loading = false;
     notifyListeners();
+  }
+
+  Future updateRoom(
+      {required int id,
+      required int houseId,
+      required int floor,
+      required int newNumberOfBed}) async {
+    loading = true;
+    notifyListeners();
+    Map<String, int> data = {
+      "id": id,
+      "floor": floor,
+      "house_id": houseId,
+      "numbers_of_bed": newNumberOfBed
+    };
+    var response = await DioHelper.putData(
+      url: "update_data/room_update.php",
+      query: data,
+    );
+    RoomsModel? roomUpdated;
+    var resData = response.data;
+    if (resData['messages'][0] == "Room updated") {
+      roomUpdated = myRooms.firstWhere((room) =>
+          room.name == id && room.floor == floor && room.houseId == houseId);
+      roomUpdated.numbersOfBed = int.parse(resData['data']['numbers_of_bed']);
+      print("${myRooms[roomUpdated.id - 1].id} - ID = ${roomUpdated.id}");
+    }
+    loading = false;
+    notifyListeners();
+
+    return response;
   }
 
   bool editRoomActive = false;

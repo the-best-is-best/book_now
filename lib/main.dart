@@ -1,3 +1,4 @@
+import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -5,6 +6,7 @@ import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/screens/create_select_screen.dart';
+import 'package:book_now/screens/room_details_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -75,29 +77,36 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: FutureBuilder(
-          future: checkDataRead.getLisenData().then((_) {
-            if (checkDataRead.insertHouses.length > 0) {
-              housesDataRead
-                  .getHouses(checkDataRead.insertHouses)
-                  .then(
-                      (_) => floorDataRead.getFloors(housesDataWatch.myHouses))
-                  .then((_) {
-                if (checkDataRead.insertRooms.length > 0) {
-                  roomsDataRead.getRooms(checkDataRead.insertRooms);
-                }
-              });
-            }
-          }),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
+        future: checkDataRead.getLisenData().then((_) {
+          if (checkDataRead.insertHouses.length > 0) {
+            housesDataRead
+                .getHouses(checkDataRead.insertHouses)
+                .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses))
+                .then((_) {
+              if (checkDataRead.insertRooms.length > 0) {
+                roomsDataRead.getRooms(checkDataRead.insertRooms);
+              }
+            });
+          }
+        }),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
             return CreateSelectScreen();
-          }),
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

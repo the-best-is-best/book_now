@@ -18,7 +18,7 @@ Widget selectRoomTab() {
         final houseId = myRoomWatch.curHouse;
         final floor = myRoomWatch.curFloor;
 
-        final List<RoomsModel> curRoomes = myRoomWatch.myRoomes
+        final List<RoomsModel> curRoomes = myRoomWatch.myRooms
             .where((room) => room.houseId == houseId && room.floor == floor)
             .toList();
 
@@ -60,8 +60,6 @@ Widget selectRoomTab() {
                                                     Duration(microseconds: 500),
                                                 type: PageTransitionType.fade,
                                                 child: RoomDetailsScreen(
-                                                  house: houseId,
-                                                  floor: floor,
                                                   room: curRoomes[index],
                                                 )));
                                       },
