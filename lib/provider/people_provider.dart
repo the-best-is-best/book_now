@@ -1,4 +1,4 @@
-import 'package:book_now/modals/lisen_data_model.dart';
+import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/modals/people/create_people_model.dart';
 import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 class PeopleProvider with ChangeNotifier {
   List<PeopleModel> myPeople = [];
 
-  Future getPeople(List<LisenDataModel> lisenData) async {
-    List<LisenDataModel> getNewHouses = [];
+  Future getPeople(List<ListenDataModel> lisenData) async {
+    List<ListenDataModel> getNewHouses = [];
     getNewHouses = lisenData
         .where((val) => val.action == "inserted" && val.tableName == "people")
         .toList();

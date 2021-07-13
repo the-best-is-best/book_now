@@ -9,7 +9,7 @@ class HouseModel {
     required this.floor,
   });
 
-  HouseModel.fromJson(Map<String, dynamic> json)
+  HouseModel.fromJson(Map<dynamic, dynamic> json)
       : id = int.parse(json['id'].toString()),
         name = json['name'],
         floor = int.parse(json['floor'].toString());

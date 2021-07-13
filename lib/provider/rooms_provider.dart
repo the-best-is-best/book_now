@@ -1,4 +1,4 @@
-import 'package:book_now/modals/lisen_data_model.dart';
+import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/modals/rooms/create_room_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
@@ -14,8 +14,8 @@ class RoomsProvider with ChangeNotifier {
 
   List<RoomsModel> myRooms = [];
 
-  Future getRooms(List<LisenDataModel> lisenData) async {
-    List<LisenDataModel> getNewRooms = [];
+  Future getRooms(List<ListenDataModel> lisenData) async {
+    List<ListenDataModel> getNewRooms = [];
     getNewRooms = lisenData
         .where((val) => val.action == "inserted" && val.tableName == "rooms")
         .toList();

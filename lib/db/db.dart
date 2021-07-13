@@ -1,10 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 
-class DBInit {
+class DB {
   static late Database db;
 
   static Future<void> init() async {
-    db = await openDatabase('book_now.db', version: 1,
+    db = await openDatabase('book_now.db', version: 2,
             onCreate: (database, version) {
       database.execute(
           'CREATE TABLE book_now_log (id integer PRIMARY KEY , record_id integer , action TEXT , table_name Text , date DateTime)');
@@ -21,7 +21,8 @@ class DBInit {
         .catchError((error) {});
   }
 
-  static Future insertToDB({required String tableName, required data}) async {
+  static Future insertToDB(
+      {required String tableName, required Map<String, Object?> data}) async {
     await db.transaction((txn) {
       return Future.delayed(Duration(seconds: 1), () async {
         return txn.insert(tableName, data).then((value) {
@@ -37,12 +38,6 @@ class DBInit {
       data = await db.query(table);
       return data;
     });
-  }
-
-  static Future getLastId({required table}) async {
-    var data =
-        await db.rawQuery("SELECT * FROM $table ORDER BY id DESC LIMIT 1");
-    return data[0]['id'];
   }
 
   static Future<int> updateData({

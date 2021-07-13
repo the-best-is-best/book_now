@@ -1,15 +1,24 @@
-import 'package:book_now/modals/lisen_data_model.dart';
+import 'package:book_now/db/db.dart';
+import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class CheckDataProvider with ChangeNotifier {
-  List<LisenDataModel> lisenData = [];
-  List<LisenDataModel> insertHouses = [];
-  List<LisenDataModel> insertRooms = [];
-  List<LisenDataModel> insertPeople = [];
+  List<ListenDataModel> lisenData = [];
+  List<ListenDataModel> insertHouses = [];
+  List<ListenDataModel> insertRooms = [];
+  List<ListenDataModel> insertPeople = [];
 
-  Future getListenData() async {
-    Map<String, dynamic> data = {'book_now_log_count': 0};
+  Future getCheckDataFromDB() async {
+    List<Map<dynamic, dynamic>> data = await DB.getDataFromDB('book_now_log');
+
+    List.generate(data.length, (i) {
+      lisenData.add(ListenDataModel.fromJson(data[i]));
+    });
+  }
+
+  Future getListenData(int bookNowLogCount) async {
+    Map<String, dynamic> data = {'book_now_log_count': bookNowLogCount};
     var response = await DioHelper.postData(url: 'listenDB.php', query: data);
     if (response.data['messages'][0] == 'data changed') {
       var data = response.data;
@@ -21,7 +30,7 @@ class CheckDataProvider with ChangeNotifier {
     lisenData = [];
 
     datas.forEach((k, data) {
-      lisenData.add(LisenDataModel.fromJson(data));
+      lisenData.add(ListenDataModel.fromJson(data));
     });
     insertHouses = lisenData
         .where((e) => e.action == "inserted" && e.tableName == "houses")

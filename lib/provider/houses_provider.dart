@@ -1,6 +1,8 @@
+import 'package:book_now/db/db.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
 import 'package:book_now/modals/houses/house_model.dart';
-import 'package:book_now/modals/lisen_data_model.dart';
+import 'package:book_now/modals/listen_model/create_listen_data_model.dart';
+import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/houses_tabs/create_house_tab.dart';
 import 'package:book_now/screens/tabs/houses_tabs/select_house_tab.dart';
@@ -10,8 +12,16 @@ import 'package:book_now/extention/to_map.dart';
 class HousesProvider with ChangeNotifier {
   List<HouseModel> myHouses = [];
 
-  Future getHouses(List<LisenDataModel> lisenData) async {
-    List<LisenDataModel> getNewHouses = [];
+  Future getHousesFromDB() async {
+    List<Map<dynamic, dynamic>> data = await DB.getDataFromDB('houses');
+
+    List.generate(data.length, (i) {
+      myHouses.add(HouseModel.fromJson(data[i]));
+    });
+  }
+
+  Future getHouses(List<ListenDataModel> lisenData) async {
+    List<ListenDataModel> getNewHouses = [];
     getNewHouses = lisenData
         .where((val) => val.action == "inserted" && val.tableName == "houses")
         .toList();
@@ -31,11 +41,9 @@ class HousesProvider with ChangeNotifier {
   }
 
   Future<dynamic> toList(List<dynamic> datas) async {
-    myHouses = [];
     datas.forEach((data) {
       myHouses.add(HouseModel.fromJson(data));
     });
-    return myHouses;
   }
 
   bool loading = false;
@@ -44,6 +52,7 @@ class HousesProvider with ChangeNotifier {
     loading = true;
     notifyListeners();
     var createHouse = createHouseModel.toJson();
+    await DB.insertToDB(tableName: 'houses', data: createHouse);
 
     var response = await DioHelper.postData(
       url: "insert_data/create_houses.php",
@@ -53,8 +62,15 @@ class HousesProvider with ChangeNotifier {
     return response;
   }
 
-  insertToList(HouseModel data) {
+  insertToList(HouseModel data) async {
     myHouses.add(data);
+
+    var logData = CreateListenModel(
+            recordId: data.id, tableName: "houses", action: "inserted")
+        .toJson();
+
+    await DB.insertToDB(tableName: 'book_now_log', data: logData);
+
     loading = false;
     notifyListeners();
   }
