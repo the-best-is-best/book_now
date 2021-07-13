@@ -1,27 +1,23 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:book_now/provider/my_project_provider.dart';
+import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
 
-class CreateSelectScreen extends StatefulWidget {
+class PeopleScreen extends StatefulWidget {
   @override
-  _CreateSelectScreenState createState() => _CreateSelectScreenState();
+  _PeopleScreenState createState() => _PeopleScreenState();
 }
-/*
-void checkForNewSharedLists() {
-  print("loaded");
-}*/
 
-class _CreateSelectScreenState extends State<CreateSelectScreen> {
+class _PeopleScreenState extends State<PeopleScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
+
   @override
   Widget build(BuildContext context) {
-    //Timer.periodic(Duration(seconds: 1), (Timer t) => checkForNewSharedLists());
-    final myProjectRead = context.read<MyProjectProvider>();
-    final myProjectWatch = context.watch<MyProjectProvider>();
+    final myPeopleRead = context.read<PeopleProvider>();
+    final myPeopleWatch = context.watch<PeopleProvider>();
 
     return AdvancedDrawer(
       backdropColor: Colors.blueGrey,
@@ -38,20 +34,20 @@ class _CreateSelectScreenState extends State<CreateSelectScreen> {
         ],
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
-      drawer: buildMenu(0, context),
+      drawer: buildMenu(2, context),
       child: Scaffold(
-        appBar: buildAppBar("My Project", _advancedDrawerController),
+        appBar: buildAppBar("People", _advancedDrawerController),
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              width: myProjectWatch.tabIndex == 0
+              width: myPeopleWatch.tabIndex == 0
                   ? MediaQuery.of(context).size.width / 1.1
                   : null,
               child: Card(
                 elevation: 20,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: myProjectWatch.tabsWidget[myProjectWatch.tabIndex],
+                  child: myPeopleWatch.tabsWidget[myPeopleWatch.tabIndex],
                 ),
               ),
             ),
@@ -60,9 +56,9 @@ class _CreateSelectScreenState extends State<CreateSelectScreen> {
         bottomNavigationBar: BottomNavigationBar(
           elevation: 20,
           onTap: (val) {
-            myProjectRead.changeTabIndex(val);
+            myPeopleRead.changeTabIndex(val);
           },
-          currentIndex: myProjectWatch.tabIndex,
+          currentIndex: myPeopleWatch.tabIndex,
           unselectedFontSize: 15,
           type: BottomNavigationBarType.fixed,
           backgroundColor: mainColor,

@@ -22,7 +22,6 @@ Widget selectHousesTab() {
                 ? buildSearchComponent(
                     context: context,
                     searchHouse: searchHouseController,
-                    myHousesRead: myHousesRead,
                     searchTitle: "house name",
                     onSubmit: (String? val) {
                       myHousesRead.searchHouse(val!);
@@ -96,17 +95,15 @@ ListView buildListView({
                   child: ExpandableNotifier(
                     child: ScrollOnExpand(
                       child: ExpandablePanel(
-                        header: Center(
-                          child: searchHouseController.text.isEmpty
-                              ? Text(
-                                  "$index - ${myHousesWatch.myHouses[index].name}",
-                                  style: Theme.of(context).textTheme.headline6,
-                                )
-                              : Text(
-                                  "$index - ${myHousesWatch.searchMyHouse[index].name}",
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                        ),
+                        header: searchHouseController.text.isEmpty
+                            ? Text(
+                                "$index - ${myHousesWatch.myHouses[index].name}",
+                                style: Theme.of(context).textTheme.headline6,
+                              )
+                            : Text(
+                                "$index - ${myHousesWatch.searchMyHouse[index].name}",
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
                         collapsed: Container(),
                         expanded: Container(
                           child: searchHouseController.text.isEmpty

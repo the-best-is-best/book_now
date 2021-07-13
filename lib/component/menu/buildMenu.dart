@@ -1,5 +1,6 @@
 import 'package:book_now/screens/create_select_screen.dart';
-import 'package:book_now/screens/houses_screen.dart';
+import 'package:book_now/screens/houses/houses_screen.dart';
+import 'package:book_now/screens/people/people_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -51,15 +52,24 @@ Widget buildMenu(int curPage, BuildContext context) {
           ),
           ListTile(
             selected: curPage == 2 ? true : false,
-            onTap: curPage == 2 ? null : () {},
-            leading: Icon(Icons.favorite),
-            title: Text('Favourites'),
+            onTap: curPage == 2
+                ? null
+                : () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            duration: Duration(microseconds: 500),
+                            type: PageTransitionType.fade,
+                            child: PeopleScreen()));
+                  },
+            leading: Icon(Icons.people_alt),
+            title: Text('People'),
           ),
           ListTile(
             selected: curPage == 3 ? true : false,
             onTap: curPage == 3 ? null : () {},
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: Icon(Icons.travel_explore),
+            title: Text('Travel'),
           ),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 Widget buildSearchComponent({
   required BuildContext context,
   required TextEditingController searchHouse,
-  required HousesProvider myHousesRead,
   required String searchTitle,
   required onSubmit,
 }) {
@@ -41,9 +39,6 @@ Widget buildSearchComponent({
                 return null;
               },
               onSubmit: onSubmit,
-              //(String? val) {
-              //   myHousesRead.searchHouse(val!);
-              // }
             ),
           ),
           SizedBox(width: 10),

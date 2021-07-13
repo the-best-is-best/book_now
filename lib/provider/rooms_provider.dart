@@ -15,23 +15,21 @@ class RoomsProvider with ChangeNotifier {
   List<RoomsModel> myRooms = [];
 
   Future getRooms(List<LisenDataModel> lisenData) async {
-    if (myRooms.length == 0) {
-      List<LisenDataModel> getNewRooms = [];
-      getNewRooms = lisenData
-          .where((val) => val.action == "inserted" && val.tableName == "rooms")
-          .toList();
+    List<LisenDataModel> getNewRooms = [];
+    getNewRooms = lisenData
+        .where((val) => val.action == "inserted" && val.tableName == "rooms")
+        .toList();
 
-      List<int> id = [];
-      getNewRooms.forEach((val) => id.add(val.recordId));
-      Map<String, dynamic> data = {};
-      data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+    List<int> id = [];
+    getNewRooms.forEach((val) => id.add(val.recordId));
+    Map<String, dynamic> data = {};
+    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
-      var response =
-          await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
-      if (response.statusCode == 201) {
-        var data = response.data;
-        return toList(data['data']);
-      }
+    var response =
+        await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
+    if (response.statusCode == 201) {
+      var data = response.data;
+      return toList(data['data']);
     }
   }
 
@@ -95,7 +93,6 @@ class RoomsProvider with ChangeNotifier {
       roomUpdated = myRooms.firstWhere((room) =>
           room.name == id && room.floor == floor && room.houseId == houseId);
       roomUpdated.numbersOfBed = int.parse(resData['data']['numbers_of_bed']);
-      print("${myRooms[roomUpdated.id - 1].id} - ID = ${roomUpdated.id}");
     }
     loading = false;
     notifyListeners();

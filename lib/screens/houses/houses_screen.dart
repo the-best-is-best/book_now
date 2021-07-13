@@ -1,6 +1,5 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
-import 'package:book_now/lisen_socket/lisen_socket.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -14,24 +13,13 @@ class HousesScreen extends StatefulWidget {
 
 class _HousesScreenState extends State<HousesScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
-  /*
-  @override
-  void initState() {
-    super.initState();
-    LisenSocket.init();
-  }*/
-
-/*
-  void dispose() {
-    LisenSocket.close();
-    super.dispose();
-  }*/
 
   Widget build(BuildContext context) {
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
 
     return AdvancedDrawer(
+      openRatio: .75,
       backdropColor: Colors.blueGrey,
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,

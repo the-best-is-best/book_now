@@ -44,7 +44,7 @@ if (!$jsonData = json_decode($rowPostData)) {
 }
 try {
     $row;
-    $query = $readDB->prepare("SELECT * FROM book_now_log");
+    $query = $readDB->prepare("SELECT id FROM book_now_log");
     $query->execute();
     $rowCount = $query->rowCount();
     if ($rowCount > 0) {
@@ -61,7 +61,9 @@ try {
             $response->addMessage("No data changed");
             $response->send();
         }
+
         $returnData = [];
+        //  $returnData['book_now_log_count'] = $countNewData;
         while ($countNewData > 0) {
 
             $returnData[$countNewData] = $row[count($row) - $countNewData];

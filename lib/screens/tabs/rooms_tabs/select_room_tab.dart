@@ -1,6 +1,6 @@
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/provider/rooms_provider.dart';
-import 'package:book_now/screens/room_details_screen.dart';
+import 'package:book_now/screens/rooms/room_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';

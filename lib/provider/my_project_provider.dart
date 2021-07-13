@@ -9,14 +9,12 @@ class MyProjectProvider with ChangeNotifier {
   List<ProjectsModel> myProject = [];
 
   Future<dynamic> getData() async {
-    if (myProject.length == 0) {
-      Map<String, dynamic> data = {};
-      var response = await DioHelper.getData(
-          url: 'get_data/get_projects.php', query: data);
-      if (response.statusCode == 201) {
-        var data = response.data;
-        return toList(data['data']);
-      }
+    Map<String, dynamic> data = {};
+    var response =
+        await DioHelper.getData(url: 'get_data/get_projects.php', query: data);
+    if (response.statusCode == 201) {
+      var data = response.data;
+      return toList(data['data']);
     }
   }
 

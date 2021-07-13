@@ -6,15 +6,14 @@ class CheckDataProvider with ChangeNotifier {
   List<LisenDataModel> lisenData = [];
   List<LisenDataModel> insertHouses = [];
   List<LisenDataModel> insertRooms = [];
+  List<LisenDataModel> insertPeople = [];
 
-  Future getLisenData() async {
-    if (lisenData.length == 0) {
-      Map<String, dynamic> data = {'book_now_log_count': 0};
-      var response = await DioHelper.postData(url: 'lisenDB.php', query: data);
-      if (response.data['messages'][0] == 'data changed') {
-        var data = response.data;
-        toList(data['data']);
-      }
+  Future getListenData() async {
+    Map<String, dynamic> data = {'book_now_log_count': 0};
+    var response = await DioHelper.postData(url: 'listenDB.php', query: data);
+    if (response.data['messages'][0] == 'data changed') {
+      var data = response.data;
+      toList(data['data']);
     }
   }
 
@@ -31,5 +30,18 @@ class CheckDataProvider with ChangeNotifier {
     insertRooms = lisenData
         .where((e) => e.action == "inserted" && e.tableName == "rooms")
         .toList();
+
+    insertPeople = lisenData
+        .where((e) => e.action == "inserted" && e.tableName == "people")
+        .toList();
+  }
+}
+
+Future listenDBChanged() async {
+  Map<String, dynamic> data = {'book_now_log_count': 0};
+  var response =
+      await DioHelper.postData(url: 'listenDBDelay.php', query: data);
+  if (response.data['messages'][0] == 'data changed') {
+    return response.data['data']['book_now_log_count'];
   }
 }

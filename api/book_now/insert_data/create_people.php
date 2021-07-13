@@ -59,30 +59,31 @@ if (!isset($jsonData->name)) {
 }
 
 if (
-    strlen($jsonData->name) < 1 || strlen($jsonData->name) > 255
+    strlen($jsonData->name) < 1 || strlen($jsonData->name) > 255 ||
+    strlen($jsonData->city) < 1 || strlen($jsonData->city) > 255
 ) {
     $response = new Response();
 
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
-    (strlen($jsonData->name) < 1 ?  $response->addMessage("Room Name cannot be black") : false);
-    (strlen($jsonData->name) > 255 ?  $response->addMessage("Room Name cannot be greater than 255 characters") : false);
+    (strlen($jsonData->name) < 1 ?  $response->addMessage("People Name cannot be black") : false);
+    (strlen($jsonData->name) > 255 ?  $response->addMessage("People Name cannot be greater than 255 characters") : false);
+
+    (strlen($jsonData->city) < 1 ?  $response->addMessage("city  cannot be black") : false);
+    (strlen($jsonData->city) > 255 ?  $response->addMessage("city  cannot be greater than 255 characters") : false);
 
     $response->send();
     exit;
 }
 $name = $jsonData->name;
-$house_id = $jsonData->house_id;
-$floor = $jsonData->floor;
-$numbers_of_bed = $jsonData->numbers_of_bed;
+$tel = $jsonData->tel;
+$city = $jsonData->city;
 
 try {
 
-    $query = $writeDB->prepare('SELECT id FROM rooms WHERE name = :name AND house_id = :house_id AND floor= :floor');
+    $query = $writeDB->prepare('SELECT id FROM people WHERE name = :name ');
     $query->bindParam(':name', $name, PDO::PARAM_STR);
-    $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
-    $query->bindParam(':floor', $floor, PDO::PARAM_STR);
 
     $query->execute();
 
@@ -91,17 +92,30 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(409);
         $response->setSuccess(false);
-        $response->addMessage('Room name already exists');
+        $response->addMessage('People name already exists');
+        $response->send();
+        exit;
+    }
+    $query = $writeDB->prepare('SELECT id FROM people WHERE tel = :tel ');
+    $query->bindParam(':tel', $tel, PDO::PARAM_STR);
+
+    $query->execute();
+
+    $rowCount = $query->rowCount();
+    if ($rowCount !== 0) {
+        $response = new Response();
+        $response->setHttpStatusCode(409);
+        $response->setSuccess(false);
+        $response->addMessage('Telephone already exists');
         $response->send();
         exit;
     }
 
-    $query = $writeDB->prepare('INSERT INTO rooms (name , house_id , floor , numbers_of_bed ) VALUES (:name , :house_id , :floor , :numbers_of_bed)');
+    $query = $writeDB->prepare('INSERT INTO people (name , tel , city ) VALUES (:name , :tel , :city )');
 
     $query->bindParam(':name', $name, PDO::PARAM_STR);
-    $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
-    $query->bindParam(':floor', $floor, PDO::PARAM_STR);
-    $query->bindParam(':numbers_of_bed', $numbers_of_bed, PDO::PARAM_STR);
+    $query->bindParam(':tel', $tel, PDO::PARAM_STR);
+    $query->bindParam(':city', $city, PDO::PARAM_STR);
 
     $query->execute();
     $rowCount = $query->rowCount();
@@ -110,7 +124,7 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue creating Room - please try again');
+        $response->addMessage('There was an issue creating people - please try again');
         $response->send();
         exit;
     }
@@ -121,14 +135,13 @@ try {
     $returnData = array();
     $returnData['id'] = $last_id;
     $returnData['name'] = $name;
-    $returnData['house_id'] = $house_id;
-    $returnData['floor'] = $floor;
-    $returnData['numbers_of_bed'] = $numbers_of_bed;
+    $returnData['tel'] = $tel;
+    $returnData['city'] = $city;
 
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
-    $response->addMessage('Room Created');
+    $response->addMessage('People Created');
     $response->setData($returnData);
     $response->send();
     exit;
@@ -137,7 +150,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue creating Room - please try again' . $ex);
+    $response->addMessage('There was an issue creating people - please try again' . $ex);
     $response->send();
     exit;
 }

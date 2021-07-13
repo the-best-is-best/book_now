@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2021 at 01:15 AM
+-- Generation Time: Jul 13, 2021 at 10:38 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -60,6 +60,35 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `update_houses` AFTER UPDATE ON `houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null , NEW.id , "updated" ,"houses" , NOW())
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `people`
+--
+
+CREATE TABLE `people` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `tel` bigint(20) NOT NULL,
+  `city` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `people`
+--
+DELIMITER $$
+CREATE TRIGGER `deleted_people` BEFORE DELETE ON `people` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "people" ,NOW() )
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_people` AFTER INSERT ON `people` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "people",NOW() )
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_people` AFTER INSERT ON `people` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "updated" , "people")
 $$
 DELIMITER ;
 
@@ -150,6 +179,14 @@ ALTER TABLE `houses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `people`
+--
+ALTER TABLE `people`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tel` (`tel`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `project_name`
 --
 ALTER TABLE `project_name`
@@ -181,6 +218,12 @@ ALTER TABLE `book_now_log`
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `people`
+--
+ALTER TABLE `people`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
