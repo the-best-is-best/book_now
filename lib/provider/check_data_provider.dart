@@ -1,56 +1,83 @@
-import 'package:book_now/db/db.dart';
+// import 'package:book_now/db/db.dart';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> lisenData = [];
+  List<ListenDataModel> lisenDataUpdated = [];
+
   List<ListenDataModel> insertHouses = [];
+  List<ListenDataModel> updateHouses = [];
+
   List<ListenDataModel> insertRooms = [];
+  List<ListenDataModel> updateRooms = [];
+
   List<ListenDataModel> insertPeople = [];
+  List<ListenDataModel> updatePeople = [];
 
-  Future getCheckDataFromDB() async {
-    List<Map<dynamic, dynamic>> data = await DB.getDataFromDB('book_now_log');
+  bool getData = false;
 
-    List.generate(data.length, (i) {
-      lisenData.add(ListenDataModel.fromJson(data[i]));
-    });
-  }
+  Future getListenData() async {
+    if (!getData) {
+      lisenDataUpdated = [];
 
-  Future getListenData(int bookNowLogCount) async {
-    Map<String, dynamic> data = {'book_now_log_count': bookNowLogCount};
-    var response = await DioHelper.postData(url: 'listenDB.php', query: data);
-    if (response.data['messages'][0] == 'data changed') {
-      var data = response.data;
-      toList(data['data']);
+      insertHouses = [];
+      updateHouses = [];
+
+      insertRooms = [];
+      updateRooms = [];
+
+      insertPeople = [];
+      updatePeople = [];
+
+      Map<String, dynamic> data = {'book_now_log_count': lisenData.length};
+      var response = await DioHelper.postData(url: 'listenDB.php', query: data);
+      if (response.data['messages'][0] == 'data changed') {
+        var data = response.data;
+        getData = true;
+        return await toList(data['data']);
+      }
+      getData = true;
     }
   }
 
-  Future<dynamic> toList(Map datas) async {
-    lisenData = [];
+  void listenDataChange() {
+    getData = false;
+  }
 
+  Future<dynamic> toList(Map datas) async {
     datas.forEach((k, data) {
       lisenData.add(ListenDataModel.fromJson(data));
     });
-    insertHouses = lisenData
+    datas.forEach((k, datas) {
+      lisenDataUpdated.add(ListenDataModel.fromJson(datas));
+    });
+    insertHouses = lisenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "houses")
         .toList();
 
-    insertRooms = lisenData
+    updateHouses = lisenDataUpdated
+        .where((e) => e.action == "updated" && e.tableName == "houses")
+        .toList();
+
+    insertRooms = lisenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rooms")
         .toList();
 
-    insertPeople = lisenData
+    updateRooms = lisenDataUpdated
+        .where((e) => e.action == "updated" && e.tableName == "rooms")
+        .toList();
+
+    insertPeople = lisenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "people")
         .toList();
-  }
-}
 
-Future listenDBChanged() async {
-  Map<String, dynamic> data = {'book_now_log_count': 0};
-  var response =
-      await DioHelper.postData(url: 'listenDBDelay.php', query: data);
-  if (response.data['messages'][0] == 'data changed') {
-    return response.data['data']['book_now_log_count'];
+    updatePeople = lisenDataUpdated
+        .where((e) => e.action == "updated" && e.tableName == "people")
+        .toList();
+    print("coneected");
+
+    return true;
   }
 }

@@ -1,7 +1,7 @@
 class PeopleModel {
   int id;
   String name;
-  int tel;
+  String tel;
   String city;
 
   PeopleModel({
@@ -13,6 +13,6 @@ class PeopleModel {
   PeopleModel.fromJson(Map<String, dynamic> json)
       : id = int.parse(json['id'].toString()),
         name = json['name'],
-        tel = int.parse(json['tel'].toString()),
+        tel = json['tel'].toString(),
         city = json['city'];
 }

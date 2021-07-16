@@ -9,6 +9,9 @@ Widget defaultDateTimePicker({
   String? dateLabel,
   String? timeLabel,
   String? label,
+  IconData? prefix,
+  dynamic suffixPressed,
+  IconData? suffix,
   required dynamic validator,
   bool use24 = false,
 }) {
@@ -21,14 +24,25 @@ Widget defaultDateTimePicker({
     validator: validator,
     icon: Icon(Icons.event),
     dateLabelText: dateLabel,
-    style: Theme.of(context).primaryTextTheme.bodyText1,
+    style: Theme.of(context).textTheme.bodyText1,
     timeLabelText: timeLabel,
     use24HourFormat: use24,
     locale: Locale('en', 'US'),
     decoration: label != null
         ? InputDecoration(
+            prefixIcon: Icon(
+              prefix,
+            ),
+            suffixIcon: suffix != null
+                ? IconButton(
+                    onPressed: suffixPressed != null ? suffixPressed : null,
+                    icon: Icon(
+                      suffix,
+                    ),
+                  )
+                : null,
             labelText: label,
-            labelStyle: Theme.of(context).primaryTextTheme.bodyText1,
+            labelStyle: Theme.of(context).textTheme.bodyText1,
             border: OutlineInputBorder(),
           )
         : null,

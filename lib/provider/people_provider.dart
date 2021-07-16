@@ -11,31 +11,46 @@ class PeopleProvider with ChangeNotifier {
   List<PeopleModel> myPeople = [];
 
   Future getPeople(List<ListenDataModel> lisenData) async {
-    List<ListenDataModel> getNewHouses = [];
-    getNewHouses = lisenData
-        .where((val) => val.action == "inserted" && val.tableName == "people")
-        .toList();
-
     List<int> id = [];
-    getNewHouses.forEach((val) => id.add(val.recordId));
+    lisenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
     var response =
         await DioHelper.getData(url: 'get_data/get_people.php', query: data);
     if (response.statusCode == 201) {
-      var data = response.data;
+      var datas = response.data['data'];
 
-      return toList(data['data']);
+      datas.forEach((data) {
+        myPeople.add(PeopleModel.fromJson(data));
+      });
     }
   }
 
-  Future<dynamic> toList(List<dynamic> datas) async {
-    myPeople = [];
-    datas.forEach((data) {
-      myPeople.add(PeopleModel.fromJson(data));
-    });
-    return myPeople;
+  Future getUpdatePeople(List<ListenDataModel> lisenData) async {
+    List<int> id = [];
+
+    lisenData.forEach((val) => id.add(val.recordId));
+    Map<String, dynamic> data = {};
+    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+
+    var response =
+        await DioHelper.getData(url: 'get_data/get_people.php', query: data);
+    if (response.statusCode == 201) {
+      var datas = response.data['data'];
+      // get item has been updated
+      PeopleModel? peopleUpdated;
+      datas.forEach((data) async {
+        peopleUpdated = myPeople.firstWhere(
+            (people) => people.id == int.parse(data['id'].toString()),
+            orElse: () => PeopleModel(id: 0, name: "", city: "", tel: ""));
+        if (peopleUpdated!.id != 0) {
+          peopleUpdated!.name = data['name'];
+          peopleUpdated!.tel = "0 ${data['tel']}";
+          peopleUpdated!.city = data['city'];
+        }
+      });
+    }
   }
 
   bool loading = false;
@@ -49,19 +64,9 @@ class PeopleProvider with ChangeNotifier {
       url: "insert_data/create_people.php",
       query: createHouse,
     );
-
+    loading = false;
+    notifyListeners();
     return response;
-  }
-
-  insertToList(PeopleModel data) {
-    myPeople.add(data);
-    loading = false;
-    notifyListeners();
-  }
-
-  void insertFiled() {
-    loading = false;
-    notifyListeners();
   }
 
   Future updatePeople(
@@ -81,14 +86,7 @@ class PeopleProvider with ChangeNotifier {
       url: "update_data/people_update.php",
       query: data,
     );
-    PeopleModel? peopleUpdated;
-    var resData = response.data;
-    if (resData['messages'][0] == "People updated") {
-      peopleUpdated = myPeople.firstWhere((people) => people.id == id);
-      peopleUpdated.name = resData['data']['name'];
-      peopleUpdated.tel = int.parse(resData['data']['tel']);
-      peopleUpdated.city = resData['data']['city'];
-    }
+
     loading = false;
     notifyListeners();
 

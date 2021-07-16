@@ -15,30 +15,49 @@ class RoomsProvider with ChangeNotifier {
   List<RoomsModel> myRooms = [];
 
   Future getRooms(List<ListenDataModel> lisenData) async {
-    List<ListenDataModel> getNewRooms = [];
-    getNewRooms = lisenData
-        .where((val) => val.action == "inserted" && val.tableName == "rooms")
-        .toList();
-
     List<int> id = [];
-    getNewRooms.forEach((val) => id.add(val.recordId));
+    lisenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
     var response =
         await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
     if (response.statusCode == 201) {
-      var data = response.data;
-      return toList(data['data']);
+      var datas = response.data['data'];
+      datas.forEach((data) {
+        myRooms.add(RoomsModel.fromJson(data));
+      });
     }
   }
 
-  Future<dynamic> toList(List<dynamic> datas) async {
-    myRooms = [];
-    datas.forEach((data) {
-      myRooms.add(RoomsModel.fromJson(data));
-    });
-    return myRooms;
+  Future getUpdateRoom(List<ListenDataModel> lisenData) async {
+    List<int> id = [];
+
+    lisenData.forEach((val) => id.add(val.recordId));
+    Map<String, dynamic> data = {};
+    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+
+    var response =
+        await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
+    if (response.statusCode == 201) {
+      var datas = response.data['data'];
+
+// get item has been updated
+      datas.forEach((data) async {
+        RoomsModel? roomUpdated;
+        roomUpdated = myRooms.firstWhere(
+            (room) =>
+                room.name == data['name'] &&
+                room.floor == data['floor'] &&
+                room.houseId == data['house_id'], orElse: () {
+          return RoomsModel(
+              id: 0, name: 0, floor: 0, houseId: 0, numbersOfBed: 0);
+        });
+
+        if (roomUpdated.id != 0)
+          roomUpdated.numbersOfBed = data['numbers_of_bed'];
+      });
+    }
   }
 
   Future gotToRoom({required int house, required int floor}) async {
@@ -56,18 +75,9 @@ class RoomsProvider with ChangeNotifier {
       url: "insert_data/create_room.php",
       query: createRoom,
     );
+    loading = false;
+    notifyListeners();
     return response;
-  }
-
-  void insertToList(RoomsModel data) {
-    myRooms.add(data);
-    loading = false;
-    notifyListeners();
-  }
-
-  void insertFiled() {
-    loading = false;
-    notifyListeners();
   }
 
   Future updateRoom(
@@ -87,13 +97,7 @@ class RoomsProvider with ChangeNotifier {
       url: "update_data/room_update.php",
       query: data,
     );
-    RoomsModel? roomUpdated;
-    var resData = response.data;
-    if (resData['messages'][0] == "Room updated") {
-      roomUpdated = myRooms.firstWhere((room) =>
-          room.name == id && room.floor == floor && room.houseId == houseId);
-      roomUpdated.numbersOfBed = int.parse(resData['data']['numbers_of_bed']);
-    }
+
     loading = false;
     notifyListeners();
 

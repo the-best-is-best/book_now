@@ -1,6 +1,8 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
+import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final myCheckDataRead = context.read<CheckDataProvider>();
+
     final myHouseRead = context.read<HousesProvider>();
     final myRoomRead = context.read<RoomsProvider>();
     final myRoomWatch = context.watch<RoomsProvider>();
@@ -48,115 +52,121 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
             )
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.1,
-                child: Card(
-                  elevation: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        myRoomWatch.editRoomActive
-                            ? Column(
-                                children: [
-                                  Form(
-                                    key: _keyForm,
-                                    child: defaultFormField(
-                                        context: context,
-                                        controller: newNumOfBedController,
-                                        label: 'New number of bed',
-                                        type: TextInputType.number,
-                                        validate: (String? val) {
-                                          if (val != null && val.isEmpty) {
-                                            return 'empty !!';
-                                          }
-                                          return null;
-                                        }),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  myRoomWatch.loading
-                                      ? CircularProgressIndicator()
-                                      : ElevatedButton(
-                                          child: Text("Edit"),
-                                          onPressed: () {
-                                            _keyForm.currentState!.save();
-                                            if (!_keyForm.currentState!
-                                                .validate()) {
-                                              return;
+        body: getDataFromServer(
+          context: context,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  child: Card(
+                    elevation: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          myRoomWatch.editRoomActive
+                              ? Column(
+                                  children: [
+                                    Form(
+                                      key: _keyForm,
+                                      child: defaultFormField(
+                                          context: context,
+                                          controller: newNumOfBedController,
+                                          label: 'New number of bed',
+                                          type: TextInputType.number,
+                                          validate: (String? val) {
+                                            if (val != null && val.isEmpty) {
+                                              return 'empty !!';
                                             }
-                                            _keyForm.currentState!.save();
+                                            return null;
+                                          }),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    myRoomWatch.loading
+                                        ? CircularProgressIndicator()
+                                        : ElevatedButton(
+                                            child: Text("Edit"),
+                                            onPressed: () {
+                                              _keyForm.currentState!.save();
+                                              if (!_keyForm.currentState!
+                                                  .validate()) {
+                                                return;
+                                              }
+                                              _keyForm.currentState!.save();
 
-                                            myRoomRead
-                                                .updateRoom(
-                                              id: widget.room.name,
-                                              floor: widget.room.floor,
-                                              houseId: widget.room.houseId,
-                                              newNumberOfBed: int.parse(
-                                                  newNumOfBedController.text),
-                                            )
-                                                .then(
-                                              (response) async {
-                                                var data = response.data;
-                                                if (response.statusCode ==
-                                                    201) {
-                                                  newNumOfBedController.text =
-                                                      "";
-                                                  Navigator.pop(context);
-                                                  await Flushbar(
-                                                    title: 'Success',
-                                                    message: "Updated",
-                                                    duration:
-                                                        Duration(seconds: 3),
-                                                  ).show(context);
-                                                } else {
-                                                  if (data['statusCode'] >=
-                                                          400 &&
-                                                      data['success'] ==
-                                                          false) {
-                                                    List<dynamic> messages =
-                                                        data['messages'];
-                                                    for (int i = 0;
-                                                        i < messages.length;
-                                                        i++) {
-                                                      await Flushbar(
-                                                        title: 'Error',
-                                                        message: messages[i],
-                                                        duration: Duration(
-                                                            seconds: 3),
-                                                      ).show(context);
+                                              myRoomRead
+                                                  .updateRoom(
+                                                id: widget.room.name,
+                                                floor: widget.room.floor,
+                                                houseId: widget.room.houseId,
+                                                newNumberOfBed: int.parse(
+                                                    newNumOfBedController.text),
+                                              )
+                                                  .then(
+                                                (response) async {
+                                                  var data = response.data;
+                                                  if (data['messages'][0] ==
+                                                      "Room updated") {
+                                                    newNumOfBedController.text =
+                                                        "";
+                                                    myCheckDataRead
+                                                        .listenDataChange();
+
+                                                    Navigator.pop(context);
+                                                    await Flushbar(
+                                                      title: 'Success',
+                                                      message: "Updated",
+                                                      duration:
+                                                          Duration(seconds: 3),
+                                                    ).show(context);
+                                                  } else {
+                                                    if (data['statusCode'] >=
+                                                            400 &&
+                                                        data['success'] ==
+                                                            false) {
+                                                      List<dynamic> messages =
+                                                          data['messages'];
+                                                      for (int i = 0;
+                                                          i < messages.length;
+                                                          i++) {
+                                                        await Flushbar(
+                                                          title: 'Error',
+                                                          message: messages[i],
+                                                          duration: Duration(
+                                                              seconds: 3),
+                                                        ).show(context);
+                                                      }
                                                     }
                                                   }
-                                                }
-                                              },
-                                            );
-                                          },
-                                        ),
-                                ],
-                              )
-                            : Text(
-                                "Number of bed : ${widget.room.numbersOfBed}",
-                                style: Theme.of(context).textTheme.headline5,
-                              ),
-                        SizedBox(
-                          height: 20,
-                        )
-                      ],
+                                                },
+                                              );
+                                            },
+                                          ),
+                                  ],
+                                )
+                              : Text(
+                                  "Number of bed : ${widget.room.numbersOfBed}",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                          SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }

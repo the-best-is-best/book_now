@@ -94,7 +94,7 @@ Widget createPeopleTab() {
                             CreatePeopleModel createPeopleModel =
                                 CreatePeopleModel(
                                     name: peopleNameController.text,
-                                    tel: int.parse(telController.text),
+                                    tel: telController.text,
                                     city: cityController.text);
                             myPeopleRead
                                 .createPeopleClicked(createPeopleModel)
@@ -102,11 +102,6 @@ Widget createPeopleTab() {
                               (response) async {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
-                                  var people = data['data'];
-                                  PeopleModel peoples =
-                                      PeopleModel.fromJson(people);
-                                  myPeopleRead.insertToList(peoples);
-
                                   peopleNameController.text = telController
                                       .text = cityController.text = "";
 
@@ -116,7 +111,7 @@ Widget createPeopleTab() {
                                     duration: Duration(seconds: 3),
                                   ).show(context);
                                 } else {
-                                  myPeopleRead.insertFiled();
+                                  // myPeopleRead.insertFiled();
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
                                     List<dynamic> messages = data['messages'];

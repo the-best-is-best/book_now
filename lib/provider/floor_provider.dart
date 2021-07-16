@@ -10,7 +10,6 @@ class FloorProvider with ChangeNotifier {
 
     myHouses.forEach((house) {
       List<int> floors = [];
-
       if (house.floor > 0) {
         for (int i = 0; i < house.floor; i++) {
           floors.add(i + 1);

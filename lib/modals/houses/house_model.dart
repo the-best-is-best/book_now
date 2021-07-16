@@ -13,4 +13,9 @@ class HouseModel {
       : id = int.parse(json['id'].toString()),
         name = json['name'],
         floor = int.parse(json['floor'].toString());
+
+  // Map<String, dynamic> toJson() => {
+  //       'name': name,
+  //       'floor': floor,
+  //     };
 }

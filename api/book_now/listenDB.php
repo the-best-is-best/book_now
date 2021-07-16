@@ -60,10 +60,10 @@ try {
             $response->setSuccess(true);
             $response->addMessage("No data changed");
             $response->send();
+            exit();
         }
 
         $returnData = [];
-        //  $returnData['book_now_log_count'] = $countNewData;
         while ($countNewData > 0) {
 
             $returnData[$countNewData] = $row[count($row) - $countNewData];

@@ -1,6 +1,6 @@
 class CreatePeopleModel {
   String name;
-  int tel;
+  String tel;
   String city;
 
   CreatePeopleModel({

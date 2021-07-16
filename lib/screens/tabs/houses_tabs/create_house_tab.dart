@@ -1,7 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
+import 'package:book_now/db/db.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
 import 'package:book_now/modals/houses/house_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,8 @@ Widget createHouseTab() {
 
   return Builder(
     builder: (context) {
+      final myCheckDataRead = context.read<CheckDataProvider>();
+
       final myHousesRead = context.read<HousesProvider>();
       final myHousesWatch = context.watch<HousesProvider>();
       final floorDataRead = context.read<FloorProvider>();
@@ -72,30 +76,27 @@ Widget createHouseTab() {
                       ? CircularProgressIndicator()
                       : ElevatedButton(
                           child: Text("Create"),
-                          onPressed: () {
+                          onPressed: () async {
                             _keyForm.currentState!.save();
                             if (!_keyForm.currentState!.validate()) {
                               return;
                             }
                             _keyForm.currentState!.save();
+
                             CreateHouseModel createHouseModel =
                                 CreateHouseModel(
                               name: houseNameController.text,
-                              floor: int.parse(floorNamberController.text),
+                              floor: int.parse(
+                                floorNamberController.text,
+                              ),
                             );
                             myHousesRead
                                 .createHouseClicked(createHouseModel)
                                 .then(
                               (response) async {
                                 var data = response.data;
-                                if (response.statusCode == 201) {
-                                  var house = data['data'];
-                                  HouseModel houses =
-                                      HouseModel.fromJson(house);
-                                  myHousesRead.insertToList(houses);
-                                  floorDataRead
-                                      .getFloors(myHousesWatch.myHouses);
 
+                                if (data['messages'][0] == "House Created") {
                                   houseNameController.text =
                                       floorNamberController.text = "";
 
@@ -105,7 +106,6 @@ Widget createHouseTab() {
                                     duration: Duration(seconds: 3),
                                   ).show(context);
                                 } else {
-                                  myHousesRead.insertFiled();
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
                                     List<dynamic> messages = data['messages'];

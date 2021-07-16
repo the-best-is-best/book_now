@@ -1,4 +1,6 @@
+import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/modals/houses/house_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ class RoomScreen extends StatelessWidget {
   const RoomScreen({required this.house, required this.floor});
   @override
   Widget build(BuildContext context) {
+    final myCheckDataRead = context.read<CheckDataProvider>();
     final myRoomsRead = context.read<RoomsProvider>();
     final myRoomsWatch = context.watch<RoomsProvider>();
 
@@ -36,6 +39,9 @@ class RoomScreen extends StatelessWidget {
         elevation: 20,
         onTap: (val) {
           myRoomsRead.changeTabIndex(val);
+          if (val == 1) {
+            myCheckDataRead.listenDataChange();
+          }
         },
         currentIndex: myRoomsWatch.tabIndex,
         unselectedFontSize: 15,

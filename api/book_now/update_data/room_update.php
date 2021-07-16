@@ -58,7 +58,7 @@ if (
     (!isset($jsonData->id) ?  $response->addMessage("room not supplied") : false);
     (!isset($jsonData->floor) ?  $response->addMessage("floor not supplied") : false);
     (!isset($jsonData->house_id) ?  $response->addMessage("house not supplied") : false);
-    (!isset($jsonData->number_of_bed) ?  $response->addMessage("number of bed not supplied") : false);
+    (!isset($jsonData->numbers_of_bed) ?  $response->addMessage("number of bed not supplied") : false);
 
     $response->send();
     exit;
@@ -92,16 +92,16 @@ try {
     }
 
 
-
+    /*
     $returnData = array();
     $returnData['numbers_of_bed'] = $numbers_of_bed;
 
-
+*/
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Room updated');
-    $response->setData($returnData);
+    //  $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

@@ -14,13 +14,13 @@ import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'db/db.dart';
+//import 'db/db.dart';
 import 'network/dio_helper.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+//  WidgetsFlutterBinding.ensureInitialized();
+  // await DB.init();
 
-  await DB.init();
   DioHelper.init();
   initializeDateFormatting();
   //ListenSocket.init();
@@ -49,8 +49,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final checkDataRead = context.read<CheckDataProvider>();
+    final checkDataWatch = context.read<CheckDataProvider>();
+
     final housesDataRead = context.read<HousesProvider>();
+    final housesDataWatch = context.watch<HousesProvider>();
+
     final floorDataRead = context.read<FloorProvider>();
+
     final roomsDataRead = context.read<RoomsProvider>();
     final peopleDataRead = context.read<PeopleProvider>();
 
@@ -74,56 +79,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: FutureBuilder(
-        future: checkDataRead
-            .getCheckDataFromDB()
-            .then((_) => housesDataRead.getHousesFromDB()),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return FutureBuilder(
-              future: checkDataRead
-                  .getListenData(checkDataRead.lisenData.length)
-                  .then((_) {
-                if (checkDataRead.insertHouses.length > 0) {
-                  housesDataRead.getHouses(checkDataRead.insertHouses).then(
-                      (_) => floorDataRead.getFloors(housesDataRead.myHouses));
-                }
-              }).then((_) {
-                if (checkDataRead.insertRooms.length > 0) {
-                  roomsDataRead.getRooms(checkDataRead.insertRooms);
-                }
-              }).then((_) {
-                if (checkDataRead.insertPeople.length > 0) {
-                  peopleDataRead.getPeople(checkDataRead.insertPeople);
-                }
-              }),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else {
-                  return CreateSelectScreen();
-                }
-              },
-            );
-          } else {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        },
-      ),
+      home: CreateSelectScreen(),
     );
   }
-}
-
-Stream listenDBDelay() async* {
-  await Future<void>.delayed(const Duration(seconds: 1), () => print(1));
-
-  await Future<void>.delayed(const Duration(seconds: 1));
 }

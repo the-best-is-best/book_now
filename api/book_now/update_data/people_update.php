@@ -91,18 +91,18 @@ try {
     }
 
 
-
+    /*
     $returnData = array();
     $returnData['name'] = $name;
     $returnData['tel'] = $tel;
     $returnData['city'] = $city;
 
-
+*/
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('People updated');
-    $response->setData($returnData);
+    //   $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

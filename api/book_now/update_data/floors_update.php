@@ -88,16 +88,16 @@ try {
     }
 
 
-
+    /*
     $returnData = array();
     $returnData['id'] = $id;
     $returnData['floor'] = $newTotalFloor;
-
+*/
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Floor updated');
-    $response->setData($returnData);
+    //   $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

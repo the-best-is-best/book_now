@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/modals/houses/create_house_model.dart';
 import 'package:book_now/modals/houses/house_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ class FloorRoom extends StatelessWidget {
   const FloorRoom({required this.myHouse});
   @override
   Widget build(BuildContext context) {
+    final myCheckDataRead = context.read<CheckDataProvider>();
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
     final myFloorRead = context.read<FloorProvider>();
@@ -88,10 +89,14 @@ class FloorRoom extends StatelessWidget {
                                           .then(
                                         (response) async {
                                           var data = response.data;
-                                          if (response.statusCode == 201) {
+                                          if (data['messages'][0] ==
+                                              "Floor updated") {
                                             newFloorNamberController.text = "";
-                                            myFloorRead.getFloors(
-                                                myHousesWatch.myHouses);
+                                            /*  myFloorRead.getFloors(
+                                                myHousesWatch.myHouses);*/
+                                            /*   myCheckDataRead
+                                                .listenToGetNewData();*/
+                                            myCheckDataRead.listenDataChange();
                                             Navigator.pop(context);
 
                                             await Flushbar(
@@ -100,7 +105,7 @@ class FloorRoom extends StatelessWidget {
                                               duration: Duration(seconds: 3),
                                             ).show(context);
                                           } else {
-                                            myHousesRead.insertFiled();
+                                            //  myHousesRead.insertFiled();
                                             if (data['statusCode'] >= 400 &&
                                                 data['success'] == false) {
                                               List<dynamic> messages =

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/people_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +21,8 @@ class PeopleDetailsScreen extends StatelessWidget {
   bool firstload = false;
   @override
   Widget build(BuildContext context) {
+    final myCheckDataRead = context.read<CheckDataProvider>();
+
     final myPeopleRead = context.read<PeopleProvider>();
     final myPeopleWatch = context.watch<PeopleProvider>();
 
@@ -140,6 +143,9 @@ class PeopleDetailsScreen extends StatelessWidget {
                                                       newTelController.text =
                                                           newcityController
                                                               .text = "";
+                                                  myCheckDataRead
+                                                      .listenDataChange();
+
                                                   Navigator.pop(context);
                                                   await Flushbar(
                                                     title: 'Success',
