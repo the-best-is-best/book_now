@@ -1,6 +1,6 @@
 class TravelModel {
   int id;
-  int name;
+  String name;
 
   TravelModel({
     required this.id,
@@ -8,5 +8,5 @@ class TravelModel {
   });
   TravelModel.fromJson(Map<String, dynamic> json)
       : id = int.parse(json['id'].toString()),
-        name = int.parse(json['name'].toString());
+        name = json['name'];
 }

@@ -40,49 +40,49 @@ Widget selectRoomTab() {
               thickness: 3,
             ),
             Container(
-                child: Center(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Container(
-                          width: query.width,
-                          child: curRoomes.length > 0
-                              ? StaggeredGridView.countBuilder(
-                                  shrinkWrap: true,
-                                  crossAxisCount: itemRowCount,
-                                  itemCount: curRoomes.length,
-                                  itemBuilder: (_, int index) {
-                                    return ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            PageTransition(
-                                                duration:
-                                                    Duration(microseconds: 500),
-                                                type: PageTransitionType.fade,
-                                                child: RoomDetailsScreen(
-                                                  room: curRoomes[index],
-                                                )));
-                                      },
-                                      child: Text(
-                                          curRoomes[index].name.toString()),
-                                      style: ElevatedButton.styleFrom(
-                                        shape: CircleBorder(),
-                                      ),
-                                    );
-                                  },
-                                  staggeredTileBuilder: (int index) =>
-                                      StaggeredTile.count(1, 1),
-                                  mainAxisSpacing: 5.0,
-                                  crossAxisSpacing: 5.0,
-                                )
-                              : Center(
-                                  child: Text(
-                                    "No Rooms",
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
-                                  ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Container(
+                    width: query.width,
+                    child: curRoomes.length > 0
+                        ? StaggeredGridView.countBuilder(
+                            shrinkWrap: true,
+                            crossAxisCount: itemRowCount,
+                            itemCount: curRoomes.length,
+                            itemBuilder: (_, int index) {
+                              return ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          duration: Duration(microseconds: 500),
+                                          type: PageTransitionType.fade,
+                                          child: RoomDetailsScreen(
+                                            room: curRoomes[index],
+                                          )));
+                                },
+                                child: Text(curRoomes[index].name.toString()),
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
                                 ),
-                        )))),
+                              );
+                            },
+                            staggeredTileBuilder: (int index) =>
+                                StaggeredTile.count(1, 1),
+                            mainAxisSpacing: 5.0,
+                            crossAxisSpacing: 5.0,
+                          )
+                        : Center(
+                            child: Text(
+                              "No Rooms",
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+            ),
           ],
         );
       }),

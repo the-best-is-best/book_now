@@ -46,34 +46,46 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->id) || !isset($jsonData->floor)) {
+if (!isset($jsonData->id) || !isset($jsonData->name)) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
-    (!isset($jsonData->floor) ?  $response->addMessage("floor not supplied") : false);
+    (!isset($jsonData->floor) ?  $response->addMessage("Name not supplied") : false);
 
     $response->send();
     exit;
 }
 
 $id = $jsonData->id;
-$floor = $jsonData->floor;
+$name = $jsonData->name;
 
 
 try {
+    $query = $writeDB->prepare('SELECT id FROM travel WHERE name = :name');
+    $query->bindParam(':name', $name, PDO::PARAM_STR);
+    $query->execute();
 
-    $query = $writeDB->prepare('SELECT floor FROM houses WHERE id = :id');
+    $rowCount = $query->rowCount();
+    if ($rowCount !== 0) {
+        $response = new Response();
+        $response->setHttpStatusCode(409);
+        $response->setSuccess(false);
+        $response->addMessage('Travel name already exists');
+        $response->send();
+        exit;
+    }
+
+    $query = $writeDB->prepare('SELECT name FROM travel WHERE id = :id');
     $query->bindParam(':id', $id, PDO::PARAM_STR);
     $query->execute();
     $row = $query->fetch();
 
-    $newTotalFloor = $row["floor"] + $floor;
 
-    $query = $writeDB->prepare('UPDATE houses SET floor = :floor WHERE id = :id');
+    $query = $writeDB->prepare('UPDATE travel SET name = :name WHERE id = :id');
 
-    $query->bindParam(':floor', $newTotalFloor, PDO::PARAM_STR);
+    $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->bindParam(':id', $id, PDO::PARAM_STR);
 
     $query->execute();
@@ -82,7 +94,7 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue update floor - please try again');
+        $response->addMessage('There was an issue update name - please try again');
         $response->send();
         exit;
     }
@@ -92,7 +104,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
-    $response->addMessage('Floor updated');
+    $response->addMessage('Travel updated');
 
     $response->send();
     exit;
@@ -101,7 +113,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue update floor - please try again' . $ex);
+    $response->addMessage('There was an issue update travel - please try again' . $ex);
     $response->send();
     exit;
 }

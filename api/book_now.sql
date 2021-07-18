@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2021 at 07:23 PM
+-- Generation Time: Jul 18, 2021 at 11:43 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -101,6 +101,7 @@ DELIMITER ;
 CREATE TABLE `project_name` (
   `id` int(11) NOT NULL,
   `project_name` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
   `end_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -162,6 +163,33 @@ CREATE TRIGGER `update_rooms` AFTER UPDATE ON `rooms` FOR EACH ROW INSERT INTO b
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `travel`
+--
+
+CREATE TABLE `travel` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `travel`
+--
+DELIMITER $$
+CREATE TRIGGER `deleted_travel` BEFORE DELETE ON `travel` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "travel",NOW() )
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_travel` AFTER INSERT ON `travel` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "travel",NOW() )
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_travel` AFTER UPDATE ON `travel` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "updated" , "travel" , NOW())
+$$
+DELIMITER ;
+
 --
 -- Indexes for dumped tables
 --
@@ -205,6 +233,12 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `travel`
+--
+ALTER TABLE `travel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -242,6 +276,12 @@ ALTER TABLE `rel_house`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `travel`
+--
+ALTER TABLE `travel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

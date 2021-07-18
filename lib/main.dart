@@ -5,6 +5,7 @@ import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/provider/travel_provider.dart';
 import 'package:book_now/screens/create_select_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: RoomsProvider()),
       ChangeNotifierProvider.value(value: PeopleProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
+      ChangeNotifierProvider.value(value: TravelProvider()),
     ], child: MyApp());
   }
 }

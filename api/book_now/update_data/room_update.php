@@ -92,16 +92,11 @@ try {
     }
 
 
-    /*
-    $returnData = array();
-    $returnData['numbers_of_bed'] = $numbers_of_bed;
 
-*/
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Room updated');
-    //  $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

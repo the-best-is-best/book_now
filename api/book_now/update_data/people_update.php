@@ -70,6 +70,19 @@ $tel = $jsonData->tel;
 $city = trim($jsonData->city);
 
 try {
+    $query = $writeDB->prepare('SELECT id FROM people WHERE name = :name');
+    $query->bindParam(':name', $name, PDO::PARAM_STR);
+    $query->execute();
+
+    $rowCount = $query->rowCount();
+    if ($rowCount !== 0) {
+        $response = new Response();
+        $response->setHttpStatusCode(409);
+        $response->setSuccess(false);
+        $response->addMessage('People name already exists');
+        $response->send();
+        exit;
+    }
 
     $query = $writeDB->prepare('UPDATE people SET name = :name , tel = :tel , city = :city WHERE id = :id');
 
@@ -91,18 +104,11 @@ try {
     }
 
 
-    /*
-    $returnData = array();
-    $returnData['name'] = $name;
-    $returnData['tel'] = $tel;
-    $returnData['city'] = $city;
 
-*/
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('People updated');
-    //   $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

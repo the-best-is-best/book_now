@@ -1,6 +1,8 @@
 import 'package:book_now/screens/create_select_screen.dart';
+import 'package:book_now/screens/history_screen.dart';
 import 'package:book_now/screens/houses/houses_screen.dart';
 import 'package:book_now/screens/people/people_screen.dart';
+import 'package:book_now/screens/travel/travel_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -67,9 +69,33 @@ Widget buildMenu(int curPage, BuildContext context) {
           ),
           ListTile(
             selected: curPage == 3 ? true : false,
-            onTap: curPage == 3 ? null : () {},
+            onTap: curPage == 3
+                ? null
+                : () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            duration: Duration(microseconds: 500),
+                            type: PageTransitionType.fade,
+                            child: TravelScreen()));
+                  },
             leading: Icon(Icons.travel_explore),
             title: Text('Travel'),
+          ),
+          ListTile(
+            selected: curPage == 4 ? true : false,
+            onTap: curPage == 4
+                ? null
+                : () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            duration: Duration(microseconds: 500),
+                            type: PageTransitionType.fade,
+                            child: HistoryScreen()));
+                  },
+            leading: Icon(Icons.history),
+            title: Text('History'),
           ),
         ],
       ),

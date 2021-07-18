@@ -3,8 +3,8 @@ import 'package:book_now/modals/people/create_people_model.dart';
 import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/extention/to_map.dart';
-import 'package:book_now/screens/tabs/people_tab/create_people_tab.dart';
-import 'package:book_now/screens/tabs/people_tab/select_people_tab.dart';
+import 'package:book_now/screens/tabs/people_tabs/create_people_tab.dart';
+import 'package:book_now/screens/tabs/people_tabs/select_people_tab.dart';
 import 'package:flutter/material.dart';
 
 class PeopleProvider with ChangeNotifier {

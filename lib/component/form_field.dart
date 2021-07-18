@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget defaultFormField({
   required BuildContext context,
-  required TextEditingController controller,
+  required TextEditingController? controller,
   required TextInputType type,
   dynamic onSubmit,
   dynamic onChange,

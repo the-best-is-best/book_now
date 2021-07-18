@@ -1,52 +1,52 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/modals/rooms/rooms_model.dart';
+import 'package:book_now/modals/travel/travel_model.dart';
 import 'package:book_now/provider/check_data_provider.dart';
-import 'package:book_now/provider/houses_provider.dart';
-import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class RoomDetailsScreen extends StatefulWidget {
-  final RoomsModel room;
+class TravelDetailsScreen extends StatefulWidget {
+  final TravelModel travel;
 
-  const RoomDetailsScreen({
-    required this.room,
-  });
+  TravelDetailsScreen({required this.travel});
 
   @override
-  _RoomDetailsScreenState createState() => _RoomDetailsScreenState();
+  _TravelDetailsScreenState createState() => _TravelDetailsScreenState();
 }
 
-class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
+class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
   final _keyForm = GlobalKey<FormState>();
-  final newNumOfBedController = TextEditingController();
+
+  final newNameTravelController = TextEditingController();
+
   bool firstload = false;
+  @override
+  void initState() {
+    if (!firstload) {
+      newNameTravelController.text = widget.travel.name;
+      firstload = true;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final myCheckDataRead = context.read<CheckDataProvider>();
 
-    final myHouseRead = context.read<HousesProvider>();
-    final myRoomRead = context.read<RoomsProvider>();
-    final myRoomWatch = context.watch<RoomsProvider>();
-    final myHouse = myHouseRead.myHouses
-        .firstWhere((house) => house.id == this.widget.room.houseId);
-    if (!firstload) {
-      newNumOfBedController.text = widget.room.numbersOfBed.toString();
-      firstload = true;
-    }
+    final myTravelRead = context.read<TravelProvider>();
+    final myTravelWatch = context.watch<TravelProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("${myHouse.name} - Room  ${widget.room.name}"),
+        title: Text("Edit travel"),
         actions: [
           IconButton(
-            icon: myRoomWatch.editRoomActive
+            icon: myTravelWatch.editTravelActive
                 ? FaIcon(FontAwesomeIcons.eye)
                 : FaIcon(FontAwesomeIcons.edit),
             onPressed: () {
-              myRoomRead.inEdit();
+              myTravelRead.inEdit();
             },
           )
         ],
@@ -67,19 +67,22 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      myRoomWatch.editRoomActive
+                      myTravelWatch.editTravelActive
                           ? Column(
                               children: [
                                 Form(
                                   key: _keyForm,
                                   child: defaultFormField(
                                       context: context,
-                                      controller: newNumOfBedController,
-                                      label: 'New number of bed',
+                                      controller: newNameTravelController,
+                                      label: 'New Name',
                                       type: TextInputType.number,
                                       validate: (String? val) {
-                                        if (val != null && val.isEmpty) {
-                                          return 'empty !!';
+                                        if (val != null && val.isEmpty ||
+                                            val != null &&
+                                                val.isEmpty &&
+                                                val.length < 3) {
+                                          return "min 3 characters";
                                         }
                                         return null;
                                       }),
@@ -87,7 +90,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                myRoomWatch.loading
+                                myTravelWatch.loading
                                     ? CircularProgressIndicator()
                                     : ElevatedButton(
                                         child: Text("Edit"),
@@ -99,20 +102,18 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                           }
                                           _keyForm.currentState!.save();
 
-                                          myRoomRead
-                                              .updateRoom(
-                                            id: widget.room.name,
-                                            floor: widget.room.floor,
-                                            houseId: widget.room.houseId,
-                                            newNumberOfBed: int.parse(
-                                                newNumOfBedController.text),
+                                          myTravelRead
+                                              .updateTravel(
+                                            id: widget.travel.id,
+                                            name: newNameTravelController.text,
                                           )
                                               .then(
                                             (response) async {
                                               var data = response.data;
                                               if (data['messages'][0] ==
-                                                  "Room updated") {
-                                                newNumOfBedController.text = "";
+                                                  "Travel updated") {
+                                                newNameTravelController.text =
+                                                    "";
                                                 myCheckDataRead
                                                     .listenDataChange();
 
@@ -147,7 +148,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                               ],
                             )
                           : Text(
-                              "Number of bed : ${widget.room.numbersOfBed}",
+                              "Name : ${widget.travel.name}",
                               style: Theme.of(context).textTheme.headline5,
                             ),
                       SizedBox(

@@ -3,6 +3,7 @@ import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ FutureBuilder<Null> getDataFromServer({
   final HousesProvider housesDataWatch = context.watch<HousesProvider>();
   final RoomsProvider roomsDataRead = context.watch<RoomsProvider>();
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
+  final TravelProvider travelDataRead = context.read<TravelProvider>();
 
   return FutureBuilder(
     future: checkDataRead.getListenData().then((val) async {
@@ -44,6 +46,14 @@ FutureBuilder<Null> getDataFromServer({
 
       if (val == true && checkDataWatch.updatePeople.length > 0) {
         peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
+      }
+
+      if (val == true && checkDataWatch.insertTravel.length > 0) {
+        travelDataRead.getTravel(checkDataWatch.insertTravel);
+      }
+
+      if (val == true && checkDataWatch.updateTravel.length > 0) {
+        travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
       }
     }),
     builder: (context, AsyncSnapshot snapshot) {

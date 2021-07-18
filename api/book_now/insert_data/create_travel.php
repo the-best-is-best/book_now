@@ -15,7 +15,7 @@ try {
 }
 
 
-if ($_SERVER['REQUEST_METHOD']  !== 'PUT') {
+if ($_SERVER['REQUEST_METHOD']  !== 'POST') {
     $response = new Response();
     $response->setHttpStatusCode(405);
     $response->setSuccess(false);
@@ -46,54 +46,78 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->id) || !isset($jsonData->floor)) {
+if (!isset($jsonData->name) ) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
 
-    (!isset($jsonData->floor) ?  $response->addMessage("floor not supplied") : false);
+    (!isset($jsonData->name) ?  $response->addMessage(" Travel Name not supplied") : false);
 
     $response->send();
     exit;
 }
 
-$id = $jsonData->id;
-$floor = $jsonData->floor;
+if (
+    strlen($jsonData->name) < 1 || strlen($jsonData->name) > 255
+) {
+    $response = new Response();
 
+    $response->setHttpStatusCode(400);
+    $response->setSuccess(false);
+
+    (strlen($jsonData->name) < 1 ?  $response->addMessage("Travel Name cannot be black") : false);
+    (strlen($jsonData->name) > 255 ?  $response->addMessage("Travel Name cannot be greater than 255 characters") : false);
+
+    $response->send();
+    exit;
+}
+$name = trim($jsonData->name);
 
 try {
 
-    $query = $writeDB->prepare('SELECT floor FROM houses WHERE id = :id');
-    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query = $writeDB->prepare('SELECT id FROM travel WHERE name = :name');
+    $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->execute();
-    $row = $query->fetch();
 
-    $newTotalFloor = $row["floor"] + $floor;
-
-    $query = $writeDB->prepare('UPDATE houses SET floor = :floor WHERE id = :id');
-
-    $query->bindParam(':floor', $newTotalFloor, PDO::PARAM_STR);
-    $query->bindParam(':id', $id, PDO::PARAM_STR);
-
-    $query->execute();
     $rowCount = $query->rowCount();
-    if ($rowCount === 0) {
+    if ($rowCount !== 0) {
         $response = new Response();
-        $response->setHttpStatusCode(500);
+        $response->setHttpStatusCode(409);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue update floor - please try again');
+        $response->addMessage('Travel name already exists');
         $response->send();
         exit;
     }
 
+    $query = $writeDB->prepare('INSERT into travel (name ) VALUES (:name )');
+
+    $query->bindParam(':name', $name, PDO::PARAM_STR);
+
+    $query->execute();
+    $rowCount = $query->rowCount();
+
+    if ($rowCount === 0) {
+        $response = new Response();
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
+        $response->addMessage('There was an issue creating Travel - please try again');
+        $response->send();
+        exit;
+    }
+    $last_id = $writeDB->lastInsertId();
 
 
+
+    $returnData = array();
+    $returnData['id'] = $last_id;
+    $returnData['name'] = $name;
+  
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
-    $response->addMessage('Floor updated');
-
+    $response->addMessage('Travel Created');
+    $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {
@@ -101,7 +125,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue update floor - please try again' . $ex);
+    $response->addMessage('There was an issue creating Travel - please try again' . $ex);
     $response->send();
     exit;
 }

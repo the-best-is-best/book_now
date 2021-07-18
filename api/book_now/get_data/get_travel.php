@@ -46,7 +46,7 @@ try {
     }
     $get_id_data =  $_GET["id"];
 
-    $query = $readDB->prepare('SELECT * FROM houses  WHERE id IN (' . implode(',', $get_id_data) . ')');
+    $query = $readDB->prepare('SELECT * FROM travel  WHERE id IN (' . implode(',', $get_id_data) . ')');
     $query->execute();
     $row = $query->fetchAll();
 
@@ -62,7 +62,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue Get Houses - please try again' . $ex);
+    $response->addMessage('There was an issue Get Travel - please try again' . $ex);
     $response->send();
     exit;
 }
