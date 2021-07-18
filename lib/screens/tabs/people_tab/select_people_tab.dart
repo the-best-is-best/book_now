@@ -102,15 +102,21 @@ ListView buildListView({
                                   duration: Duration(microseconds: 500),
                                   type: PageTransitionType.fade,
                                   child: PeopleDetailsScreen(
-                                    people: searchPeopleController.text.isEmpty
-                                        ? myPeopleWatch.myPeople[index]
-                                        : myPeopleWatch.searchMypeople[index],
-                                  )));
+                                      people: myPeopleWatch.myPeople[index])));
                         },
                         child: Text(myPeopleWatch.myPeople[index].name),
                       )
                     : ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  duration: Duration(microseconds: 500),
+                                  type: PageTransitionType.fade,
+                                  child: PeopleDetailsScreen(
+                                      people: myPeopleWatch
+                                          .searchMypeople[index])));
+                        },
                         child: Text(myPeopleWatch.searchMypeople[index].name),
                       ),
               ),

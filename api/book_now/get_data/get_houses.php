@@ -46,7 +46,7 @@ try {
     }
     $get_id_data =  $_GET["id"];
 
-    // exit;
+
     $query = $readDB->prepare('SELECT * FROM houses  WHERE id IN (' . implode(',', $get_id_data) . ')');
     $query->execute();
     $row = $query->fetchAll();

@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/houses/house_model.dart';
 import 'package:book_now/provider/check_data_provider.dart';
-import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,6 @@ class FloorRoom extends StatelessWidget {
     final myCheckDataRead = context.read<CheckDataProvider>();
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
-    final myFloorRead = context.read<FloorProvider>();
     final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
     final TextEditingController newFloorNamberController =
         TextEditingController();

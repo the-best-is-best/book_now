@@ -28,6 +28,7 @@ class RoomsProvider with ChangeNotifier {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
+    notifyListeners();
   }
 
   Future getUpdateRoom(List<ListenDataModel> lisenData) async {
@@ -58,6 +59,7 @@ class RoomsProvider with ChangeNotifier {
           roomUpdated.numbersOfBed = data['numbers_of_bed'];
       });
     }
+    notifyListeners();
   }
 
   Future gotToRoom({required int house, required int floor}) async {

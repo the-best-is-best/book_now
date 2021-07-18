@@ -1,12 +1,8 @@
-import 'package:book_now/provider/reports_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ReportsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final reportsWatch = context.watch<ReportsProvider>();
-
     return Scaffold(
       appBar: AppBar(
         elevation: 10,

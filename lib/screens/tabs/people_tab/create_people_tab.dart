@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/create_people_model.dart';
-import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +110,6 @@ Widget createPeopleTab() {
                                     duration: Duration(seconds: 3),
                                   ).show(context);
                                 } else {
-                                  // myPeopleRead.insertFiled();
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
                                     List<dynamic> messages = data['messages'];

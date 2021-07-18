@@ -10,7 +10,6 @@ Widget selectProjectTab() {
   return Column(
     children: [
       Builder(builder: (context) {
-        final query = MediaQuery.of(context).size;
         final myProjectWatch = context.watch<MyProjectProvider>();
         final reportsRead = context.read<ReportsProvider>();
 

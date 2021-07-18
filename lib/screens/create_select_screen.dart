@@ -19,7 +19,6 @@ class _CreateSelectScreenState extends State<CreateSelectScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
   @override
   Widget build(BuildContext context) {
-    //Timer.periodic(Duration(seconds: 1), (Timer t) => checkForNewSharedLists());
     final myProjectRead = context.read<MyProjectProvider>();
     final myProjectWatch = context.watch<MyProjectProvider>();
 

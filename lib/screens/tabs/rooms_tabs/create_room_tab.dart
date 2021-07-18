@@ -1,8 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/rooms/create_room_model.dart';
-import 'package:book_now/modals/rooms/rooms_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +14,6 @@ Widget createRoomTab() {
 
   return Builder(
     builder: (context) {
-      final myCheckDataRead = context.read<CheckDataProvider>();
       final myRoomRead = context.read<RoomsProvider>();
       final myRoomWatch = context.watch<RoomsProvider>();
       final houseId = myRoomWatch.curHouse;
@@ -157,10 +154,6 @@ Widget createRoomTab() {
                                     .then((response) async {
                                   var data = response.data;
                                   if (response.statusCode == 201) {
-                                    var room = data['data'];
-                                    RoomsModel rooms =
-                                        RoomsModel.fromJson(room);
-                                    //  myRoomRead.insertToList(rooms);
                                     curRoomController.text = lastRoomController
                                         .text = numOfBedController.text = "";
                                     await Flushbar(
@@ -169,7 +162,6 @@ Widget createRoomTab() {
                                       duration: Duration(seconds: 3),
                                     ).show(context);
                                   } else {
-                                    //  myRoomRead.insertFiled();
                                     if (data['statusCode'] >= 400 &&
                                         data['success'] == false) {
                                       List<dynamic> messages = data['messages'];

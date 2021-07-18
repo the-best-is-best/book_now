@@ -28,17 +28,13 @@ class HousesProvider with ChangeNotifier {
       // update list
       datas.forEach((data) => myHouses.add(HouseModel.fromJson(data)));
     }
+    notifyListeners();
   }
 
   Future getUpdateHouses(List<ListenDataModel> lisenData) async {
-    List<ListenDataModel> getNewHouses = [];
-    getNewHouses = lisenData
-        .where((val) => val.action == "updated" && val.tableName == "houses")
-        .toList();
-
     List<int> id = [];
 
-    getNewHouses.forEach((val) => id.add(val.recordId));
+    lisenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
@@ -56,6 +52,7 @@ class HousesProvider with ChangeNotifier {
         }
       });
     }
+    notifyListeners();
   }
 
   bool loading = false;

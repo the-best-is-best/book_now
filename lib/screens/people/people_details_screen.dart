@@ -7,18 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class PeopleDetailsScreen extends StatelessWidget {
+class PeopleDetailsScreen extends StatefulWidget {
   final PeopleModel people;
 
   PeopleDetailsScreen({
     required this.people,
   });
+
+  @override
+  _PeopleDetailsScreenState createState() => _PeopleDetailsScreenState();
+}
+
+class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
   final _keyForm = GlobalKey<FormState>();
+
   final newNamePeopleController = TextEditingController();
+
   final newTelController = TextEditingController();
+
   final newcityController = TextEditingController();
 
   bool firstload = false;
+
   @override
   Widget build(BuildContext context) {
     final myCheckDataRead = context.read<CheckDataProvider>();
@@ -27,11 +37,11 @@ class PeopleDetailsScreen extends StatelessWidget {
     final myPeopleWatch = context.watch<PeopleProvider>();
 
     final myPeople = myPeopleRead.myPeople
-        .firstWhere((people) => people.id == this.people.id);
+        .firstWhere((people) => people.id == this.widget.people.id);
     if (!firstload) {
-      newNamePeopleController.text = people.name;
-      newTelController.text = people.tel.toString();
-      newcityController.text = people.city;
+      newNamePeopleController.text = widget.people.name;
+      newTelController.text = widget.people.tel.toString();
+      newcityController.text = widget.people.city;
       firstload = true;
     }
     return Scaffold(
@@ -127,7 +137,7 @@ class PeopleDetailsScreen extends StatelessWidget {
 
                                             myPeopleRead
                                                 .updatePeople(
-                                              id: people.id,
+                                              id: widget.people.id,
                                               name:
                                                   newNamePeopleController.text,
                                               tel: int.parse(
@@ -207,15 +217,15 @@ class PeopleDetailsScreen extends StatelessWidget {
                               height: 20,
                             ),
                             Text(
-                              "Name : ${people.name}",
+                              "Name : ${widget.people.name}",
                               style: Theme.of(context).textTheme.headline6,
                             ),
                             Text(
-                              "Telephone : ${people.tel}",
+                              "Telephone : ${widget.people.tel}",
                               style: Theme.of(context).textTheme.headline6,
                             ),
                             Text(
-                              "City : ${people.city}",
+                              "City : ${widget.people.city}",
                               style: Theme.of(context).textTheme.headline6,
                             ),
                             SizedBox(

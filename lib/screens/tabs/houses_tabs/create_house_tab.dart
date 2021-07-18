@@ -1,10 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/db/db.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
-import 'package:book_now/modals/houses/house_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
-import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +12,8 @@ Widget createHouseTab() {
 
   return Builder(
     builder: (context) {
-      final myCheckDataRead = context.read<CheckDataProvider>();
-
       final myHousesRead = context.read<HousesProvider>();
       final myHousesWatch = context.watch<HousesProvider>();
-      final floorDataRead = context.read<FloorProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,6 +25,7 @@ class PeopleProvider with ChangeNotifier {
         myPeople.add(PeopleModel.fromJson(data));
       });
     }
+    notifyListeners();
   }
 
   Future getUpdatePeople(List<ListenDataModel> lisenData) async {
@@ -51,6 +52,7 @@ class PeopleProvider with ChangeNotifier {
         }
       });
     }
+    notifyListeners();
   }
 
   bool loading = false;
