@@ -1,17 +1,17 @@
 class CreateProjectModel {
   String projectName;
-  String houseName;
+  int price;
   String endDate;
 
   CreateProjectModel({
     required this.projectName,
-    required this.houseName,
+    required this.price,
     required this.endDate,
   });
 
   Map<String, dynamic> toJson() => {
         'project_name': projectName,
-        'house_name': houseName,
+        'price': price,
         'end_date': endDate,
       };
 }

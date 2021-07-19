@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/rooms/create_room_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ Widget createRoomTab() {
       final myRoomWatch = context.watch<RoomsProvider>();
       final houseId = myRoomWatch.curHouse;
       final floor = myRoomWatch.curFloor;
-
+      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +52,10 @@ Widget createRoomTab() {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
                         }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
+                        }
                         return null;
                       }),
                   SizedBox(
@@ -64,6 +69,10 @@ Widget createRoomTab() {
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
+                        }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
                         }
                         int last = int.parse(val);
                         int cur = int.parse(curRoomController.text);
@@ -83,6 +92,10 @@ Widget createRoomTab() {
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
+                        }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
                         }
                         return null;
                       }),
@@ -117,6 +130,7 @@ Widget createRoomTab() {
                                 if (response.statusCode == 201) {
                                   curRoomController.text = lastRoomController
                                       .text = numOfBedController.text = "";
+                                  myCheckDataRead.listenDataChange();
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",

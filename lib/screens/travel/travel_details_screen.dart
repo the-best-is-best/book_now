@@ -78,11 +78,12 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                       label: 'New Name',
                                       type: TextInputType.number,
                                       validate: (String? val) {
-                                        if (val != null && val.isEmpty ||
-                                            val != null &&
-                                                val.isEmpty &&
-                                                val.length < 3) {
-                                          return "min 3 characters";
+                                        if (val == null || val.isEmpty) {
+                                          return "Empty !!";
+                                        }
+                                        int? convertToInt = int.tryParse(val);
+                                        if (convertToInt == null) {
+                                          return "Number not valid";
                                         }
                                         return null;
                                       }),

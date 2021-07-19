@@ -63,6 +63,10 @@ class FloorRoom extends StatelessWidget {
                                   if (val == null || val.isEmpty) {
                                     return "empty !!";
                                   }
+                                  int? convertToInt = int.tryParse(val);
+                                  if (convertToInt == null) {
+                                    return "Number not valid";
+                                  }
                                   return null;
                                 }),
                             SizedBox(

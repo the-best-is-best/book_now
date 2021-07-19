@@ -78,8 +78,12 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                       label: 'New number of bed',
                                       type: TextInputType.number,
                                       validate: (String? val) {
-                                        if (val != null && val.isEmpty) {
+                                        if (val == null || val.isEmpty) {
                                           return 'empty !!';
+                                        }
+                                        int? convertToInt = int.tryParse(val);
+                                        if (convertToInt == null) {
+                                          return "Number not valid";
                                         }
                                         return null;
                                       }),

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,8 @@ Widget createHouseTab() {
     builder: (context) {
       final myHousesRead = context.read<HousesProvider>();
       final myHousesWatch = context.watch<HousesProvider>();
+      final myCheckDataRead = context.read<CheckDataProvider>();
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +63,10 @@ Widget createHouseTab() {
                         if (val == null || val.isEmpty) {
                           return "empty !!";
                         }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
+                        }
                         return null;
                       }),
                   SizedBox(
@@ -92,7 +99,7 @@ Widget createHouseTab() {
                                 if (data['messages'][0] == "House Created") {
                                   houseNameController.text =
                                       floorNamberController.text = "";
-
+                                  myCheckDataRead.listenDataChange();
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",

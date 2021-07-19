@@ -46,7 +46,7 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->house_name)) {
+if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->price)) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -54,14 +54,13 @@ if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($js
 
     (!isset($jsonData->project_name) ?  $response->addMessage("Project Name not supplied") : false);
     (!isset($jsonData->end_date) ?  $response->addMessage("End date not supplied") : false);
-    (!isset($jsonData->house_name) ?  $response->addMessage("House name not supplied") : false);
+    (!isset($jsonData->price) ?  $response->addMessage("Price not supplied") : false);
     $response->send();
     exit;
 }
 
 if (
-    strlen($jsonData->project_name) < 1 || strlen($jsonData->project_name) > 255 || strlen($jsonData->house_name) < 1
-    || strlen($jsonData->house_name) > 255
+    strlen($jsonData->project_name) < 1 || strlen($jsonData->project_name) > 255
 ) {
     $response = new Response();
 
@@ -71,8 +70,6 @@ if (
     (strlen($jsonData->project_name) < 1 ?  $response->addMessage("Project Name cannot be black") : false);
     (strlen($jsonData->project_name) > 255 ?  $response->addMessage("Project Name cannot be greater than 255 characters") : false);
 
-    (strlen($jsonData->house_name) < 1 ?  $response->addMessage("House Name cannot be black") : false);
-    (strlen($jsonData->house_name) > 255 ?  $response->addMessage("House Name cannot be greater than 255 characters") : false);
 
     $response->send();
     exit;
@@ -89,11 +86,11 @@ $date = date_create($jsonData->end_date);
 
 $project_name = trim($jsonData->project_name);
 $end_date = date_format($date, "Y/m/d H:i:s");
-$house_name = trim($jsonData->house_name);
+$price = trim($jsonData->price);
 
 try {
 
-    $query = $writeDB->prepare('select id from project_name where project_name = :name');
+    $query = $writeDB->prepare('SELECT id from project where project_name = :name');
     $query->bindParam(':name', $project_name, PDO::PARAM_STR);
     $query->execute();
 
@@ -107,10 +104,12 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('insert into project_name (project_name  , end_date )
-    VALUES (:project_name , :end_date  )');
+    $query = $writeDB->prepare('INSERT INTO project (project_name  , price,  end_date )
+    VALUES (:project_name , :price , :end_date  )');
 
     $query->bindParam(':project_name', $project_name, PDO::PARAM_STR);
+    $query->bindParam(':price', $price, PDO::PARAM_STR);
+
     $query->bindParam(':end_date', $end_date, PDO::PARAM_STR);
 
     $query->execute();
@@ -126,32 +125,11 @@ try {
     }
     $last_id = $writeDB->lastInsertId();
 
-    $query = $writeDB->prepare('insert into houses (name  , project_id )
-    VALUES (:name , :project_id  )');
-
-    $query->bindParam(':name', $house_name, PDO::PARAM_STR);
-    $query->bindParam(
-        ':project_id',
-        $last_id,
-        PDO::PARAM_STR
-    );
-
-    $query->execute();
-    $rowCount = $query->rowCount();
-
-    if ($rowCount === 0) {
-        $response = new Response();
-        $response->setHttpStatusCode(500);
-        $response->setSuccess(false);
-        $response->addMessage('There was an issue creating House - please try again');
-        $response->send();
-        exit;
-    }
-
     $returnData = array();
     $returnData['id'] = $last_id;
     $returnData['project_name'] = $project_name;
-    $returnData['house_name'] = $house_name;
+    $returnData['price'] = $price;
+    $returnData['end_date'] = $end_date;
 
     $response = new Response();
     $response->setHttpStatusCode(201);

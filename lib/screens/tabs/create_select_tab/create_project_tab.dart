@@ -3,26 +3,22 @@ import 'package:book_now/component/date_time_picker.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/create_project/create_project_model.dart';
 import 'package:book_now/modals/create_project/projects_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
-import 'package:book_now/provider/reports_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
-import '../../reports_screen.dart';
 
 Widget createProjectTab() {
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
   TextEditingController projectNameController = TextEditingController();
-  TextEditingController houseNameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
   TextEditingController endDateController = TextEditingController();
 
   return Builder(
     builder: (context) {
       final myProjectRead = context.read<MyProjectProvider>();
-      final reportsRead = context.read<ReportsProvider>();
       final myProjectWatch = context.watch<MyProjectProvider>();
-
+      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,12 +58,16 @@ Widget createProjectTab() {
                   ),
                   defaultFormField(
                       context: context,
-                      controller: houseNameController,
-                      label: 'House Name',
-                      type: TextInputType.text,
+                      controller: priceController,
+                      label: 'Price',
+                      type: TextInputType.number,
                       validate: (String? val) {
-                        if (val == null || val.isEmpty || val.length < 3) {
-                          return "min 3 characters";
+                        if (val == null || val.isEmpty) {
+                          return "empty !!";
+                        }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
                         }
                         return null;
                       }),
@@ -101,25 +101,23 @@ Widget createProjectTab() {
                             CreateProjectModel createProjectModel =
                                 CreateProjectModel(
                                     projectName: projectNameController.text,
-                                    houseName: houseNameController.text,
+                                    price: int.parse(priceController.text),
                                     endDate: endDateController.text);
                             myProjectRead
                                 .createProjectClicked(createProjectModel)
                                 .then(
                               (response) async {
                                 var data = response.data;
-                                if (response.statusCode == 201) {
-                                  var project = data['data'];
-                                  ProjectsModel projects =
-                                      ProjectsModel.fromJson(project);
-                                  myProjectRead.insertToList(projects);
-                                  reportsRead.goToProject(projects);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          duration: Duration(microseconds: 500),
-                                          type: PageTransitionType.fade,
-                                          child: ReportsScreen()));
+                                if (data['messages'][0] == "Project Created") {
+                                  projectNameController.text = priceController
+                                      .text = endDateController.text = "";
+
+                                  myCheckDataRead.listenDataChange();
+                                  await Flushbar(
+                                    title: 'Success',
+                                    message: "Added",
+                                    duration: Duration(seconds: 3),
+                                  ).show(context);
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {

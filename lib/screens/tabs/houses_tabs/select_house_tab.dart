@@ -63,7 +63,10 @@ Widget selectHousesTab() {
                           query: query,
                         )
                       : Center(
-                          child: Text("No Houses"),
+                          child: Text(
+                            "No Houses",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
                         ),
             ),
           ],

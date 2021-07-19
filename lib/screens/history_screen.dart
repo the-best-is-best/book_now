@@ -12,7 +12,7 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final myHistoryWatch = context.watch<CheckDataProvider>();
     final query = MediaQuery.of(context).size;
-    print(query.width);
+
     return getDataFromServer(
       context: context,
       child: AdvancedDrawer(
@@ -41,114 +41,266 @@ class HistoryScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "Table Name",
-                              style: Theme.of(context).textTheme.headline6,
+                    child: query.width > 750
+                        ? Container(
+                            width: 750,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Table Name",
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    Text(
+                                      "Action",
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    Text(
+                                      "Date",
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  height: query.height * 3 / 4,
+                                  width: 750,
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                          child: Text(
+                                                            item.tableName,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline6,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                    width: 150,
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                          child: Text(
+                                                            item.action,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline6,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                          child: Text(
+                                                            item.date,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline6,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            Text(
-                              "Action",
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            Text(
-                              "Date",
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        query.width > 750
-                            ? Container(
-                                height: query.height * 3 / 4,
-                                child: ListView(
-                                  shrinkWrap: true,
+                          )
+                        : Scrollbar(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Container(
+                                width: 750,
+                                child: Column(
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        Column(
-                                          children: [
-                                            ...myHistoryWatch.lisenData
-                                                .map(
-                                                  (item) => Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10.0),
-                                                    child: Text(
-                                                      item.tableName,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6,
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList(),
-                                            SizedBox(
-                                              height: 50,
-                                            )
-                                          ],
+                                        Text(
+                                          "Table Name",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
                                         ),
-                                        Column(
-                                          children: [
-                                            ...myHistoryWatch.lisenData
-                                                .map(
-                                                  (item) => Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10.0),
-                                                    child: Text(
-                                                      item.action,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6,
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList(),
-                                            SizedBox(
-                                              height: 50,
-                                            )
-                                          ],
+                                        Text(
+                                          "Action",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
                                         ),
-                                        Column(
-                                          children: [
-                                            ...myHistoryWatch.lisenData
-                                                .map(
-                                                  (item) => Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10.0),
-                                                    child: Text(
-                                                      item.date,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6,
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList(),
-                                            SizedBox(
-                                              height: 50,
-                                            )
-                                          ],
+                                        Text(
+                                          "Date",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
                                         ),
                                       ],
-                                    )
+                                    ),
+                                    SizedBox(
+                                      height: 50,
+                                    ),
+                                    Container(
+                                      height: query.height * 3 / 4,
+                                      child: ListView(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                          child: Text(
+                                                            item.tableName,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline6,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 200),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        10.0),
+                                                            child: Text(
+                                                              item.action,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headline6,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  ...myHistoryWatch.lisenData
+                                                      .map(
+                                                        (item) => Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                          child: Text(
+                                                            item.date,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline6,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                  SizedBox(
+                                                    height: 50,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              )
-                            : CustomScrollView(
-                                slivers: <Widget>[],
-                              )
-                      ],
-                    ),
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ),

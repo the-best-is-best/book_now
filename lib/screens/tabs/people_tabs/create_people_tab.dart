@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/create_people_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ Widget createPeopleTab() {
     builder: (context) {
       final myPeopleRead = context.read<PeopleProvider>();
       final myPeopleWatch = context.watch<PeopleProvider>();
+      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,6 +63,10 @@ Widget createPeopleTab() {
                         if (val == null || val.isEmpty) {
                           return "Empty !!";
                         }
+                        int? convertToInt = int.tryParse(val);
+                        if (convertToInt == null) {
+                          return "Number not valid";
+                        }
                         return null;
                       }),
                   SizedBox(
@@ -103,7 +109,7 @@ Widget createPeopleTab() {
                                 if (response.statusCode == 201) {
                                   peopleNameController.text = telController
                                       .text = cityController.text = "";
-
+                                  myCheckDataRead.listenDataChange();
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",

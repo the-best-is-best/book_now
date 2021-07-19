@@ -6,7 +6,7 @@ import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
-import 'package:book_now/screens/create_select_screen.dart';
+import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         primaryColor: mainColor,
         scaffoldBackgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: mainColor),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(15),
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: CreateSelectScreen(),
+      home: ProjectScreen(),
     );
   }
 }

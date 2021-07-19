@@ -7,6 +7,8 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> lisenData = [];
   List<ListenDataModel> lisenDataUpdated = [];
 
+  List<ListenDataModel> insertProject = [];
+
   List<ListenDataModel> insertHouses = [];
   List<ListenDataModel> updateHouses = [];
 
@@ -24,6 +26,8 @@ class CheckDataProvider with ChangeNotifier {
   Future getListenData() async {
     if (!getData) {
       lisenDataUpdated = [];
+
+      insertProject = [];
 
       insertHouses = [];
       updateHouses = [];
@@ -56,9 +60,15 @@ class CheckDataProvider with ChangeNotifier {
     datas.forEach((k, data) {
       lisenData.add(ListenDataModel.fromJson(data));
     });
+
     datas.forEach((k, datas) {
       lisenDataUpdated.add(ListenDataModel.fromJson(datas));
     });
+    print(lisenDataUpdated.length);
+    insertProject = lisenDataUpdated
+        .where((e) => e.action == "inserted" && e.tableName == "project")
+        .toList();
+
     insertHouses = lisenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "houses")
         .toList();

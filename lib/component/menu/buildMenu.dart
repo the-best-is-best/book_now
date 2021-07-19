@@ -1,4 +1,4 @@
-import 'package:book_now/screens/create_select_screen.dart';
+import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/screens/history_screen.dart';
 import 'package:book_now/screens/houses/houses_screen.dart';
 import 'package:book_now/screens/people/people_screen.dart';
@@ -28,7 +28,7 @@ Widget buildMenu(int curPage, BuildContext context) {
                         PageTransition(
                             duration: Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: CreateSelectScreen()));
+                            child: ProjectScreen()));
                   },
             leading: FaIcon(
               FontAwesomeIcons.projectDiagram,

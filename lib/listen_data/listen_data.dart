@@ -1,10 +1,14 @@
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
+import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
+import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
+import 'package:book_now/screens/reports_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 FutureBuilder<Null> getDataFromServer({
@@ -13,15 +17,38 @@ FutureBuilder<Null> getDataFromServer({
 }) {
   final CheckDataProvider checkDataRead = context.read<CheckDataProvider>();
   final CheckDataProvider checkDataWatch = context.watch<CheckDataProvider>();
+
+  final MyProjectProvider myProjecRead = context.read<MyProjectProvider>();
+  final ReportsProvider reportRead = context.watch<ReportsProvider>();
+
   final HousesProvider housesDataRead = context.read<HousesProvider>();
-  final FloorProvider floorDataRead = context.read<FloorProvider>();
   final HousesProvider housesDataWatch = context.watch<HousesProvider>();
+
+  final FloorProvider floorDataRead = context.read<FloorProvider>();
+
   final RoomsProvider roomsDataRead = context.watch<RoomsProvider>();
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
   return FutureBuilder(
     future: checkDataRead.getListenData().then((val) async {
+      if (val == true && checkDataWatch.insertProject.length > 0) {
+        myProjecRead.getData(checkDataWatch.insertProject).then((val) {
+          /*  if (val != null) {
+            
+            reportRead.goToProject(val);
+
+            Navigator.pushReplacement(
+                context,
+                PageTransition(
+                    duration: Duration(microseconds: 500),
+                    type: PageTransitionType.fade,
+                    child: ReportsScreen()));
+          }
+       */
+        });
+      }
+
       if (val == true && checkDataWatch.insertHouses.length > 0) {
         housesDataRead
             .getHouses(checkDataWatch.insertHouses)

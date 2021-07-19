@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/travel/create_travel_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ Widget createTravelTab() {
     builder: (context) {
       final myTravelRead = context.read<TravelProvider>();
       final myTravelWatch = context.watch<TravelProvider>();
+      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,6 +75,7 @@ Widget createTravelTab() {
 
                                 if (data['messages'][0] == "Travel Created") {
                                   travelNameController.text = "";
+                                  myCheckDataRead.listenDataChange();
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",
