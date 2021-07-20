@@ -3,6 +3,7 @@ import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
+import 'package:book_now/provider/rel/rel_houses_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
@@ -34,6 +35,7 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: PeopleProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
       ChangeNotifierProvider.value(value: TravelProvider()),
+      ChangeNotifierProvider.value(value: RelHousesProvider()),
     ], child: MyApp());
   }
 }

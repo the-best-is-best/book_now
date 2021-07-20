@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/date_time_picker.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/create_project/create_project_model.dart';
-import 'package:book_now/modals/create_project/projects_model.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:flutter/material.dart';

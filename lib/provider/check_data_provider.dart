@@ -21,6 +21,9 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> insertTravel = [];
   List<ListenDataModel> updateTravel = [];
 
+  List<ListenDataModel> insertRelHouses = [];
+  List<ListenDataModel> deleteRelHouses = [];
+
   bool getData = false;
 
   Future getListenData() async {
@@ -40,6 +43,9 @@ class CheckDataProvider with ChangeNotifier {
 
       insertTravel = [];
       updateTravel = [];
+
+      insertRelHouses = [];
+      deleteRelHouses = [];
 
       Map<String, dynamic> data = {'book_now_log_count': lisenData.length};
       var response = await DioHelper.postData(url: 'listenDB.php', query: data);
@@ -64,7 +70,6 @@ class CheckDataProvider with ChangeNotifier {
     datas.forEach((k, datas) {
       lisenDataUpdated.add(ListenDataModel.fromJson(datas));
     });
-    print(lisenDataUpdated.length);
     insertProject = lisenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "project")
         .toList();
@@ -99,6 +104,14 @@ class CheckDataProvider with ChangeNotifier {
 
     updateTravel = lisenDataUpdated
         .where((e) => e.action == "updated" && e.tableName == "travel")
+        .toList();
+
+    insertRelHouses = lisenDataUpdated
+        .where((e) => e.action == "inserted" && e.tableName == "rel_houses")
+        .toList();
+
+    deleteRelHouses = lisenDataUpdated
+        .where((e) => e.action == "deleted" && e.tableName == "rel_houses")
         .toList();
 
     print("coneected");

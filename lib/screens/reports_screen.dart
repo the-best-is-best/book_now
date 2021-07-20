@@ -1,8 +1,10 @@
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -16,19 +18,29 @@ class ReportsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 10,
         title: Text("Report"),
+        leading: IconButton(
+          onPressed: () {
+            myReportRead.goToProject(0);
+            Navigator.pushReplacement(
+                context,
+                PageTransition(
+                    duration: Duration(microseconds: 500),
+                    type: PageTransitionType.fade,
+                    child: ProjectScreen()));
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
       ),
       body: getDataFromServer(
-          context: context,
-          child: SingleChildScrollView(
-            child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
-          )),
+        context: context,
+        child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: myReportWatch.tabIndex,
         onTap: (val) {
           myReportRead.changeTabIndex(val);
-          if (val == 1) {
-            myCheckDataRead.listenDataChange();
-          }
+
+          myCheckDataRead.listenDataChange();
         },
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: mainColor,

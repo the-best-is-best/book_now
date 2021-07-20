@@ -1,4 +1,3 @@
-import 'package:book_now/component/search_component.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:book_now/screens/travel/travel_details_screen.dart';
 import 'package:flutter/material.dart';
