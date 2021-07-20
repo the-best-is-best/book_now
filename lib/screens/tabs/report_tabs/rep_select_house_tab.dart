@@ -57,7 +57,9 @@ class RepSelectHouseTab extends StatelessWidget {
                                   .relHouses
                                   .firstWhere((relHouse) {
                                 return relHouse.houseId ==
-                                    myHousesWatch.myHouses[index].id;
+                                        myHousesWatch.myHouses[index].id &&
+                                    relHouse.projectId ==
+                                        myReportWatch.myProject;
                               },
                                       orElse: () => RelHousesModel(
                                           id: 0,
