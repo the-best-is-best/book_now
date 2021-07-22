@@ -52,9 +52,15 @@ class MyProjectProvider with ChangeNotifier {
       url: "insert_data/create_project.php",
       query: createProject,
     );
+
+    notifyListeners();
+
+    return response;
+  }
+
+  Future insertedEnd() async {
     loading = false;
     notifyListeners();
-    return response;
   }
 
   int tabIndex = 0;

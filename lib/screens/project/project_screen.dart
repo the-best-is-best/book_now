@@ -1,7 +1,9 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/check_data_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/style/main_style.dart';
@@ -15,13 +17,13 @@ class ProjectScreen extends StatefulWidget {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
+
   @override
   Widget build(BuildContext context) {
     final myProjectRead = context.read<MyProjectProvider>();
     final myProjectWatch = context.watch<MyProjectProvider>();
-    final myCheckDataRead = context.read<CheckDataProvider>();
 
-    return getDataFromServer(
+    return getDataServer(
       context: context,
       child: AdvancedDrawer(
         backdropColor: Colors.blueGrey,
@@ -61,9 +63,6 @@ class _ProjectScreenState extends State<ProjectScreen> {
             elevation: 20,
             onTap: (val) {
               myProjectRead.changeTabIndex(val);
-              if (val == 1) {
-                myCheckDataRead.listenDataChange();
-              }
             },
             currentIndex: myProjectWatch.tabIndex,
             unselectedFontSize: 15,

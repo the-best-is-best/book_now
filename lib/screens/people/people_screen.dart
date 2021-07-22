@@ -23,7 +23,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
     final myPeopleRead = context.read<PeopleProvider>();
     final myPeopleWatch = context.watch<PeopleProvider>();
 
-    return getDataFromServer(
+    return getDataServer(
       context: context,
       child: AdvancedDrawer(
         backdropColor: Colors.blueGrey,
@@ -63,9 +63,6 @@ class _PeopleScreenState extends State<PeopleScreen> {
             elevation: 20,
             onTap: (val) {
               myPeopleRead.changeTabIndex(val);
-              if (val == 1) {
-                myCheckDataRead.listenDataChange();
-              }
             },
             currentIndex: myPeopleWatch.tabIndex,
             unselectedFontSize: 15,

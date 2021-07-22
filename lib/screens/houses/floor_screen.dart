@@ -94,11 +94,7 @@ class FloorRoom extends StatelessWidget {
                                           if (data['messages'][0] ==
                                               "Floor updated") {
                                             newFloorNamberController.text = "";
-                                            /*  myFloorRead.getFloors(
-                                                myHousesWatch.myHouses);*/
-                                            /*   myCheckDataRead
-                                                .listenToGetNewData();*/
-                                            myCheckDataRead.listenDataChange();
+
                                             Navigator.pop(context);
 
                                             await Flushbar(

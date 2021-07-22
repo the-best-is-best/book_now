@@ -115,8 +115,6 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                                   "Travel updated") {
                                                 newNameTravelController.text =
                                                     "";
-                                                myCheckDataRead
-                                                    .listenDataChange();
 
                                                 Navigator.pop(context);
                                                 await Flushbar(

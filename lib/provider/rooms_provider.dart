@@ -77,9 +77,15 @@ class RoomsProvider with ChangeNotifier {
       url: "insert_data/create_room.php",
       query: createRoom,
     );
+
+    notifyListeners();
+
+    return response;
+  }
+
+  Future insertedEnd() async {
     loading = false;
     notifyListeners();
-    return response;
   }
 
   Future updateRoom(

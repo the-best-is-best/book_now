@@ -38,9 +38,6 @@ class RoomScreen extends StatelessWidget {
         elevation: 20,
         onTap: (val) {
           myRoomsRead.changeTabIndex(val);
-          if (val == 1) {
-            myCheckDataRead.listenDataChange();
-          }
         },
         currentIndex: myRoomsWatch.tabIndex,
         unselectedFontSize: 15,

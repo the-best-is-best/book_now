@@ -117,8 +117,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                               if (data['messages'][0] ==
                                                   "Room updated") {
                                                 newNumOfBedController.text = "";
-                                                myCheckDataRead
-                                                    .listenDataChange();
 
                                                 Navigator.pop(context);
                                                 await Flushbar(

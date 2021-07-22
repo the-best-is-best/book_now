@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ Widget createHouseTab() {
     builder: (context) {
       final myHousesRead = context.read<HousesProvider>();
       final myHousesWatch = context.watch<HousesProvider>();
-      final myCheckDataRead = context.read<CheckDataProvider>();
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -97,25 +97,32 @@ Widget createHouseTab() {
                                 var data = response.data;
 
                                 if (data['messages'][0] == "House Created") {
-                                  houseNameController.text =
-                                      floorNamberController.text = "";
-                                  myCheckDataRead.listenDataChange();
-                                  await Flushbar(
-                                    title: 'Success',
-                                    message: "Added",
-                                    duration: Duration(seconds: 3),
-                                  ).show(context);
+                                  DioHelper.postNotification().then((_) {
+                                    myHousesRead.insertedEnd().then((_) async {
+                                      houseNameController.text =
+                                          floorNamberController.text = "";
+                                      await Flushbar(
+                                        title: 'Success',
+                                        message: "Added",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    });
+                                  });
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
-                                    List<dynamic> messages = data['messages'];
-                                    for (int i = 0; i < messages.length; i++) {
-                                      await Flushbar(
-                                        title: 'Error',
-                                        message: messages[i],
-                                        duration: Duration(seconds: 3),
-                                      ).show(context);
-                                    }
+                                    myHousesRead.insertedEnd().then((_) async {
+                                      List<dynamic> messages = data['messages'];
+                                      for (int i = 0;
+                                          i < messages.length;
+                                          i++) {
+                                        await Flushbar(
+                                          title: 'Error',
+                                          message: messages[i],
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      }
+                                    });
                                   }
                                 }
                               },

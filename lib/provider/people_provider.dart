@@ -66,9 +66,15 @@ class PeopleProvider with ChangeNotifier {
       url: "insert_data/create_people.php",
       query: createHouse,
     );
+
+    notifyListeners();
+
+    return response;
+  }
+
+  Future insertedEnd() async {
     loading = false;
     notifyListeners();
-    return response;
   }
 
   Future updatePeople(

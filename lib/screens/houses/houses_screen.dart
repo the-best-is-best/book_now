@@ -4,6 +4,7 @@ import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/style/main_style.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +16,13 @@ class HousesScreen extends StatefulWidget {
 
 class _HousesScreenState extends State<HousesScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
+    final myCheckData = context.read<CheckDataProvider>();
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
 
-    return getDataFromServer(
+    return getDataServer(
       context: context,
       child: AdvancedDrawer(
         openRatio: .75,
@@ -66,9 +63,6 @@ class _HousesScreenState extends State<HousesScreen> {
             elevation: 20,
             onTap: (val) {
               myHousesRead.changeTabIndex(val);
-              if (val == 1) {
-                myCheckDataRead.listenDataChange();
-              }
             },
             currentIndex: myHousesWatch.tabIndex,
             unselectedFontSize: 15,

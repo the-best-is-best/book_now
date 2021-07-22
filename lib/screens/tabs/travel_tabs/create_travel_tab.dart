@@ -75,7 +75,6 @@ Widget createTravelTab() {
 
                                 if (data['messages'][0] == "Travel Created") {
                                   travelNameController.text = "";
-                                  myCheckDataRead.listenDataChange();
                                   await Flushbar(
                                     title: 'Success',
                                     message: "Added",

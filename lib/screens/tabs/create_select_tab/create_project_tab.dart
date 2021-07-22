@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/date_time_picker.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/create_project/create_project_model.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:flutter/material.dart';
@@ -108,15 +109,20 @@ Widget createProjectTab() {
                               (response) async {
                                 var data = response.data;
                                 if (data['messages'][0] == "Project Created") {
-                                  projectNameController.text = priceController
-                                      .text = endDateController.text = "";
+                                  DioHelper.postNotification().then((_) =>
+                                      myProjectRead
+                                          .insertedEnd()
+                                          .then((_) async {
+                                        projectNameController.text =
+                                            priceController.text =
+                                                endDateController.text = "";
 
-                                  myCheckDataRead.listenDataChange();
-                                  await Flushbar(
-                                    title: 'Success',
-                                    message: "Added",
-                                    duration: Duration(seconds: 3),
-                                  ).show(context);
+                                        await Flushbar(
+                                          title: 'Success',
+                                          message: "Added",
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      }));
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {

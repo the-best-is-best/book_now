@@ -5,9 +5,9 @@ import 'package:book_now/screens/tabs/report_tabs/rep_select_travel.dart';
 import 'package:flutter/material.dart';
 
 class ReportsProvider with ChangeNotifier {
-  late int myProject;
+  int myProject = 0;
 
-  void goToProject(int project) {
+  Future goToProject(int project) async {
     myProject = project;
   }
 

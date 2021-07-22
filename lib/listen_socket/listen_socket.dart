@@ -5,7 +5,7 @@
 //   static late WebSocketChannel channel;
 //   static init() {
 //     channel = IOWebSocketChannel.connect(
-//       Uri.parse('ws://192.168.1.2:8080/book_now/socket.php'),
+//       Uri.parse('ws://192.168.1.4:8000/book_now/socket.php'),
 //     );
 //   }
 

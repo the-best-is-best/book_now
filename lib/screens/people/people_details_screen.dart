@@ -154,8 +154,6 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                                     newTelController.text =
                                                         newcityController.text =
                                                             "";
-                                                myCheckDataRead
-                                                    .listenDataChange();
 
                                                 Navigator.pop(context);
                                                 await Flushbar(

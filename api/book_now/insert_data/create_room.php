@@ -118,18 +118,10 @@ try {
 
 
 
-    $returnData = array();
-    $returnData['id'] = $last_id;
-    $returnData['name'] = $name;
-    $returnData['house_id'] = $house_id;
-    $returnData['floor'] = $floor;
-    $returnData['numbers_of_bed'] = $numbers_of_bed;
-
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Room Created');
-    $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

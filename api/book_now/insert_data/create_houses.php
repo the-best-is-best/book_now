@@ -109,20 +109,12 @@ try {
         $response->send();
         exit;
     }
-    $last_id = $writeDB->lastInsertId();
 
-
-
-    $returnData = array();
-    $returnData['id'] = $last_id;
-    $returnData['name'] = $name;
-    $returnData['floor'] = $floor;
 
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('House Created');
-    $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

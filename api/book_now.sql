@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2021 at 06:50 PM
+-- Generation Time: Jul 22, 2021 at 10:38 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -28,6 +28,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `book_now_log` (
+  `id` int(11) NOT NULL,
+  `record_id` int(11) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `table_name` varchar(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `book_now_rel_log`
+--
+
+CREATE TABLE `book_now_rel_log` (
   `id` int(11) NOT NULL,
   `record_id` int(11) NOT NULL,
   `action` varchar(255) NOT NULL,
@@ -130,22 +144,23 @@ DELIMITER ;
 CREATE TABLE `rel_houses` (
   `id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `houses_id` text NOT NULL
+  `house_id` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `rel_houses`
 --
 DELIMITER $$
-CREATE TRIGGER `deleted_rel_houses` BEFORE DELETE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "rel_houses",NOW() )
+CREATE TRIGGER `deleted_rel_houses` BEFORE DELETE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, OLD.id , "deleted" , "rel_houses",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_rel_houses` AFTER INSERT ON `rel_houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "rel_houses",NOW() )
+CREATE TRIGGER `insert_rel_houses` AFTER INSERT ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, NEW.id , "inserted" , "rel_houses",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_rel_houses` AFTER UPDATE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "updated" , "rel_houses",NOW() )
+CREATE TRIGGER `update_rel_houses` AFTER UPDATE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, NEW.id , "updated" , "rel_houses",NOW() )
 $$
 DELIMITER ;
 
@@ -251,6 +266,12 @@ ALTER TABLE `book_now_log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `book_now_rel_log`
+--
+ALTER TABLE `book_now_rel_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `houses`
 --
 ALTER TABLE `houses`
@@ -302,6 +323,12 @@ ALTER TABLE `travel`
 -- AUTO_INCREMENT for table `book_now_log`
 --
 ALTER TABLE `book_now_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_now_rel_log`
+--
+ALTER TABLE `book_now_rel_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

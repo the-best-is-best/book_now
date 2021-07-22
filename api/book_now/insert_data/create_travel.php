@@ -46,7 +46,7 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->name) ) {
+if (!isset($jsonData->name)) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -109,15 +109,11 @@ try {
 
 
 
-    $returnData = array();
-    $returnData['id'] = $last_id;
-    $returnData['name'] = $name;
-  
+
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Travel Created');
-    $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

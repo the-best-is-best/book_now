@@ -14,7 +14,6 @@ Widget selectHousesTab() {
         final myHousesRead = context.read<HousesProvider>();
 
         final myHousesWatch = context.watch<HousesProvider>();
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

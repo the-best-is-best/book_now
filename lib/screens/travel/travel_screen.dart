@@ -21,68 +21,62 @@ class _TravelScreenState extends State<TravelScreen> {
     final myTravelRead = context.read<TravelProvider>();
     final myTravelWatch = context.watch<TravelProvider>();
 
-    return getDataFromServer(
-      context: context,
-      child: AdvancedDrawer(
-        openRatio: .75,
-        backdropColor: Colors.blueGrey,
-        controller: _advancedDrawerController,
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 300),
-        animateChildDecoration: true,
-        childDecoration: const BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 5.0,
-            ),
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-        ),
-        drawer: buildMenu(3, context),
-        child: Scaffold(
-          appBar: buildAppBar("Travel", _advancedDrawerController),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Container(
-                width: myTravelWatch.tabIndex == 0
-                    ? MediaQuery.of(context).size.width / 1.1
-                    : null,
-                child: Card(
-                  elevation: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: myTravelWatch.tabsWidget[myTravelWatch.tabIndex],
-                  ),
+    return AdvancedDrawer(
+      openRatio: .75,
+      backdropColor: Colors.blueGrey,
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      animateChildDecoration: true,
+      childDecoration: const BoxDecoration(
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5.0,
+          ),
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      ),
+      drawer: buildMenu(3, context),
+      child: Scaffold(
+        appBar: buildAppBar("Travel", _advancedDrawerController),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              width: myTravelWatch.tabIndex == 0
+                  ? MediaQuery.of(context).size.width / 1.1
+                  : null,
+              child: Card(
+                elevation: 20,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: myTravelWatch.tabsWidget[myTravelWatch.tabIndex],
                 ),
               ),
             ),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            elevation: 20,
-            onTap: (val) {
-              myTravelRead.changeTabIndex(val);
-              if (val == 1) {
-                myCheckDataRead.listenDataChange();
-              }
-            },
-            currentIndex: myTravelWatch.tabIndex,
-            unselectedFontSize: 15,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: mainColor,
-            fixedColor: Colors.black,
-            unselectedItemColor: Colors.brown,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.create),
-                label: 'Create',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.select_all),
-                label: 'Select',
-              ),
-            ],
-          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 20,
+          onTap: (val) {
+            myTravelRead.changeTabIndex(val);
+          },
+          currentIndex: myTravelWatch.tabIndex,
+          unselectedFontSize: 15,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: mainColor,
+          fixedColor: Colors.black,
+          unselectedItemColor: Colors.brown,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.create),
+              label: 'Create',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.select_all),
+              label: 'Select',
+            ),
+          ],
         ),
       ),
     );

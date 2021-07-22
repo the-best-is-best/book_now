@@ -65,10 +65,15 @@ class HousesProvider with ChangeNotifier {
       url: "insert_data/create_houses.php",
       query: createHouse,
     );
-    loading = false;
+
     notifyListeners();
 
     return response;
+  }
+
+  Future insertedEnd() async {
+    loading = false;
+    notifyListeners();
   }
 
   Future updateFloor(int id, int floor) async {

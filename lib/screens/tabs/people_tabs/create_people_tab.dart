@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/create_people_model.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
@@ -107,14 +108,17 @@ Widget createPeopleTab() {
                               (response) async {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
-                                  peopleNameController.text = telController
-                                      .text = cityController.text = "";
-                                  myCheckDataRead.listenDataChange();
-                                  await Flushbar(
-                                    title: 'Success',
-                                    message: "Added",
-                                    duration: Duration(seconds: 3),
-                                  ).show(context);
+                                  DioHelper.postNotification().then((_) {
+                                    myPeopleRead.insertedEnd().then((_) async {
+                                      peopleNameController.text = telController
+                                          .text = cityController.text = "";
+                                      await Flushbar(
+                                        title: 'Success',
+                                        message: "Added",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    });
+                                  });
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {

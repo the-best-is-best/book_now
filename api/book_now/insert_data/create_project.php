@@ -74,6 +74,7 @@ if (
     $response->send();
     exit;
 }
+/*
 if ($jsonData->end_date <= date("d-m-Y h:m")) {
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -82,6 +83,7 @@ if ($jsonData->end_date <= date("d-m-Y h:m")) {
     $response->send();
     exit;
 }
+*/
 $date = date_create($jsonData->end_date);
 
 $project_name = trim($jsonData->project_name);
@@ -123,19 +125,12 @@ try {
         $response->send();
         exit;
     }
-    $last_id = $writeDB->lastInsertId();
 
-    $returnData = array();
-    $returnData['id'] = $last_id;
-    $returnData['project_name'] = $project_name;
-    $returnData['price'] = $price;
-    $returnData['end_date'] = $end_date;
 
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage('Project Created');
-    $response->setData($returnData);
     $response->send();
     exit;
 } catch (PDOException $ex) {

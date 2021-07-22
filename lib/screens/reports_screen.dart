@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 class ReportsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
     final myReportRead = context.read<ReportsProvider>();
     final myReportWatch = context.watch<ReportsProvider>();
 
@@ -31,16 +30,11 @@ class ReportsScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: getDataFromServer(
-        context: context,
-        child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
-      ),
+      body: myReportWatch.tabsWidget[myReportWatch.tabIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: myReportWatch.tabIndex,
         onTap: (val) {
           myReportRead.changeTabIndex(val);
-
-          myCheckDataRead.listenDataChange();
         },
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: mainColor,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731444342148",
+    "project_id": "booknow-1e18e",
+    "storage_bucket": "booknow-1e18e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731444342148:android:da6972857278c9fafb81d1",
+        "android_client_info": {
+          "package_name": "com.lifechangingtruth.book_now"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731444342148-m88t6dvuftdu4678t5j15k6nl9p8077i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA51bhczavg8rTeBvf__4MqkBMy34cG2tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731444342148-m88t6dvuftdu4678t5j15k6nl9p8077i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
