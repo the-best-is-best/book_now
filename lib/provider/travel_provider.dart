@@ -65,7 +65,6 @@ class TravelProvider with ChangeNotifier {
       url: "insert_data/create_travel.php",
       query: createTravel,
     );
-    loading = false;
     notifyListeners();
 
     return response;
@@ -86,10 +85,14 @@ class TravelProvider with ChangeNotifier {
       query: data,
     );
 
-    loading = false;
     notifyListeners();
 
     return response;
+  }
+
+  Future loadingEnd() async {
+    loading = false;
+    notifyListeners();
   }
 
   bool editTravelActive = false;

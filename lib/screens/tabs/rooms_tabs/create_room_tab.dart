@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/rooms/create_room_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +19,6 @@ Widget createRoomTab() {
       final myRoomWatch = context.watch<RoomsProvider>();
       final houseId = myRoomWatch.curHouse;
       final floor = myRoomWatch.curFloor;
-      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +128,7 @@ Widget createRoomTab() {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
                                   DioHelper.postNotification().then((_) =>
-                                      myRoomRead.insertedEnd().then((_) async {
+                                      myRoomRead.loadingEnd().then((_) async {
                                         curRoomController.text =
                                             lastRoomController.text =
                                                 numOfBedController.text = "";
@@ -172,13 +170,17 @@ Widget createRoomTab() {
                                     .then((response) async {
                                   var data = response.data;
                                   if (response.statusCode == 201) {
-                                    curRoomController.text = lastRoomController
-                                        .text = numOfBedController.text = "";
-                                    await Flushbar(
-                                      title: 'Success',
-                                      message: "Added",
-                                      duration: Duration(seconds: 3),
-                                    ).show(context);
+                                    DioHelper.postNotification().then((_) =>
+                                        myRoomRead.loadingEnd().then((_) async {
+                                          curRoomController.text =
+                                              lastRoomController.text =
+                                                  numOfBedController.text = "";
+                                          await Flushbar(
+                                            title: 'Success',
+                                            message: "Added",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        }));
                                   } else {
                                     if (data['statusCode'] >= 400 &&
                                         data['success'] == false) {

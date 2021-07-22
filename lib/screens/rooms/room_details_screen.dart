@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
-
     final myHouseRead = context.read<HousesProvider>();
     final myRoomRead = context.read<RoomsProvider>();
     final myRoomWatch = context.watch<RoomsProvider>();
@@ -116,15 +114,22 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                               var data = response.data;
                                               if (data['messages'][0] ==
                                                   "Room updated") {
-                                                newNumOfBedController.text = "";
+                                                DioHelper.postNotification()
+                                                    .then((_) => myRoomRead
+                                                            .loadingEnd()
+                                                            .then((_) async {
+                                                          newNumOfBedController
+                                                              .text = "";
 
-                                                Navigator.pop(context);
-                                                await Flushbar(
-                                                  title: 'Success',
-                                                  message: "Updated",
-                                                  duration:
-                                                      Duration(seconds: 3),
-                                                ).show(context);
+                                                          Navigator.pop(
+                                                              context);
+                                                          await Flushbar(
+                                                            title: 'Success',
+                                                            message: "Updated",
+                                                            duration: Duration(
+                                                                seconds: 3),
+                                                          ).show(context);
+                                                        }));
                                               } else {
                                                 if (data['statusCode'] >= 400 &&
                                                     data['success'] == false) {

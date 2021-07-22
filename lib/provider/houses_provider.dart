@@ -71,7 +71,7 @@ class HousesProvider with ChangeNotifier {
     return response;
   }
 
-  Future insertedEnd() async {
+  Future loadingEnd() async {
     loading = false;
     notifyListeners();
   }
@@ -88,7 +88,6 @@ class HousesProvider with ChangeNotifier {
       query: data,
     );
 
-    loading = false;
     notifyListeners();
 
     return response;

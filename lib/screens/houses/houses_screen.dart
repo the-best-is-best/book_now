@@ -1,10 +1,8 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/style/main_style.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +16,6 @@ class _HousesScreenState extends State<HousesScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   Widget build(BuildContext context) {
-    final myCheckData = context.read<CheckDataProvider>();
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
 

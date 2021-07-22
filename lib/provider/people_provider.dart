@@ -72,7 +72,7 @@ class PeopleProvider with ChangeNotifier {
     return response;
   }
 
-  Future insertedEnd() async {
+  Future loadingEnd() async {
     loading = false;
     notifyListeners();
   }
@@ -95,7 +95,6 @@ class PeopleProvider with ChangeNotifier {
       query: data,
     );
 
-    loading = false;
     notifyListeners();
 
     return response;

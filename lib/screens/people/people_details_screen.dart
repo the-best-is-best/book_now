@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/people_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,8 +31,6 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
-
     final myPeopleRead = context.read<PeopleProvider>();
     final myPeopleWatch = context.watch<PeopleProvider>();
 
@@ -150,18 +148,26 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                             (response) async {
                                               var data = response.data;
                                               if (response.statusCode == 201) {
-                                                newNamePeopleController.text =
-                                                    newTelController.text =
-                                                        newcityController.text =
-                                                            "";
+                                                DioHelper.postNotification()
+                                                    .then((_) => myPeopleRead
+                                                            .loadingEnd()
+                                                            .then((_) async {
+                                                          newNamePeopleController
+                                                                  .text =
+                                                              newTelController
+                                                                      .text =
+                                                                  newcityController
+                                                                      .text = "";
 
-                                                Navigator.pop(context);
-                                                await Flushbar(
-                                                  title: 'Success',
-                                                  message: "Updated",
-                                                  duration:
-                                                      Duration(seconds: 3),
-                                                ).show(context);
+                                                          Navigator.pop(
+                                                              context);
+                                                          await Flushbar(
+                                                            title: 'Success',
+                                                            message: "Updated",
+                                                            duration: Duration(
+                                                                seconds: 3),
+                                                          ).show(context);
+                                                        }));
                                               } else {
                                                 if (data['statusCode'] >= 400 &&
                                                     data['success'] == false) {

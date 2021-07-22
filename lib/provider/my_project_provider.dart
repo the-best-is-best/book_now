@@ -58,7 +58,7 @@ class MyProjectProvider with ChangeNotifier {
     return response;
   }
 
-  Future insertedEnd() async {
+  Future loadingEnd() async {
     loading = false;
     notifyListeners();
   }

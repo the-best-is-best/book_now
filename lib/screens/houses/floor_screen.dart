@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/houses/house_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,6 @@ class FloorRoom extends StatelessWidget {
   const FloorRoom({required this.myHouse});
   @override
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
     final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
@@ -93,15 +92,22 @@ class FloorRoom extends StatelessWidget {
                                           var data = response.data;
                                           if (data['messages'][0] ==
                                               "Floor updated") {
-                                            newFloorNamberController.text = "";
+                                            DioHelper.postNotification().then(
+                                                (_) => myHousesRead
+                                                        .loadingEnd()
+                                                        .then((_) async {
+                                                      newFloorNamberController
+                                                          .text = "";
 
-                                            Navigator.pop(context);
+                                                      Navigator.pop(context);
 
-                                            await Flushbar(
-                                              title: 'Success',
-                                              message: "Added",
-                                              duration: Duration(seconds: 3),
-                                            ).show(context);
+                                                      await Flushbar(
+                                                        title: 'Success',
+                                                        message: "Added",
+                                                        duration: Duration(
+                                                            seconds: 3),
+                                                      ).show(context);
+                                                    }));
                                           } else {
                                             //  myHousesRead.insertFiled();
                                             if (data['statusCode'] >= 400 &&

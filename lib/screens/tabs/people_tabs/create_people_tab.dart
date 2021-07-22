@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/people/create_people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ Widget createPeopleTab() {
     builder: (context) {
       final myPeopleRead = context.read<PeopleProvider>();
       final myPeopleWatch = context.watch<PeopleProvider>();
-      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +107,7 @@ Widget createPeopleTab() {
                                 var data = response.data;
                                 if (response.statusCode == 201) {
                                   DioHelper.postNotification().then((_) {
-                                    myPeopleRead.insertedEnd().then((_) async {
+                                    myPeopleRead.loadingEnd().then((_) async {
                                       peopleNameController.text = telController
                                           .text = cityController.text = "";
                                       await Flushbar(

@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/travel/create_travel_model.dart';
-import 'package:book_now/provider/check_data_provider.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,6 @@ Widget createTravelTab() {
     builder: (context) {
       final myTravelRead = context.read<TravelProvider>();
       final myTravelWatch = context.watch<TravelProvider>();
-      final myCheckDataRead = context.read<CheckDataProvider>();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,12 +73,15 @@ Widget createTravelTab() {
                                 var data = response.data;
 
                                 if (data['messages'][0] == "Travel Created") {
-                                  travelNameController.text = "";
-                                  await Flushbar(
-                                    title: 'Success',
-                                    message: "Added",
-                                    duration: Duration(seconds: 3),
-                                  ).show(context);
+                                  DioHelper.postNotification().then((_) =>
+                                      myTravelRead.loadingEnd().then((_) async {
+                                        travelNameController.text = "";
+                                        await Flushbar(
+                                          title: 'Success',
+                                          message: "Added",
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      }));
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {

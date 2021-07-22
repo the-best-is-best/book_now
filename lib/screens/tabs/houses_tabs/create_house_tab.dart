@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/houses/create_house_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +97,7 @@ Widget createHouseTab() {
 
                                 if (data['messages'][0] == "House Created") {
                                   DioHelper.postNotification().then((_) {
-                                    myHousesRead.insertedEnd().then((_) async {
+                                    myHousesRead.loadingEnd().then((_) async {
                                       houseNameController.text =
                                           floorNamberController.text = "";
                                       await Flushbar(
@@ -111,7 +110,7 @@ Widget createHouseTab() {
                                 } else {
                                   if (data['statusCode'] >= 400 &&
                                       data['success'] == false) {
-                                    myHousesRead.insertedEnd().then((_) async {
+                                    myHousesRead.loadingEnd().then((_) async {
                                       List<dynamic> messages = data['messages'];
                                       for (int i = 0;
                                           i < messages.length;

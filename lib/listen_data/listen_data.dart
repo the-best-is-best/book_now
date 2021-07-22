@@ -51,6 +51,7 @@ FutureBuilder getDataServer({
   final FloorProvider floorDataRead = context.read<FloorProvider>();
 
   final RoomsProvider roomsDataRead = context.read<RoomsProvider>();
+
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
@@ -69,35 +70,35 @@ FutureBuilder getDataServer({
       }
       if (val == true && checkDataWatch.updateHouses.length > 0) {
         housesDataRead
-            .getUpdateHouses(checkDataRead.updateHouses)
+            .getUpdateHouses(checkDataWatch.updateHouses)
             .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
       }
-      if (val == true && checkDataRead.insertRooms.length > 0) {
-        roomsDataRead.getRooms(checkDataRead.insertRooms);
+      if (val == true && checkDataWatch.insertRooms.length > 0) {
+        roomsDataRead.getRooms(checkDataWatch.insertRooms);
       }
 
-      if (val == true && checkDataRead.updateRooms.length > 0) {
-        roomsDataRead.getUpdateRoom(checkDataRead.updateRooms);
+      if (val == true && checkDataWatch.updateRooms.length > 0) {
+        roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
       }
 
-      if (val == true && checkDataRead.insertPeople.length > 0) {
-        peopleDataRead.getPeople(checkDataRead.insertPeople);
+      if (val == true && checkDataWatch.insertPeople.length > 0) {
+        peopleDataRead.getPeople(checkDataWatch.insertPeople);
       }
 
-      if (val == true && checkDataRead.updatePeople.length > 0) {
-        peopleDataRead.getUpdatePeople(checkDataRead.updatePeople);
+      if (val == true && checkDataWatch.updatePeople.length > 0) {
+        peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
       }
 
-      if (val == true && checkDataRead.insertTravel.length > 0) {
-        travelDataRead.getTravel(checkDataRead.insertTravel);
+      if (val == true && checkDataWatch.insertTravel.length > 0) {
+        travelDataRead.getTravel(checkDataWatch.insertTravel);
       }
 
-      if (val == true && checkDataRead.updateTravel.length > 0) {
-        travelDataRead.getUpdateTravel(checkDataRead.updateTravel);
+      if (val == true && checkDataWatch.updateTravel.length > 0) {
+        travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
       }
-      if (val == true && checkDataRead.insertRelHouses.length > 0) {
+      if (val == true && checkDataWatch.insertRelHouses.length > 0) {
         relHousesRead.getDataRelHouse(
-          checkDataRead.insertRelHouses,
+          checkDataWatch.insertRelHouses,
         );
       }
 

@@ -1,7 +1,6 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
-import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +17,6 @@ class _PeopleScreenState extends State<PeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myCheckDataRead = context.read<CheckDataProvider>();
-
     final myPeopleRead = context.read<PeopleProvider>();
     final myPeopleWatch = context.watch<PeopleProvider>();
 
