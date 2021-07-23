@@ -108,21 +108,16 @@ Widget createHouseTab() {
                                     });
                                   });
                                 } else {
-                                  if (data['statusCode'] >= 400 &&
-                                      data['success'] == false) {
-                                    myHousesRead.loadingEnd().then((_) async {
-                                      List<dynamic> messages = data['messages'];
-                                      for (int i = 0;
-                                          i < messages.length;
-                                          i++) {
-                                        await Flushbar(
-                                          title: 'Error',
-                                          message: messages[i],
-                                          duration: Duration(seconds: 3),
-                                        ).show(context);
-                                      }
-                                    });
-                                  }
+                                  myHousesRead.loadingEnd().then((_) async {
+                                    List<dynamic> messages = data['messages'];
+                                    for (int i = 0; i < messages.length; i++) {
+                                      await Flushbar(
+                                        title: 'Error',
+                                        message: messages[i],
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    }
+                                  });
                                 }
                               },
                             );

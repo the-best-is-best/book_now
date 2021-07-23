@@ -122,8 +122,7 @@ Widget createProjectTab() {
                                         ).show(context);
                                       }));
                                 } else {
-                                  if (data['statusCode'] >= 400 &&
-                                      data['success'] == false) {
+                                  myProjectRead.loadingEnd().then((_) async {
                                     List<dynamic> messages = data['messages'];
                                     for (int i = 0; i < messages.length; i++) {
                                       await Flushbar(
@@ -132,7 +131,7 @@ Widget createProjectTab() {
                                         duration: Duration(seconds: 3),
                                       ).show(context);
                                     }
-                                  }
+                                  });
                                 }
                               },
                             );

@@ -109,9 +109,9 @@ class FloorRoom extends StatelessWidget {
                                                       ).show(context);
                                                     }));
                                           } else {
-                                            //  myHousesRead.insertFiled();
-                                            if (data['statusCode'] >= 400 &&
-                                                data['success'] == false) {
+                                            myHousesRead
+                                                .loadingEnd()
+                                                .then((_) async {
                                               List<dynamic> messages =
                                                   data['messages'];
                                               for (int i = 0;
@@ -124,7 +124,7 @@ class FloorRoom extends StatelessWidget {
                                                       Duration(seconds: 3),
                                                 ).show(context);
                                               }
-                                            }
+                                            });
                                           }
                                         },
                                       );

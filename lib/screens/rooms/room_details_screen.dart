@@ -131,8 +131,9 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                                           ).show(context);
                                                         }));
                                               } else {
-                                                if (data['statusCode'] >= 400 &&
-                                                    data['success'] == false) {
+                                                myRoomRead
+                                                    .loadingEnd()
+                                                    .then((_) async {
                                                   List<dynamic> messages =
                                                       data['messages'];
                                                   for (int i = 0;
@@ -145,7 +146,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                                           Duration(seconds: 3),
                                                     ).show(context);
                                                   }
-                                                }
+                                                });
                                               }
                                             },
                                           );

@@ -169,8 +169,9 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                                           ).show(context);
                                                         }));
                                               } else {
-                                                if (data['statusCode'] >= 400 &&
-                                                    data['success'] == false) {
+                                                myPeopleRead
+                                                    .loadingEnd()
+                                                    .then((_) async {
                                                   List<dynamic> messages =
                                                       data['messages'];
                                                   for (int i = 0;
@@ -183,7 +184,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                                           Duration(seconds: 3),
                                                     ).show(context);
                                                   }
-                                                }
+                                                });
                                               }
                                             },
                                           );

@@ -128,8 +128,9 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                                           ).show(context);
                                                         }));
                                               } else {
-                                                if (data['statusCode'] >= 400 &&
-                                                    data['success'] == false) {
+                                                myTravelRead
+                                                    .loadingEnd()
+                                                    .then((_) async {
                                                   List<dynamic> messages =
                                                       data['messages'];
                                                   for (int i = 0;
@@ -142,7 +143,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                                           Duration(seconds: 3),
                                                     ).show(context);
                                                   }
-                                                }
+                                                });
                                               }
                                             },
                                           );

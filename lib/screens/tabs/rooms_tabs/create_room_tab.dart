@@ -139,8 +139,7 @@ Widget createRoomTab() {
                                         ).show(context);
                                       }));
                                 } else {
-                                  if (data['statusCode'] >= 400 &&
-                                      data['success'] == false) {
+                                  myRoomRead.loadingEnd().then((_) async {
                                     List<dynamic> messages = data['messages'];
                                     for (int i = 0; i < messages.length; i++) {
                                       await Flushbar(
@@ -149,7 +148,7 @@ Widget createRoomTab() {
                                         duration: Duration(seconds: 3),
                                       ).show(context);
                                     }
-                                  }
+                                  });
                                 }
                               });
                             } else {
@@ -182,8 +181,7 @@ Widget createRoomTab() {
                                           ).show(context);
                                         }));
                                   } else {
-                                    if (data['statusCode'] >= 400 &&
-                                        data['success'] == false) {
+                                    myRoomRead.loadingEnd().then((_) async {
                                       List<dynamic> messages = data['messages'];
                                       for (int i = 0;
                                           i < messages.length;
@@ -194,7 +192,7 @@ Widget createRoomTab() {
                                           duration: Duration(seconds: 3),
                                         ).show(context);
                                       }
-                                    }
+                                    });
                                   }
                                 });
                               }
