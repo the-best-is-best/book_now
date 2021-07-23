@@ -1,10 +1,8 @@
-import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
-import 'package:book_now/provider/rel/rel_houses_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
@@ -27,6 +25,13 @@ void main() async {
   DioHelper.init();
   await FirebaseMessaging.instance.subscribeToTopic("all_users");
 
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    GetDataListen.getData = false;
+  });
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    GetDataListen.getData = false;
+  });
+
   initializeDateFormatting();
   runApp(RunMyApp());
 }
@@ -44,7 +49,6 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: RoomsProvider()),
       ChangeNotifierProvider.value(value: PeopleProvider()),
       ChangeNotifierProvider.value(value: TravelProvider()),
-      ChangeNotifierProvider.value(value: RelHousesProvider()),
     ], child: MyApp());
   }
 }
@@ -53,10 +57,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final myCheckData = context.read<CheckDataProvider>();
-    ListenData.staticgetDataFromServer(
-        context: context, checkData: myCheckData);
-    ListenData.appOpened();
+    // final myCheckData = context.read<CheckDataProvider>();
+    // ListenData.staticgetDataFromServer(
+    //     context: context, checkData: myCheckData);
+    // ListenData.appOpened();
 
     return MaterialApp(
       supportedLocales: [

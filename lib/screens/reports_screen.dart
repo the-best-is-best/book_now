@@ -34,15 +34,13 @@ class ReportsScreen extends StatelessWidget {
         onTap: (val) {
           myReportRead.changeTabIndex(val);
         },
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         unselectedItemColor: mainColor,
         selectedItemColor: secColor,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.report), label: "Report"),
           BottomNavigationBarItem(
               icon: Icon(Icons.home_filled), label: "Overnight stay"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.card_travel), label: "Travel"),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: "People"),
         ],
       ),

@@ -2,6 +2,13 @@ import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:flutter/foundation.dart';
 
+class GetDataListen {
+  static bool getData = false;
+  static void getDataServer() {
+    getData = false;
+  }
+}
+
 class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> lisenData = [];
   List<ListenDataModel> lisenDataUpdated = [];
@@ -20,16 +27,8 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> insertTravel = [];
   List<ListenDataModel> updateTravel = [];
 
-  List<ListenDataModel> insertRelHouses = [];
-  List<ListenDataModel> deleteRelHouses = [];
-  bool getData = false;
-
-  void listenDataNotification() {
-    getData = false;
-  }
-
   Future<bool> getListenData() async {
-    if (!getData) {
+    if (!GetDataListen.getData) {
       lisenDataUpdated = [];
 
       insertProject = [];
@@ -46,18 +45,15 @@ class CheckDataProvider with ChangeNotifier {
       insertTravel = [];
       updateTravel = [];
 
-      insertRelHouses = [];
-      deleteRelHouses = [];
-
       Map<String, dynamic> data = {'book_now_log_count': lisenData.length};
       var response = await DioHelper.postData(url: 'listenDB.php', query: data);
       bool newData = false;
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
-        getData = true;
+        GetDataListen.getData = true;
         newData = await toList(data['data']);
       }
-      getData = true;
+      GetDataListen.getData = true;
       return newData;
     }
     return false;

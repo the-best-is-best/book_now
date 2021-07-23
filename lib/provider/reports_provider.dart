@@ -1,4 +1,3 @@
-import 'package:book_now/screens/tabs/report_tabs/rep_select_house_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_travel.dart';
@@ -14,7 +13,6 @@ class ReportsProvider with ChangeNotifier {
   int tabIndex = 0;
   List<Widget> tabsWidget = [
     RepSelectReportsTab(),
-    RepSelectHouseTab(),
     RepSelectPeople(),
     RepSelectTravelTab(),
   ];

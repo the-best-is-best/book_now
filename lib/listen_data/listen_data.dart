@@ -3,37 +3,10 @@ import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
-import 'package:book_now/provider/rel/rel_houses_provider.dart';
-import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-class ListenData {
-  static bool opended = false;
-
-  static Future staticgetDataFromServer({
-    required BuildContext context,
-    required CheckDataProvider checkData,
-  }) async {
-    if (opended == true) {
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        checkData.listenDataNotification();
-      });
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        checkData.listenDataNotification();
-      });
-    } else {
-      checkData.listenDataNotification();
-    }
-  }
-
-  static void appOpened() {
-    opended = true;
-  }
-}
 
 FutureBuilder getDataServer({
   required BuildContext context,
@@ -43,7 +16,6 @@ FutureBuilder getDataServer({
   final CheckDataProvider checkDataWatch = context.watch<CheckDataProvider>();
 
   final MyProjectProvider myProjecRead = context.read<MyProjectProvider>();
-  final ReportsProvider reportRead = context.read<ReportsProvider>();
 
   final HousesProvider housesDataRead = context.read<HousesProvider>();
   final HousesProvider housesDataWatch = context.watch<HousesProvider>();
@@ -54,8 +26,6 @@ FutureBuilder getDataServer({
 
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
   final TravelProvider travelDataRead = context.read<TravelProvider>();
-
-  final RelHousesProvider relHousesRead = context.read<RelHousesProvider>();
 
   return FutureBuilder(
     future: checkDataRead.getListenData().then((val) async {
@@ -95,17 +65,6 @@ FutureBuilder getDataServer({
 
       if (val == true && checkDataWatch.updateTravel.length > 0) {
         travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
-      }
-      if (val == true && checkDataWatch.insertRelHouses.length > 0) {
-        relHousesRead.getDataRelHouse(
-          checkDataWatch.insertRelHouses,
-        );
-      }
-
-      if (reportRead.myProject > 0 &&
-          checkDataRead.deleteRelHouses.length > 0) {
-        relHousesRead.getUDeleteDataRelHouse(
-            checkDataRead.deleteRelHouses, reportRead.myProject);
       }
     }),
     builder: (context, snapshot) => child,
