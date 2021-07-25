@@ -3,6 +3,7 @@ import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
+import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
@@ -41,7 +42,6 @@ class RunMyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider.value(value: ReportsProvider()),
       ChangeNotifierProvider.value(value: CheckDataProvider()),
       ChangeNotifierProvider.value(value: MyProjectProvider()),
       ChangeNotifierProvider.value(value: HousesProvider()),
@@ -49,18 +49,18 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: RoomsProvider()),
       ChangeNotifierProvider.value(value: PeopleProvider()),
       ChangeNotifierProvider.value(value: TravelProvider()),
+      ChangeNotifierProvider.value(value: ReportsProvider()),
+      ChangeNotifierProvider.value(value: RelPeopleProvider()),
     ], child: MyApp());
   }
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    // final myCheckData = context.read<CheckDataProvider>();
-    // ListenData.staticgetDataFromServer(
-    //     context: context, checkData: myCheckData);
-    // ListenData.appOpened();
+    GetDataListen.getData = false;
 
     return MaterialApp(
       supportedLocales: [

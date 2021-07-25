@@ -25,10 +25,10 @@ Widget selectPeopleTab() {
             myPeopleWatch.myPeople.length > 20
                 ? buildSearchComponent(
                     context: context,
-                    searchHouse: searchPeopleController,
+                    searchController: searchPeopleController,
                     searchTitle: "people name",
                     onSubmit: (String? val) {
-                      myPeopleRead.searchHouse(val!);
+                      myPeopleRead.searchPeople(val!);
                     },
                   )
                 : Container(),

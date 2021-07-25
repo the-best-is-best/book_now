@@ -1,14 +1,13 @@
 import 'package:book_now/component/form_field.dart';
-import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget buildSearchComponent({
   required BuildContext context,
-  required TextEditingController searchHouse,
+  required TextEditingController searchController,
   required String searchTitle,
   required onSubmit,
 }) {
+  final query = MediaQuery.of(context).size;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -28,34 +27,21 @@ Widget buildSearchComponent({
       ),
       Row(
         children: [
-          Expanded(
-            flex: 5,
+          Container(
+            width: query.width * .7,
             child: defaultFormField(
               context: context,
-              controller: searchHouse,
+              controller: searchController,
               label: 'Search $searchTitle',
               type: TextInputType.text,
+              suffix: Icons.search,
               validate: (String? val) {
                 return null;
               },
               onSubmit: onSubmit,
             ),
           ),
-          SizedBox(width: 10),
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: FaIcon(
-                FontAwesomeIcons.search,
-                color: mainColor,
-              ),
-            ),
-          )
         ],
-      ),
-      SizedBox(
-        height: 15,
       ),
     ],
   );

@@ -45,8 +45,8 @@ Widget selectProjectTab() {
                                     child: Text(myProjectWatch
                                         .myProject[index].projectName),
                                     onPressed: () {
-                                      reportsRead.goToProject(
-                                          myProjectWatch.myProject[index].id);
+                                      reportsRead.getDataProject(
+                                          myProjectWatch.myProject[index]);
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(

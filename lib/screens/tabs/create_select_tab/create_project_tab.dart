@@ -3,6 +3,7 @@ import 'package:book_now/component/date_time_picker.dart';
 import 'package:book_now/component/form_field.dart';
 import 'package:book_now/modals/create_project/create_project_model.dart';
 import 'package:book_now/network/dio_helper.dart';
+import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,10 @@ Widget createProjectTab() {
     builder: (context) {
       final myProjectRead = context.read<MyProjectProvider>();
       final myProjectWatch = context.watch<MyProjectProvider>();
+      final myHousesWatch = context.watch<HousesProvider>();
+
+      endDateController.text = DateTime.now().toIso8601String();
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +56,36 @@ Widget createProjectTab() {
                         }
                         return null;
                       }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black38),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 25),
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButtonFormField<int?>(
+                        icon: null,
+                        hint: Text('Select House'),
+                        value: myProjectWatch.houseSelected,
+                        items: myHousesWatch.myHouses
+                            .map((house) => DropdownMenuItem(
+                                  value: house.id,
+                                  child: Text(
+                                    house.name,
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          myProjectRead.changeHouseSelected(value);
+                        },
+                        validator: (int? val) {
+                          if (val == null || val == 0) {
+                            return "select house plz";
+                          }
+                        }),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -100,6 +135,7 @@ Widget createProjectTab() {
                                 CreateProjectModel(
                                     projectName: projectNameController.text,
                                     price: int.parse(priceController.text),
+                                    house: myProjectWatch.houseSelected!,
                                     endDate: endDateController.text);
                             myProjectRead
                                 .createProjectClicked(createProjectModel)
@@ -112,9 +148,10 @@ Widget createProjectTab() {
                                           .loadingEnd()
                                           .then((_) async {
                                         projectNameController.text =
-                                            priceController.text =
-                                                endDateController.text = "";
-
+                                            priceController.text = "";
+                                        endDateController.text =
+                                            DateTime.now().toIso8601String();
+                                        myProjectRead.changeHouseSelected(null);
                                         await Flushbar(
                                           title: 'Success',
                                           message: "Added",

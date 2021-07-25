@@ -11,6 +11,7 @@ class GetDataListen {
 
 class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> lisenData = [];
+
   List<ListenDataModel> lisenDataUpdated = [];
 
   List<ListenDataModel> insertProject = [];
@@ -27,7 +28,13 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> insertTravel = [];
   List<ListenDataModel> updateTravel = [];
 
-  Future<bool> getListenData() async {
+  List<ListenDataModel> lisenRelData = [];
+
+  List<ListenDataModel> lisenRelDataUpdated = [];
+
+  List<ListenDataModel> insertRelPeople = [];
+
+  Future<bool> getMAinListenData() async {
     if (!GetDataListen.getData) {
       lisenDataUpdated = [];
 
@@ -51,7 +58,7 @@ class CheckDataProvider with ChangeNotifier {
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
         GetDataListen.getData = true;
-        newData = await toList(data['data']);
+        newData = await toMainList(data['data']);
       }
       GetDataListen.getData = true;
       return newData;
@@ -59,7 +66,7 @@ class CheckDataProvider with ChangeNotifier {
     return false;
   }
 
-  Future<bool> toList(Map datas) async {
+  Future<bool> toMainList(Map datas) async {
     datas.forEach((k, data) {
       lisenData.add(ListenDataModel.fromJson(data));
     });
@@ -105,13 +112,64 @@ class CheckDataProvider with ChangeNotifier {
         .toList();
 
     return true;
+  }
 
-    // insertRelHouses = lisenDataUpdated
-    //     .where((e) => e.action == "inserted" && e.tableName == "rel_houses")
-    //     .toList();
+  void endMainList() {
+    insertProject = [];
 
-    // deleteRelHouses = lisenDataUpdated
-    //     .where((e) => e.action == "deleted" && e.tableName == "rel_houses")
-    //     .toList();
+    insertHouses = [];
+    updateHouses = [];
+
+    insertRooms = [];
+    updateRooms = [];
+
+    insertPeople = [];
+    updatePeople = [];
+
+    insertTravel = [];
+    updateTravel = [];
+  }
+
+  Future<bool> getRelListenData() async {
+    if (!GetDataListen.getData) {
+      lisenDataUpdated = [];
+      insertRelPeople = [];
+
+      Map<String, dynamic> data = {
+        'book_now_rel_log_count': lisenRelData.length
+      };
+      var response =
+          await DioHelper.postData(url: 'listen_rel_DB.php', query: data);
+      bool newData = false;
+      if (response.data['messages'][0] == 'data changed') {
+        var data = response.data;
+        GetDataListen.getData = true;
+        newData = await toRelList(data['data']);
+      }
+      GetDataListen.getData = true;
+      return newData;
+    }
+    return false;
+  }
+
+  Future<bool> toRelList(Map datas) async {
+    datas.forEach((k, data) {
+      lisenRelData.add(ListenDataModel.fromJson(data));
+    });
+
+    datas.forEach((k, data) {
+      lisenRelDataUpdated.add(ListenDataModel.fromJson(data));
+    });
+
+    insertRelPeople = lisenRelDataUpdated
+        .where((e) => e.action == "inserted" && e.tableName == "rel_project")
+        .toList();
+
+    return true;
+  }
+
+  void endRelList() {
+    lisenDataUpdated = [];
+    insertRelPeople = [];
   }
 }

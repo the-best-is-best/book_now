@@ -3,6 +3,7 @@ import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
+import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ FutureBuilder getDataServer({
   final CheckDataProvider checkDataRead = context.read<CheckDataProvider>();
   final CheckDataProvider checkDataWatch = context.watch<CheckDataProvider>();
 
-  final MyProjectProvider myProjecRead = context.read<MyProjectProvider>();
+  final MyProjectProvider myProjectRead = context.read<MyProjectProvider>();
 
   final HousesProvider housesDataRead = context.read<HousesProvider>();
   final HousesProvider housesDataWatch = context.watch<HousesProvider>();
@@ -27,10 +28,14 @@ FutureBuilder getDataServer({
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
+  final ReportsProvider myReportRead = context.read<ReportsProvider>();
+
+  final ReportsProvider myReportWatch = context.watch<ReportsProvider>();
+
   return FutureBuilder(
-    future: checkDataRead.getListenData().then((val) async {
+    future: checkDataRead.getMAinListenData().then((val) async {
       if (val == true && checkDataWatch.insertProject.length > 0) {
-        myProjecRead.getData(checkDataWatch.insertProject);
+        myProjectRead.getData(checkDataWatch.insertProject);
       }
 
       if (val == true && checkDataWatch.insertHouses.length > 0) {
@@ -66,7 +71,19 @@ FutureBuilder getDataServer({
       if (val == true && checkDataWatch.updateTravel.length > 0) {
         travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
       }
+    }).then((_) {
+      checkDataRead.endMainList();
+    }).then((_) {
+      if (myReportWatch.myProject != null) {
+        checkDataRead.getRelListenData().then((val) {
+          if (val == true && checkDataWatch.insertRelPeople.length > 0) {
+            myReportRead.getDataRelPerson(checkDataWatch.insertRelPeople);
+          }
+        });
+      }
     }),
-    builder: (context, snapshot) => child,
+    builder: (context, snapshot) => Container(
+        width: MediaQuery.of(context).size.width > 750 ? 750 : null,
+        child: Center(child: child)),
   );
 }

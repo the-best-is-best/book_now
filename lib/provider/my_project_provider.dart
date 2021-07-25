@@ -73,4 +73,9 @@ class MyProjectProvider with ChangeNotifier {
     tabIndex = index;
     notifyListeners();
   }
+
+  int? houseSelected;
+  void changeHouseSelected(val) {
+    houseSelected = val;
+  }
 }

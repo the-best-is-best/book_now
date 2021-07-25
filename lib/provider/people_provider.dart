@@ -102,7 +102,7 @@ class PeopleProvider with ChangeNotifier {
 
   bool loadingSearch = false;
   List<PeopleModel> searchMypeople = [];
-  void searchHouse(String search) {
+  void searchPeople(String search) {
     loadingSearch = true;
     notifyListeners();
     if (search != "") {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Widget selectHousesTab() {
-  final searchHouseController = TextEditingController();
+  final searchControllerController = TextEditingController();
   return Column(
     children: [
       Builder(builder: (context) {
@@ -20,10 +20,10 @@ Widget selectHousesTab() {
             myHousesWatch.myHouses.length > 20
                 ? buildSearchComponent(
                     context: context,
-                    searchHouse: searchHouseController,
+                    searchController: searchControllerController,
                     searchTitle: "house name",
                     onSubmit: (String? val) {
-                      myHousesRead.searchHouse(val!);
+                      myHousesRead.searchController(val!);
                     },
                   )
                 : Container(),
@@ -42,12 +42,13 @@ Widget selectHousesTab() {
               height: 5,
             ),
             Center(
-              child: searchHouseController.text.isEmpty
+              child: searchControllerController.text.isEmpty
                   ? myHousesWatch.myHouses.length > 0
                       ? buildListView(
                           myHousesWatch: myHousesWatch,
                           query: query,
-                          searchHouseController: searchHouseController,
+                          searchControllerController:
+                              searchControllerController,
                         )
                       : Center(
                           child: Text(
@@ -57,7 +58,8 @@ Widget selectHousesTab() {
                         )
                   : myHousesWatch.searchMyHouse.length > 0
                       ? buildListView(
-                          searchHouseController: searchHouseController,
+                          searchControllerController:
+                              searchControllerController,
                           myHousesWatch: myHousesWatch,
                           query: query,
                         )
@@ -76,14 +78,14 @@ Widget selectHousesTab() {
 }
 
 ListView buildListView({
-  required TextEditingController searchHouseController,
+  required TextEditingController searchControllerController,
   required HousesProvider myHousesWatch,
   required Size query,
 }) {
   return ListView.separated(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
-    itemCount: searchHouseController.text.isEmpty
+    itemCount: searchControllerController.text.isEmpty
         ? myHousesWatch.myHouses.length
         : myHousesWatch.searchMyHouse.length,
     itemBuilder: (BuildContext context, int index) {
@@ -97,7 +99,7 @@ ListView buildListView({
                   child: ExpandableNotifier(
                     child: ScrollOnExpand(
                       child: ExpandablePanel(
-                        header: searchHouseController.text.isEmpty
+                        header: searchControllerController.text.isEmpty
                             ? Text(
                                 "$index - ${myHousesWatch.myHouses[index].name}",
                                 style: Theme.of(context).textTheme.headline6,
@@ -108,7 +110,7 @@ ListView buildListView({
                               ),
                         collapsed: Container(),
                         expanded: Container(
-                          child: searchHouseController.text.isEmpty
+                          child: searchControllerController.text.isEmpty
                               ? buildFloorsExpanded(
                                   myHouses: myHousesWatch.myHouses[index],
                                   context: context,
