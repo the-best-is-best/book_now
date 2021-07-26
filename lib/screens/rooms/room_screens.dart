@@ -1,5 +1,6 @@
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/modals/houses/house_model.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -14,28 +15,30 @@ class RoomScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final myRoomsRead = context.read<RoomsProvider>();
     final myRoomsWatch = context.watch<RoomsProvider>();
-
+    final myCheckLoading = context.watch<CheckDataProvider>();
     return getDataServer(
       context: context,
       child: Scaffold(
         appBar:
             AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              width: myRoomsWatch.tabIndex == 0
-                  ? MediaQuery.of(context).size.width / 1.1
-                  : null,
-              child: Card(
-                elevation: 20,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: myRoomsWatch.tabsWidget[myRoomsWatch.tabIndex],
+        body: myCheckLoading.loading
+            ? CircularProgressIndicator()
+            : Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: myRoomsWatch.tabIndex == 0
+                        ? MediaQuery.of(context).size.width / 1.1
+                        : null,
+                    child: Card(
+                      elevation: 20,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: myRoomsWatch.tabsWidget[myRoomsWatch.tabIndex],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 20,
           onTap: (val) {

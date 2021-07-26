@@ -45,7 +45,7 @@ class RepSelectPeople extends StatelessWidget {
             children: [
               Center(
                   child: Text(
-                "Residence",
+                "Create Residence",
                 style: Theme.of(context).textTheme.headline4,
               )),
               SizedBox(

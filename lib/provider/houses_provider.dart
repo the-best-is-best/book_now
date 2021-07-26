@@ -11,10 +11,10 @@ class HousesProvider with ChangeNotifier {
   List<HouseModel> myHouses = [];
 
 //get data server
-  Future getHouses(List<ListenDataModel> lisenData) async {
+  Future getHouses(List<ListenDataModel> listenData) async {
 // convert data to json
     List<int> id = [];
-    lisenData.forEach((val) {
+    listenData.forEach((val) {
       id.add(val.recordId);
     });
     Map<String, dynamic> data = {};
@@ -31,10 +31,10 @@ class HousesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getUpdateHouses(List<ListenDataModel> lisenData) async {
+  Future getUpdateHouses(List<ListenDataModel> listenData) async {
     List<int> id = [];
 
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

@@ -1,4 +1,5 @@
 import 'package:book_now/listen_data/listen_data.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/project/project_screen.dart';
@@ -14,6 +15,7 @@ class ReportsScreen extends StatelessWidget {
     final myReportWatch = context.watch<ReportsProvider>();
 
     final myRelPeopleRead = context.read<RelPeopleProvider>();
+    final myCheckLoading = context.watch<CheckDataProvider>();
 
     return getDataServer(
       context: context,
@@ -23,24 +25,29 @@ class ReportsScreen extends StatelessWidget {
           title: Text("${myReportWatch.myProject!.projectName}"),
           leading: IconButton(
             onPressed: () {
-              myReportRead.backProject();
-              myRelPeopleRead.changeSelectedPeople(null);
-              myRelPeopleRead.changeSelectedTravel(null);
-
               Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      duration: Duration(microseconds: 500),
-                      type: PageTransitionType.fade,
-                      child: ProjectScreen()));
+                      context,
+                      PageTransition(
+                          duration: Duration(microseconds: 500),
+                          type: PageTransitionType.fade,
+                          child: ProjectScreen()))
+                  .then((_) {
+                myReportRead.backProject();
+                myRelPeopleRead.changeSelectedPeople(null);
+                myRelPeopleRead.changeSelectedTravel(null);
+                myRelPeopleRead.changeSelectedHouse(null);
+                myRelPeopleRead.changeSelectedRoom(null);
+              });
             },
             icon: Icon(Icons.arrow_back),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
-        ),
+        body: myCheckLoading.loading
+            ? CircularProgressIndicator()
+            : Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+              ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: myReportWatch.tabIndex,
           onTap: (val) {

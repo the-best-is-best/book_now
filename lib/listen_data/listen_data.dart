@@ -34,51 +34,59 @@ FutureBuilder getDataServer({
 
   return FutureBuilder(
     future: checkDataRead.getMAinListenData().then((val) async {
-      if (val == true && checkDataWatch.insertProject.length > 0) {
-        myProjectRead.getData(checkDataWatch.insertProject);
-      }
-
-      if (val == true && checkDataWatch.insertHouses.length > 0) {
-        housesDataRead
-            .getHouses(checkDataWatch.insertHouses)
-            .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses));
-      }
-      if (val == true && checkDataWatch.updateHouses.length > 0) {
-        housesDataRead
-            .getUpdateHouses(checkDataWatch.updateHouses)
-            .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
-      }
-      if (val == true && checkDataWatch.insertRooms.length > 0) {
-        roomsDataRead.getRooms(checkDataWatch.insertRooms);
-      }
-
-      if (val == true && checkDataWatch.updateRooms.length > 0) {
-        roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
-      }
-
-      if (val == true && checkDataWatch.insertPeople.length > 0) {
-        peopleDataRead.getPeople(checkDataWatch.insertPeople);
-      }
-
-      if (val == true && checkDataWatch.updatePeople.length > 0) {
-        peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
-      }
-
-      if (val == true && checkDataWatch.insertTravel.length > 0) {
-        travelDataRead.getTravel(checkDataWatch.insertTravel);
-      }
-
-      if (val == true && checkDataWatch.updateTravel.length > 0) {
-        travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
+      if (val == true) {
+        checkDataRead.displayLoading(true);
+        if (checkDataWatch.insertProject.length > 0) {
+          myProjectRead.getData(checkDataWatch.insertProject);
+        }
+        if (checkDataWatch.insertHouses.length > 0) {
+          housesDataRead
+              .getHouses(checkDataWatch.insertHouses)
+              .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses));
+        }
+        if (checkDataWatch.updateHouses.length > 0) {
+          housesDataRead
+              .getUpdateHouses(checkDataWatch.updateHouses)
+              .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
+        }
+        if (checkDataWatch.insertRooms.length > 0) {
+          roomsDataRead.getRooms(checkDataWatch.insertRooms);
+        }
+        if (checkDataWatch.updateRooms.length > 0) {
+          roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
+        }
+        if (checkDataWatch.insertPeople.length > 0) {
+          peopleDataRead.getPeople(checkDataWatch.insertPeople);
+        }
+        if (checkDataWatch.updatePeople.length > 0) {
+          peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
+        }
+        if (checkDataWatch.insertTravel.length > 0) {
+          travelDataRead.getTravel(checkDataWatch.insertTravel);
+        }
+        if (checkDataWatch.insertTravel.length > 0) {
+          travelDataRead.getTravel(checkDataWatch.insertTravel);
+        }
+        if (checkDataWatch.updateTravel.length > 0) {
+          travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
+        }
       }
     }).then((_) {
       checkDataRead.endMainList();
+      checkDataRead.displayLoading(false);
     }).then((_) {
       if (myReportWatch.myProject != null) {
         checkDataRead.getRelListenData().then((val) {
-          if (val == true && checkDataWatch.insertRelPeople.length > 0) {
-            myReportRead.getDataRelPerson(checkDataWatch.insertRelPeople);
+          if (val == true) {
+            checkDataRead.displayLoading(true);
+
+            if (checkDataWatch.insertRelPeople.length > 0) {
+              myReportRead.getDataRelPeople(checkDataWatch.insertRelPeople);
+            }
           }
+        }).then((_) {
+          checkDataRead.endRelList();
+          checkDataRead.displayLoading(false);
         });
       }
     }),

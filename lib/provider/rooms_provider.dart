@@ -14,9 +14,9 @@ class RoomsProvider with ChangeNotifier {
 
   List<RoomsModel> myRooms = [];
 
-  Future getRooms(List<ListenDataModel> lisenData) async {
+  Future getRooms(List<ListenDataModel> listenData) async {
     List<int> id = [];
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
@@ -32,10 +32,10 @@ class RoomsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getUpdateRoom(List<ListenDataModel> lisenData) async {
+  Future getUpdateRoom(List<ListenDataModel> listenData) async {
     List<int> id = [];
 
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

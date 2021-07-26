@@ -1,6 +1,7 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/style/main_style.dart';
@@ -19,7 +20,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     final myProjectRead = context.read<MyProjectProvider>();
     final myProjectWatch = context.watch<MyProjectProvider>();
-
+    final myCheckLoading = context.watch<CheckDataProvider>();
     return getDataServer(
       context: context,
       child: AdvancedDrawer(
@@ -40,22 +41,25 @@ class _ProjectScreenState extends State<ProjectScreen> {
         drawer: buildMenu(0, context),
         child: Scaffold(
           appBar: buildAppBar("My Project", _advancedDrawerController),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Container(
-                width: myProjectWatch.tabIndex == 0
-                    ? MediaQuery.of(context).size.width / 1.1
-                    : null,
-                child: Card(
-                  elevation: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: myProjectWatch.tabsWidget[myProjectWatch.tabIndex],
+          body: myCheckLoading.loading
+              ? Center(child: CircularProgressIndicator())
+              : Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: myProjectWatch.tabIndex == 0
+                          ? MediaQuery.of(context).size.width / 1.1
+                          : null,
+                      child: Card(
+                        elevation: 20,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: myProjectWatch
+                              .tabsWidget[myProjectWatch.tabIndex],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 20,
             onTap: (val) {

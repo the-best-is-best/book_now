@@ -1,3 +1,4 @@
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/reports_screen.dart';
@@ -11,7 +12,12 @@ Widget selectProjectTab() {
       Builder(
         builder: (context) {
           final myProjectWatch = context.watch<MyProjectProvider>();
+
           final reportsRead = context.read<ReportsProvider>();
+
+          final checkDataRead = context.read<CheckDataProvider>();
+          final checkDataWatch = context.watch<CheckDataProvider>();
+
           final query = MediaQuery.of(context).size;
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -32,6 +38,7 @@ Widget selectProjectTab() {
                 child: Container(
                   child: myProjectWatch.myProject.length > 0
                       ? ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: myProjectWatch.myProject.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -45,15 +52,36 @@ Widget selectProjectTab() {
                                     child: Text(myProjectWatch
                                         .myProject[index].projectName),
                                     onPressed: () {
-                                      reportsRead.getDataProject(
-                                          myProjectWatch.myProject[index]);
-                                      Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                              duration:
-                                                  Duration(microseconds: 500),
-                                              type: PageTransitionType.fade,
-                                              child: ReportsScreen()));
+                                      reportsRead
+                                          .getDataProject(
+                                              myProjectWatch.myProject[index])
+                                          .then((_) {
+                                        checkDataRead
+                                            .getRelListenData(fromProject: true)
+                                            .then((val) {
+                                          if (val == true) {
+                                            checkDataRead.displayLoading(true);
+
+                                            if (checkDataWatch
+                                                    .insertRelPeople.length >
+                                                0) {
+                                              reportsRead.getDataRelPeople(
+                                                  checkDataWatch
+                                                      .insertRelPeople);
+                                            }
+                                          }
+                                        }).then((_) {
+                                          checkDataRead.endRelList();
+                                          checkDataRead.displayLoading(false);
+                                        });
+                                        Navigator.pushReplacement(
+                                            context,
+                                            PageTransition(
+                                                duration:
+                                                    Duration(microseconds: 500),
+                                                type: PageTransitionType.fade,
+                                                child: ReportsScreen()));
+                                      });
                                     },
                                   )),
                             ));

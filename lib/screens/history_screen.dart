@@ -82,7 +82,7 @@ class HistoryScreen extends StatelessWidget {
                                           children: [
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Padding(
                                                         padding:
@@ -107,7 +107,7 @@ class HistoryScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Padding(
                                                         padding:
@@ -131,7 +131,7 @@ class HistoryScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Padding(
                                                         padding:
@@ -207,7 +207,7 @@ class HistoryScreen extends StatelessWidget {
                                           children: [
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Padding(
                                                         padding:
@@ -231,7 +231,7 @@ class HistoryScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Container(
                                                         margin: EdgeInsets.only(
@@ -260,7 +260,7 @@ class HistoryScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               children: [
-                                                ...myHistoryWatch.lisenData
+                                                ...myHistoryWatch.listenData
                                                     .map(
                                                       (item) => Padding(
                                                         padding:

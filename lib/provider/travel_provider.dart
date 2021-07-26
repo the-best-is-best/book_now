@@ -11,10 +11,10 @@ class TravelProvider with ChangeNotifier {
   List<TravelModel> myTravel = [];
 
 //get data server
-  Future getTravel(List<ListenDataModel> lisenData) async {
+  Future getTravel(List<ListenDataModel> listenData) async {
 // convert data to json
     List<int> id = [];
-    lisenData.forEach((val) {
+    listenData.forEach((val) {
       id.add(val.recordId);
     });
     Map<String, dynamic> data = {};
@@ -31,10 +31,10 @@ class TravelProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getUpdateTravel(List<ListenDataModel> lisenData) async {
+  Future getUpdateTravel(List<ListenDataModel> listenData) async {
     List<int> id = [];
 
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

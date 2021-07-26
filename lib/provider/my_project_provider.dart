@@ -10,11 +10,11 @@ import '../extention/to_map.dart';
 class MyProjectProvider with ChangeNotifier {
   List<ProjectsModel> myProject = [];
 
-  Future<dynamic> getData(List<ListenDataModel> lisenData) async {
+  Future<dynamic> getData(List<ListenDataModel> listenData) async {
     myProject = [];
 
     List<int> id = [];
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

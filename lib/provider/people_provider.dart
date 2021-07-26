@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 class PeopleProvider with ChangeNotifier {
   List<PeopleModel> myPeople = [];
 
-  Future getPeople(List<ListenDataModel> lisenData) async {
+  Future getPeople(List<ListenDataModel> listenData) async {
     List<int> id = [];
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
@@ -28,10 +28,10 @@ class PeopleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getUpdatePeople(List<ListenDataModel> lisenData) async {
+  Future getUpdatePeople(List<ListenDataModel> listenData) async {
     List<int> id = [];
 
-    lisenData.forEach((val) => id.add(val.recordId));
+    listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

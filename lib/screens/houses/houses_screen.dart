@@ -1,6 +1,7 @@
 import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _HousesScreenState extends State<HousesScreen> {
   Widget build(BuildContext context) {
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
-
+    final myCheckLoading = context.watch<CheckDataProvider>();
     return getDataServer(
       context: context,
       child: AdvancedDrawer(
@@ -40,22 +41,25 @@ class _HousesScreenState extends State<HousesScreen> {
         drawer: buildMenu(1, context),
         child: Scaffold(
           appBar: buildAppBar("Houses", _advancedDrawerController),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Container(
-                width: myHousesWatch.tabIndex == 0
-                    ? MediaQuery.of(context).size.width / 1.1
-                    : null,
-                child: Card(
-                  elevation: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: myHousesWatch.tabsWidget[myHousesWatch.tabIndex],
+          body: myCheckLoading.loading
+              ? CircularProgressIndicator()
+              : Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: myHousesWatch.tabIndex == 0
+                          ? MediaQuery.of(context).size.width / 1.1
+                          : null,
+                      child: Card(
+                        elevation: 20,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child:
+                              myHousesWatch.tabsWidget[myHousesWatch.tabIndex],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 20,
             onTap: (val) {
