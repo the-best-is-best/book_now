@@ -23,7 +23,7 @@ Widget selectHousesTab() {
                     searchController: searchControllerController,
                     searchTitle: "house name",
                     onSubmit: (String? val) {
-                      myHousesRead.searchController(val!);
+                      myHousesRead.searchHouse(val!);
                     },
                   )
                 : Container(),

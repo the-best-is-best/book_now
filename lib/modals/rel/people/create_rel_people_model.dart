@@ -1,30 +1,30 @@
 class CreateRelPeopleModel {
-  int personId;
+  int peopleId;
   int projectId;
   int paid;
   int support;
-  int travel;
+  int travelId;
   int bones;
   int houseId;
   int roomId;
 
   CreateRelPeopleModel({
-    required this.personId,
+    required this.peopleId,
     required this.projectId,
     required this.houseId,
     required this.bones,
     required this.paid,
     required this.roomId,
     required this.support,
-    required this.travel,
+    required this.travelId,
   });
 
   Map<String, dynamic> toJson() => {
-        'person_id': personId,
+        'people_id': peopleId,
         'project_id': projectId,
         'paid': paid,
         'support': support,
-        'travel': travel,
+        'travel_id': travelId,
         'bones': bones,
         'house_id': houseId,
         'room_id': roomId

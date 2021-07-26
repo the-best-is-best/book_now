@@ -70,8 +70,9 @@ $tel = $jsonData->tel;
 $city = trim($jsonData->city);
 
 try {
-    $query = $writeDB->prepare('SELECT id FROM people WHERE name = :name');
+    $query = $writeDB->prepare('SELECT id FROM people WHERE name = :name AND id != :id');
     $query->bindParam(':name', $name, PDO::PARAM_STR);
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
     $query->execute();
 
     $rowCount = $query->rowCount();

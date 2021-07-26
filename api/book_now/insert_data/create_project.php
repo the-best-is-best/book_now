@@ -46,7 +46,7 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->price)) {
+if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->price) || !isset($jsonData->house)) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -55,6 +55,8 @@ if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($js
     (!isset($jsonData->project_name) ?  $response->addMessage("Project Name not supplied") : false);
     (!isset($jsonData->end_date) ?  $response->addMessage("End date not supplied") : false);
     (!isset($jsonData->price) ?  $response->addMessage("Price not supplied") : false);
+
+    (!isset($jsonData->house) ?  $response->addMessage("House not supplied") : false);
     $response->send();
     exit;
 }
@@ -74,22 +76,22 @@ if (
     $response->send();
     exit;
 }
-/*
-if ($jsonData->end_date <= date("d-m-Y h:m")) {
+
+if ($jsonData->end_date <= date("Y-m-d")) {
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
-    $response->addMessage("Date time not correct");
+    $response->addMessage("Date time not correct" . $jsonData->end_date . "-" . date("d-m-Y h:m") . "");
     $response->send();
     exit;
 }
-*/
+
 $date = date_create($jsonData->end_date);
 
 $project_name = trim($jsonData->project_name);
 $end_date = date_format($date, "Y/m/d H:i:s");
 $price = trim($jsonData->price);
-
+$house = $jsonData->house;
 try {
 
     $query = $writeDB->prepare('SELECT id from project where project_name = :name');
@@ -106,12 +108,12 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('INSERT INTO project (project_name  , price,  end_date )
-    VALUES (:project_name , :price , :end_date  )');
+    $query = $writeDB->prepare('INSERT INTO project (project_name  , price, house_id , end_date )
+    VALUES (:project_name , :price , :house , :end_date  )');
 
     $query->bindParam(':project_name', $project_name, PDO::PARAM_STR);
     $query->bindParam(':price', $price, PDO::PARAM_STR);
-
+    $query->bindParam(':house', $house, PDO::PARAM_STR);
     $query->bindParam(':end_date', $end_date, PDO::PARAM_STR);
 
     $query->execute();

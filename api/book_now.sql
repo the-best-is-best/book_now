@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2021 at 10:38 PM
+-- Generation Time: Jul 26, 2021 at 09:01 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -116,6 +116,7 @@ CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `project_name` varchar(255) NOT NULL,
   `price` int(11) NOT NULL,
+  `house_id` int(11) NOT NULL,
   `end_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -138,65 +139,48 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rel_houses`
+-- Table structure for table `rel_people`
 --
 
-CREATE TABLE `rel_houses` (
+CREATE TABLE `rel_people` (
   `id` int(11) NOT NULL,
+  `people_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
+  `paid` int(11) NOT NULL,
+  `support` int(11) NOT NULL,
+  `travel_id` int(11) NOT NULL,
+  `bones` tinyint(1) NOT NULL,
   `house_id` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Triggers `rel_houses`
+-- Triggers `rel_people`
 --
 DELIMITER $$
-CREATE TRIGGER `deleted_rel_houses` BEFORE DELETE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, OLD.id , "deleted" , "rel_houses",NOW() )
+CREATE TRIGGER `deleted_rel_person` BEFORE DELETE ON `rel_people` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, OLD.id , "deleted" , "rel_people",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_rel_houses` AFTER INSERT ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, NEW.id , "inserted" , "rel_houses",NOW() )
+CREATE TRIGGER `insert_rel_person` AFTER INSERT ON `rel_people` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, NEW.id , "inserted" , "rel_people",NOW() )
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_rel_houses` AFTER UPDATE ON `rel_houses` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null, NEW.id , "updated" , "rel_houses",NOW() )
+CREATE TRIGGER `update_rel_person` AFTER UPDATE ON `rel_people` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null , NEW.id , "updated" ,"rel_people" , NOW())
 $$
 DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rel_person`
+-- Table structure for table `rel_room`
 --
 
-CREATE TABLE `rel_person` (
+CREATE TABLE `rel_room` (
   `id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `paid` int(11) NOT NULL,
-  `support` int(11) NOT NULL,
-  `travel` int(11) NOT NULL,
-  `Bones` tinyint(1) NOT NULL,
-  `house_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL
+  `room_id` int(11) NOT NULL,
+  `used_bed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Triggers `rel_person`
---
-DELIMITER $$
-CREATE TRIGGER `deleted_rel_person` BEFORE DELETE ON `rel_person` FOR EACH ROW INSERT INTO book_now_log VALUES(null, OLD.id , "deleted" , "rel_person",NOW() )
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_rel_person` AFTER INSERT ON `rel_person` FOR EACH ROW INSERT INTO book_now_log VALUES(null, NEW.id , "inserted" , "rel_person",NOW() )
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `update_rel_person` AFTER UPDATE ON `rel_person` FOR EACH ROW INSERT INTO book_now_log VALUES(null , NEW.id , "updated" ,"rel_person" , NOW())
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -292,15 +276,15 @@ ALTER TABLE `project`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rel_houses`
+-- Indexes for table `rel_people`
 --
-ALTER TABLE `rel_houses`
+ALTER TABLE `rel_people`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rel_person`
+-- Indexes for table `rel_room`
 --
-ALTER TABLE `rel_person`
+ALTER TABLE `rel_room`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -350,15 +334,15 @@ ALTER TABLE `project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `rel_houses`
+-- AUTO_INCREMENT for table `rel_people`
 --
-ALTER TABLE `rel_houses`
+ALTER TABLE `rel_people`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `rel_person`
+-- AUTO_INCREMENT for table `rel_room`
 --
-ALTER TABLE `rel_person`
+ALTER TABLE `rel_room`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

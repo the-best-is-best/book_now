@@ -37,7 +37,10 @@ class ReportsScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
           ),
         ),
-        body: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+        body: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: myReportWatch.tabIndex,
           onTap: (val) {

@@ -95,7 +95,7 @@ class HousesProvider with ChangeNotifier {
 
   bool loadingSearch = false;
   List<HouseModel> searchMyHouse = [];
-  void searchController(String search) {
+  void searchHouse(String search) {
     loadingSearch = true;
     notifyListeners();
     if (search != "") {
