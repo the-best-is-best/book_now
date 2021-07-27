@@ -1,6 +1,16 @@
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
+import 'package:book_now/provider/people_provider.dart';
+import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/provider/travel_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+
+import 'floor_provider.dart';
+import 'houses_provider.dart';
+import 'my_project_provider.dart';
 
 class GetDataListen {
   static bool getData = false;
@@ -98,6 +108,8 @@ class CheckDataProvider with ChangeNotifier {
   }
 
   void endMainList() {
+    listenDataUpdated = [];
+
     insertProject = [];
 
     insertHouses = [];

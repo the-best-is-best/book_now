@@ -22,16 +22,15 @@ void main() async {
   await Firebase.initializeApp();
 
   await FirebaseMessaging.instance.getToken();
-
-  DioHelper.init();
   await FirebaseMessaging.instance.subscribeToTopic("all_users");
-
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     GetDataListen.getData = false;
   });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     GetDataListen.getData = false;
   });
+
+  DioHelper.init();
 
   initializeDateFormatting();
   runApp(RunMyApp());

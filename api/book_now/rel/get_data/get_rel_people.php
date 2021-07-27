@@ -24,7 +24,7 @@ try {
     $response->send();
     exit;
 }
-
+/*
 if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
     $response = new Response();
     $response->setHttpStatusCode(405);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
     $response->addMessage('Request method not allowed');
     $response->send();
     exit;
-}
+}*/
 
 
 try {
@@ -40,13 +40,25 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('Not allowed');
+        $response->addMessage('Not allowed id');
         $response->send();
         exit;
     }
-    $get_id_data =  $_GET["id"];
 
-    $query = $readDB->prepare('SELECT * FROM rel_people  WHERE id IN (' . implode(',', $get_id_data) . ')');
+    if (!isset($_GET['project_id'])) {
+        $response = new Response();
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
+        $response->addMessage('Not allowed project id');
+        $response->send();
+        exit;
+    }
+
+    $get_id_data =  $_GET["id"];
+    $project_id = $_GET['project_id'];
+
+    $query = $readDB->prepare('SELECT * FROM rel_people  WHERE id IN (' . implode(',', $get_id_data) . ') AND project_id = :project_id ');
+    $query->bindParam(':project_id', $project_id, PDO::PARAM_STR);
     $query->execute();
     $row = $query->fetchAll();
 

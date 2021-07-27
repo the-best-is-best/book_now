@@ -48,9 +48,9 @@ try {
     $query->execute();
     $rowCount = $query->rowCount();
     if ($rowCount > 0) {
-        if ($jsonData->book_now_log_count < $rowCount) {
+        if ($jsonData->book_now_rel_log_count < $rowCount) {
             $countNewData =
-                $rowCount - $jsonData->book_now_log_count;
+                $rowCount - $jsonData->book_now_rel_log_count;
             $query = $readDB->prepare("SELECT * FROM book_now_rel_log ORDER BY id  desc Limit $countNewData ");
             $query->execute();
             $row = $query->fetchAll();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2021 at 09:01 PM
+-- Generation Time: Jul 27, 2021 at 09:34 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -173,18 +173,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rel_room`
---
-
-CREATE TABLE `rel_room` (
-  `id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `used_bed` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `rooms`
 --
 
@@ -282,12 +270,6 @@ ALTER TABLE `rel_people`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rel_room`
---
-ALTER TABLE `rel_room`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
@@ -337,12 +319,6 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `rel_people`
 --
 ALTER TABLE `rel_people`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rel_room`
---
-ALTER TABLE `rel_room`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
