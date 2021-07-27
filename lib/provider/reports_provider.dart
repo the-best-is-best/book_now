@@ -11,16 +11,16 @@ import 'package:book_now/extention/to_map.dart';
 class ReportsProvider with ChangeNotifier {
   ProjectsModel? myProject;
   List<RelPeopleModel> myRelPeople = [];
+  Map<int, int> myRoomBad = {};
 
-  Future getDataProject(ProjectsModel project) async {
+  void getDataProject(ProjectsModel project) {
     myProject = project;
-    myRelPeople = [];
-    print(myProject!.id);
   }
 
   void backProject() {
     myProject = null;
     myRelPeople = [];
+    myRoomBad = {};
   }
 
   Future getDataRelPeople(List<ListenDataModel> listenData) async {
