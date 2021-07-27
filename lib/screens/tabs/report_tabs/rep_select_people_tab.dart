@@ -303,17 +303,44 @@ Widget repSelectPeople() {
                             child: DropdownButtonFormField<int?>(
                                 hint: Text('Select Room'),
                                 value: myRelPeopleWatch.selectedRoom,
-                                items: myRelPeopleWatch.relRoom
-                                    .map((room) => DropdownMenuItem(
-                                          value: room.id,
+                                items: myRelPeopleWatch.relRoom.map((room) {
+                                  int? value = myReportWatch
+                                              .numberofBedsRemaining[room.id] ==
+                                          null
+                                      ? room.id
+                                      : room.numbersOfBed >
+                                              myReportWatch
+                                                      .numberofBedsRemaining[
+                                                  room.id]!
+                                          ? room.id
+                                          : null;
+                                  return value != null
+                                      ? DropdownMenuItem(
+                                          value: value,
                                           child: Text(
                                             "Room : ${room.name.toString()} - Floor : ${room.floor}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
                                           ),
-                                        ))
-                                    .toList(),
+                                        )
+                                      : DropdownMenuItem(
+                                          value: null,
+                                          onTap: () => null,
+                                          child: Text(
+                                            "Room : ${room.name.toString()} - Floor : ${room.floor}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2!
+                                                .copyWith(color: Colors.grey),
+                                          ),
+                                        );
+                                }).toList(),
                                 onChanged: (value) {
-                                  myRelPeopleRead.changeSelectedRoom(value!);
-                                  myReportRead.getNewData();
+                                  if (value != null) {
+                                    myRelPeopleRead.changeSelectedRoom(value);
+                                    myReportRead.getNewData();
+                                  }
                                 },
                                 validator: (int? val) {
                                   if (val == null || val == 0) {

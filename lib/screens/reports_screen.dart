@@ -25,6 +25,7 @@ class ReportsScreen extends StatelessWidget {
           title: Text("${myReportWatch.myProject!.projectName}"),
           leading: IconButton(
             onPressed: () async {
+              myCheckLoading.destroyListenProject();
               myReportRead.backProject();
               myRelPeopleRead.changeSelectedPeople(null);
               myRelPeopleRead.changeSelectedTravel(null);
