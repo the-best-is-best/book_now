@@ -76,6 +76,7 @@ Widget repSelectPeople() {
                                       searchTitle: "people name",
                                       onSubmit: (String? val) {
                                         myPeopleRead.searchPeople(val!);
+                                        myReportRead.getNewData();
                                       },
                                     )
                                   : Container(),
@@ -106,6 +107,7 @@ Widget repSelectPeople() {
                                   onChanged: (value) {
                                     myRelPeopleRead
                                         .changeSelectedPeople(value!);
+                                    myReportRead.getNewData();
                                   },
                                   validator: (int? val) {
                                     if (val == null || val == 0) {
@@ -219,6 +221,7 @@ Widget repSelectPeople() {
                                     .toList(),
                                 onChanged: (value) {
                                   myRelPeopleRead.changeSelectedTravel(value!);
+                                  myReportRead.getNewData();
                                 },
                                 validator: (int? val) {
                                   if (val == null || val == 0) {
@@ -277,6 +280,7 @@ Widget repSelectPeople() {
                                           .changeSelectedHouse(value!);
                                       myRelPeopleRead
                                           .getRooms(myRoomWatch.myRooms);
+                                      myReportRead.getNewData();
                                     },
                                     validator: (int? val) {
                                       if (val == null || val == 0) {
@@ -309,6 +313,7 @@ Widget repSelectPeople() {
                                     .toList(),
                                 onChanged: (value) {
                                   myRelPeopleRead.changeSelectedRoom(value!);
+                                  myReportRead.getNewData();
                                 },
                                 validator: (int? val) {
                                   if (val == null || val == 0) {
@@ -404,6 +409,12 @@ Widget repSelectPeople() {
                                   myRelPeopleRead.loadingEnd().then((_) async {
                                     paidController.text =
                                         supportController.text = "";
+
+                                    myRelPeopleRead.changeSelectedPeople(null);
+                                    myRelPeopleRead.changeSelectedHouse(null);
+                                    myRelPeopleRead.changeSelectedRoom(null);
+                                    myRelPeopleRead.changeSelectedTravel(null);
+
                                     myReportRead.getNewData();
                                     await Flushbar(
                                       title: 'Success',
