@@ -24,20 +24,18 @@ class ReportsScreen extends StatelessWidget {
           elevation: 10,
           title: Text("${myReportWatch.myProject!.projectName}"),
           leading: IconButton(
-            onPressed: () {
+            onPressed: () async {
+              myReportRead.backProject();
+              myRelPeopleRead.changeSelectedPeople(null);
+              myRelPeopleRead.changeSelectedTravel(null);
+              myRelPeopleRead.changeSelectedHouse(null);
+              myRelPeopleRead.changeSelectedRoom(null);
               Navigator.pushReplacement(
-                      context,
-                      PageTransition(
-                          duration: Duration(microseconds: 500),
-                          type: PageTransitionType.fade,
-                          child: ProjectScreen()))
-                  .then((_) {
-                myReportRead.backProject();
-                myRelPeopleRead.changeSelectedPeople(null);
-                myRelPeopleRead.changeSelectedTravel(null);
-                myRelPeopleRead.changeSelectedHouse(null);
-                myRelPeopleRead.changeSelectedRoom(null);
-              });
+                  context,
+                  PageTransition(
+                      duration: Duration(microseconds: 500),
+                      type: PageTransitionType.fade,
+                      child: ProjectScreen()));
             },
             icon: Icon(Icons.arrow_back),
           ),

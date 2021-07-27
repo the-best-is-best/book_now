@@ -52,35 +52,30 @@ Widget selectProjectTab() {
                                     child: Text(myProjectWatch
                                         .myProject[index].projectName),
                                     onPressed: () {
-                                      reportsRead
-                                          .getDataProject(
-                                              myProjectWatch.myProject[index])
-                                          .then((_) {
-                                        checkDataRead
-                                            .getRelListenData(fromProject: true)
-                                            .then((val) {
-                                          if (val == true) {
-                                            checkDataRead.displayLoading(true);
+                                      reportsRead.getDataProject(
+                                          myProjectWatch.myProject[index]);
+                                      checkDataRead
+                                          .getRelListenData(fromProject: true)
+                                          .then((val) {
+                                        if (val == true) {
+                                          checkDataRead.displayLoading(true);
 
-                                            if (checkDataWatch
-                                                    .insertRelPeople.length >
-                                                0) {
-                                              reportsRead.getDataRelPeople(
-                                                  checkDataWatch
-                                                      .insertRelPeople);
-                                            }
+                                          if (checkDataRead
+                                                  .insertRelPeople.length >
+                                              0) {
+                                            reportsRead.getDataRelPeople(
+                                                checkDataWatch.insertRelPeople);
                                           }
-                                        }).then((_) {
                                           checkDataRead.endRelList();
                                           checkDataRead.displayLoading(false);
-                                        });
-                                        Navigator.pushReplacement(
-                                            context,
-                                            PageTransition(
-                                                duration:
-                                                    Duration(microseconds: 500),
-                                                type: PageTransitionType.fade,
-                                                child: ReportsScreen()));
+                                          Navigator.pushReplacement(
+                                              context,
+                                              PageTransition(
+                                                  duration: Duration(
+                                                      microseconds: 500),
+                                                  type: PageTransitionType.fade,
+                                                  child: ReportsScreen()));
+                                        }
                                       });
                                     },
                                   )),
