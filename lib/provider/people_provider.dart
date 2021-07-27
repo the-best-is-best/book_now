@@ -11,6 +11,7 @@ class PeopleProvider with ChangeNotifier {
   List<PeopleModel> myPeople = [];
 
   Future getPeople(List<ListenDataModel> listenData) async {
+    print("get people");
     List<int> id = [];
     listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
@@ -25,6 +26,7 @@ class PeopleProvider with ChangeNotifier {
         myPeople.add(PeopleModel.fromJson(data));
       });
     }
+    print(myPeople.length);
     notifyListeners();
   }
 

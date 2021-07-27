@@ -42,7 +42,7 @@ class _HousesScreenState extends State<HousesScreen> {
         child: Scaffold(
           appBar: buildAppBar("Houses", _advancedDrawerController),
           body: myCheckLoading.loading
-              ? CircularProgressIndicator()
+              ? Center(child: CircularProgressIndicator())
               : Center(
                   child: SingleChildScrollView(
                     child: Container(

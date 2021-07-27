@@ -42,7 +42,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
         child: Scaffold(
           appBar: buildAppBar("People", _advancedDrawerController),
           body: myCheckLoading.loading
-              ? CircularProgressIndicator()
+              ? Center(child: CircularProgressIndicator())
               : Center(
                   child: SingleChildScrollView(
                     child: Container(

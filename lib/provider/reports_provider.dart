@@ -11,7 +11,7 @@ import 'package:book_now/extention/to_map.dart';
 class ReportsProvider with ChangeNotifier {
   ProjectsModel? myProject;
   List<RelPeopleModel> myRelPeople = [];
-  Map<int, int> myRoomBad = {};
+  Map<int, int> numberofBedsRemaining = {};
 
   void getDataProject(ProjectsModel project) {
     myProject = project;
@@ -20,7 +20,7 @@ class ReportsProvider with ChangeNotifier {
   void backProject() {
     myProject = null;
     myRelPeople = [];
-    myRoomBad = {};
+    numberofBedsRemaining = {};
   }
 
   Future getDataRelPeople(List<ListenDataModel> listenData) async {
@@ -40,18 +40,38 @@ class ReportsProvider with ChangeNotifier {
       // update list
       datas.forEach((data) => myRelPeople.add(RelPeopleModel.fromJson(data)));
     }
+    print("rel people - ${myRelPeople.length}");
     notifyListeners();
+  }
+
+  Future getnumberofBedsRemaining() async {
+    int key;
+    numberofBedsRemaining = {};
+    myRelPeople.forEach((val) {
+      key = val.roomId;
+      if (numberofBedsRemaining.containsKey(key)) {
+        int? value = numberofBedsRemaining[key];
+        numberofBedsRemaining[key] = value! + 1;
+      } else {
+        numberofBedsRemaining[key] = 1;
+      }
+    });
+    print(numberofBedsRemaining);
   }
 
   int tabIndex = 0;
   List<Widget> tabsWidget = [
     RepSelectReportsTab(),
     RepSelectResidenceTab(),
-    RepSelectPeople(),
+    repSelectPeople(),
   ];
 
   void changeTabIndex(index) {
     tabIndex = index;
+    notifyListeners();
+  }
+
+  void getNewData() {
     notifyListeners();
   }
 }

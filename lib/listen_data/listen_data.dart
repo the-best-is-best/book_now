@@ -37,57 +37,58 @@ FutureBuilder getDataServer({
       if (val == true) {
         checkDataRead.displayLoading(true);
         if (checkDataWatch.insertProject.length > 0) {
-          await myProjectRead.getData(checkDataWatch.insertProject);
+          myProjectRead.getData(checkDataWatch.insertProject);
         }
         if (checkDataWatch.insertHouses.length > 0) {
-          await housesDataRead
+          housesDataRead
               .getHouses(checkDataWatch.insertHouses)
               .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses));
         }
         if (checkDataWatch.updateHouses.length > 0) {
-          await housesDataRead
+          housesDataRead
               .getUpdateHouses(checkDataWatch.updateHouses)
               .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
         }
         if (checkDataWatch.insertRooms.length > 0) {
-          await roomsDataRead.getRooms(checkDataWatch.insertRooms);
+          roomsDataRead.getRooms(checkDataWatch.insertRooms);
         }
         if (checkDataWatch.updateRooms.length > 0) {
-          await roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
+          roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
         }
         if (checkDataWatch.insertPeople.length > 0) {
-          await peopleDataRead.getPeople(checkDataWatch.insertPeople);
+          peopleDataRead.getPeople(checkDataWatch.insertPeople);
         }
         if (checkDataWatch.updatePeople.length > 0) {
-          await peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
+          peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
         }
         if (checkDataWatch.insertTravel.length > 0) {
-          await travelDataRead.getTravel(checkDataWatch.insertTravel);
+          travelDataRead.getTravel(checkDataWatch.insertTravel);
         }
-        if (checkDataWatch.insertTravel.length > 0) {
-          await travelDataRead.getTravel(checkDataWatch.insertTravel);
-        }
+
         if (checkDataWatch.updateTravel.length > 0) {
-          travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
+          await travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
         }
         checkDataRead.endMainList();
         checkDataRead.displayLoading(false);
       }
-    }).then((_) {
+
       if (myReportWatch.myProject != null) {
         checkDataRead.getRelListenData().then((val) async {
           if (val == true) {
             checkDataRead.displayLoading(true);
-
             if (checkDataWatch.insertRelPeople.length > 0) {
-              await myReportRead
-                  .getDataRelPeople(checkDataWatch.insertRelPeople);
+              myReportRead
+                  .getDataRelPeople(checkDataWatch.insertRelPeople)
+                  .then((_) async {
+                myReportRead.getnumberofBedsRemaining();
+              });
             }
             checkDataRead.endRelList();
             checkDataRead.displayLoading(false);
           }
         });
       }
+      checkDataRead.endedLoadDataFromServer();
     }),
     builder: (context, snapshot) => Container(
         width: MediaQuery.of(context).size.width > 750 ? 750 : null,

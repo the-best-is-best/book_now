@@ -38,32 +38,13 @@ class CheckDataProvider with ChangeNotifier {
 
   Future<bool> getMAinListenData() async {
     if (!GetDataListen.getData) {
-      listenDataUpdated = [];
-
-      insertProject = [];
-
-      insertHouses = [];
-      updateHouses = [];
-
-      insertRooms = [];
-      updateRooms = [];
-
-      insertPeople = [];
-      updatePeople = [];
-
-      insertTravel = [];
-      updateTravel = [];
-
       Map<String, dynamic> data = {'book_now_log_count': listenData.length};
       var response = await DioHelper.postData(url: 'listenDB.php', query: data);
-      bool newData = false;
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
-        GetDataListen.getData = true;
-        newData = await toMainList(data['data']);
+
+        return await toMainList(data['data']);
       }
-      GetDataListen.getData = true;
-      return newData;
     }
     return false;
   }
@@ -134,23 +115,17 @@ class CheckDataProvider with ChangeNotifier {
 
   Future<bool> getRelListenData({bool fromProject = false}) async {
     if (!GetDataListen.getData || fromProject) {
-      listenDataUpdated = [];
-      insertRelPeople = [];
-
       Map<String, dynamic> data = {
         'book_now_rel_log_count': lisenRelData.length
       };
       var response =
           await DioHelper.postData(url: 'listen_relDB.php', query: data);
-      bool newData = false;
 
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
-        GetDataListen.getData = true;
-        newData = await toRelList(data['data']);
+        print(data['data']);
+        return await toRelList(data['data']);
       }
-      GetDataListen.getData = true;
-      return newData;
     }
     return false;
   }
@@ -167,13 +142,16 @@ class CheckDataProvider with ChangeNotifier {
     insertRelPeople = lisenRelDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rel_people")
         .toList();
-
+    print("new rel - people list ${insertRelPeople.length}");
     return true;
   }
 
+  void endedLoadDataFromServer() {
+    GetDataListen.getData = true;
+  }
+
   void endRelList() {
-    lisenRelData = [];
-    listenDataUpdated = [];
+    lisenRelDataUpdated = [];
     insertRelPeople = [];
   }
 

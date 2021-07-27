@@ -56,26 +56,31 @@ Widget selectProjectTab() {
                                           myProjectWatch.myProject[index]);
                                       checkDataRead
                                           .getRelListenData(fromProject: true)
-                                          .then((val) {
+                                          .then((val) async {
                                         if (val == true) {
                                           checkDataRead.displayLoading(true);
 
                                           if (checkDataRead
                                                   .insertRelPeople.length >
                                               0) {
-                                            reportsRead.getDataRelPeople(
-                                                checkDataWatch.insertRelPeople);
+                                            reportsRead
+                                                .getDataRelPeople(checkDataWatch
+                                                    .insertRelPeople)
+                                                .then((_) async {
+                                              reportsRead
+                                                  .getnumberofBedsRemaining();
+                                            });
                                           }
                                           checkDataRead.endRelList();
                                           checkDataRead.displayLoading(false);
-                                          Navigator.pushReplacement(
-                                              context,
-                                              PageTransition(
-                                                  duration: Duration(
-                                                      microseconds: 500),
-                                                  type: PageTransitionType.fade,
-                                                  child: ReportsScreen()));
                                         }
+                                        Navigator.pushReplacement(
+                                            context,
+                                            PageTransition(
+                                                duration:
+                                                    Duration(microseconds: 500),
+                                                type: PageTransitionType.fade,
+                                                child: ReportsScreen()));
                                       });
                                     },
                                   )),

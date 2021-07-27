@@ -17,7 +17,6 @@ Widget selectPeopleTab() {
         final myPeopleRead = context.read<PeopleProvider>();
 
         final myPeopleWatch = context.watch<PeopleProvider>();
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
