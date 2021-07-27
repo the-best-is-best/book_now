@@ -1,16 +1,7 @@
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:book_now/provider/people_provider.dart';
-import 'package:book_now/provider/reports_provider.dart';
-import 'package:book_now/provider/rooms_provider.dart';
-import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
-
-import 'floor_provider.dart';
-import 'houses_provider.dart';
-import 'my_project_provider.dart';
 
 class GetDataListen {
   static bool getData = false;
@@ -40,9 +31,9 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> insertTravel = [];
   List<ListenDataModel> updateTravel = [];
 
-  List<ListenDataModel> lisenRelData = [];
+  List<ListenDataModel> listenRelData = [];
 
-  List<ListenDataModel> lisenRelDataUpdated = [];
+  List<ListenDataModel> listenRelDataUpdated = [];
 
   List<ListenDataModel> insertRelPeople = [];
 
@@ -128,14 +119,13 @@ class CheckDataProvider with ChangeNotifier {
   Future<bool> getRelListenData({bool fromProject = false}) async {
     if (!GetDataListen.getData || fromProject) {
       Map<String, dynamic> data = {
-        'book_now_rel_log_count': lisenRelData.length
+        'book_now_rel_log_count': listenRelData.length
       };
       var response =
           await DioHelper.postData(url: 'listen_relDB.php', query: data);
 
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
-        print(data['data']);
         return await toRelList(data['data']);
       }
     }
@@ -144,17 +134,16 @@ class CheckDataProvider with ChangeNotifier {
 
   Future<bool> toRelList(Map datas) async {
     datas.forEach((k, data) {
-      lisenRelData.add(ListenDataModel.fromJson(data));
+      listenRelData.add(ListenDataModel.fromJson(data));
     });
 
     datas.forEach((k, data) {
-      lisenRelDataUpdated.add(ListenDataModel.fromJson(data));
+      listenRelDataUpdated.add(ListenDataModel.fromJson(data));
     });
 
-    insertRelPeople = lisenRelDataUpdated
+    insertRelPeople = listenRelDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rel_people")
         .toList();
-    print("new rel - people list ${insertRelPeople.length}");
     return true;
   }
 
@@ -163,8 +152,12 @@ class CheckDataProvider with ChangeNotifier {
   }
 
   void endRelList() {
-    lisenRelDataUpdated = [];
+    listenRelDataUpdated = [];
     insertRelPeople = [];
+  }
+
+  void destroyListenProject() {
+    listenRelData = [];
   }
 
   void displayLoading(disLoading) {

@@ -40,7 +40,6 @@ class ReportsProvider with ChangeNotifier {
       // update list
       datas.forEach((data) => myRelPeople.add(RelPeopleModel.fromJson(data)));
     }
-    print("rel people - ${myRelPeople.length}");
     notifyListeners();
   }
 
@@ -56,7 +55,6 @@ class ReportsProvider with ChangeNotifier {
         numberofBedsRemaining[key] = 1;
       }
     });
-    print(numberofBedsRemaining);
   }
 
   int tabIndex = 0;
