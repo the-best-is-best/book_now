@@ -105,7 +105,7 @@ Widget createPeopleTab() {
                                 .then(
                               (response) async {
                                 var data = response.data;
-                                if (response.statusCode == 201) {
+                                if (data['messages'][0] == "People Created") {
                                   DioHelper.postNotification().then((_) {
                                     myPeopleRead.loadingEnd().then((_) async {
                                       peopleNameController.text = telController

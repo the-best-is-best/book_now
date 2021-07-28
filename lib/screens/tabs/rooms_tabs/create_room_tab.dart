@@ -155,6 +155,7 @@ Widget createRoomTab() {
                               for (int i = cur; i <= last; i++) {
                                 rooms.add(i);
                               }
+                              rooms.sort((a, b) => a.compareTo(b));
                               for (int i = 0; i < rooms.length; i++) {
                                 CreateRoomModel createRoomModel =
                                     CreateRoomModel(
@@ -168,18 +169,17 @@ Widget createRoomTab() {
                                     .createRoomClicked(createRoomModel)
                                     .then((response) async {
                                   var data = response.data;
-                                  if (response.statusCode == 201) {
-                                    DioHelper.postNotification().then((_) =>
-                                        myRoomRead.loadingEnd().then((_) async {
-                                          curRoomController.text =
-                                              lastRoomController.text =
-                                                  numOfBedController.text = "";
-                                          await Flushbar(
-                                            title: 'Success',
-                                            message: "Added",
-                                            duration: Duration(seconds: 3),
-                                          ).show(context);
-                                        }));
+                                  if (data['messages'][0] == "Room Created") {
+                                    myRoomRead.loadingEnd().then((_) async {
+                                      curRoomController.text =
+                                          lastRoomController.text =
+                                              numOfBedController.text = "";
+                                      await Flushbar(
+                                        title: 'Success',
+                                        message: "Added",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    });
                                   } else {
                                     myRoomRead.loadingEnd().then((_) async {
                                       List<dynamic> messages = data['messages'];
@@ -196,6 +196,7 @@ Widget createRoomTab() {
                                   }
                                 });
                               }
+                              DioHelper.postNotification();
                             }
                           },
                         ),
