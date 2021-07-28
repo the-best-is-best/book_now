@@ -59,7 +59,7 @@ class ReportsProvider with ChangeNotifier {
 
   int tabIndex = 0;
   List<Widget> tabsWidget = [
-    RepSelectReportsTab(),
+    repManagementReportsTab(),
     repDetailsResidenceTab(),
     repSelectPeople(),
   ];

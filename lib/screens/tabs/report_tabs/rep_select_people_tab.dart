@@ -278,6 +278,8 @@ Widget repSelectPeople() {
                                     onChanged: (value) {
                                       myRelPeopleRead
                                           .changeSelectedHouse(value!);
+                                      myRelPeopleRead.changeSelectedRoom(null);
+
                                       myRelPeopleRead
                                           .getRooms(myRoomWatch.myRooms);
                                       myReportRead.getNewData();
@@ -357,14 +359,16 @@ Widget repSelectPeople() {
                             child: Row(
                               children: [
                                 Text(
-                                  "Bones :",
+                                  "coupons :",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                                 defaultRoundCheckBox(
-                                    myRelPeopleRead, myRelPeopleWatch),
+                                    (val) =>
+                                        myRelPeopleRead.changecouponsState(val),
+                                    myRelPeopleWatch.coupons),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -417,7 +421,7 @@ Widget repSelectPeople() {
                               return;
                             }
                             var createRelPeopleModel = CreateRelPeopleModel(
-                              bones: myRelPeopleWatch.bones ? 1 : 0,
+                              bones: myRelPeopleWatch.coupons ? 1 : 0,
                               houseId: myRelPeopleWatch.selectedhouseId!,
                               roomId: myRelPeopleWatch.selectedRoom!,
                               travelId: myRelPeopleWatch.selectedTravel!,

@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class GetDataListen {
   static bool getData = false;
@@ -12,6 +16,7 @@ class GetDataListen {
 
 class CheckDataProvider with ChangeNotifier {
   bool loading = false;
+  bool firstTime = true;
 
   List<ListenDataModel> listenData = [];
 
@@ -66,39 +71,41 @@ class CheckDataProvider with ChangeNotifier {
     insertHouses = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "houses")
         .toList();
-
-    updateHouses = listenDataUpdated
-        .where((e) => e.action == "updated" && e.tableName == "houses")
-        .toList();
+    if (!firstTime)
+      updateHouses = listenDataUpdated
+          .where((e) => e.action == "updated" && e.tableName == "houses")
+          .toList();
 
     insertRooms = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rooms")
         .toList();
-
-    updateRooms = listenDataUpdated
-        .where((e) => e.action == "updated" && e.tableName == "rooms")
-        .toList();
+    if (!firstTime)
+      updateRooms = listenDataUpdated
+          .where((e) => e.action == "updated" && e.tableName == "rooms")
+          .toList();
 
     insertPeople = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "people")
         .toList();
-
-    updatePeople = listenDataUpdated
-        .where((e) => e.action == "updated" && e.tableName == "people")
-        .toList();
+    if (!firstTime)
+      updatePeople = listenDataUpdated
+          .where((e) => e.action == "updated" && e.tableName == "people")
+          .toList();
 
     insertTravel = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "travel")
         .toList();
-
-    updateTravel = listenDataUpdated
-        .where((e) => e.action == "updated" && e.tableName == "travel")
-        .toList();
+    if (!firstTime)
+      updateTravel = listenDataUpdated
+          .where((e) => e.action == "updated" && e.tableName == "travel")
+          .toList();
 
     return true;
   }
 
   void endMainList() {
+    firstTime = false;
+
     listenDataUpdated = [];
 
     insertProject = [];
@@ -163,5 +170,53 @@ class CheckDataProvider with ChangeNotifier {
   void displayLoading(disLoading) {
     loading = disLoading;
     notifyListeners();
+  }
+
+  int maxPage = 0;
+  List<ListenDataModel> history = [];
+
+  bool getHistoryData = false;
+  void getMaxPage() {
+    maxPage = 0;
+    getHistoryData = true;
+
+    notifyListeners();
+    bool decimal = false;
+    if (((listenData.length) / 10) % 1 != 0) {
+      decimal = true;
+    }
+    maxPage = decimal ? listenData.length ~/ 10 + 1 : listenData.length ~/ 20;
+  }
+
+  int curPage = 1;
+  Future getNexPage() async {
+    print(maxPage);
+    if (maxPage != 0) {
+      if (curPage != maxPage) {
+        curPage += 1;
+        await getDataPage(curPage);
+      } else {
+        curPage = curPage;
+      }
+    }
+  }
+
+  Future getDataPage(int page) async {
+    if (page == 1) {
+      history = [];
+      curPage = 1;
+    }
+    getHistoryData = true;
+    notifyListeners();
+    Future.delayed(Duration(milliseconds: 500), () {
+      history = listenData
+          .getRange(0, page != maxPage ? page + 1 * 10 : listenData.length)
+          .toList();
+      sleep(const Duration(seconds: 1));
+      getHistoryData = false;
+      notifyListeners();
+    });
+
+    print(history.length);
   }
 }

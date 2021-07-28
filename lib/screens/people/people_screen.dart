@@ -4,6 +4,7 @@ import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/style/main_style.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
@@ -44,17 +45,22 @@ class _PeopleScreenState extends State<PeopleScreen> {
           body: myCheckLoading.loading
               ? Center(child: CircularProgressIndicator())
               : Center(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: myPeopleWatch.tabIndex == 0
-                          ? MediaQuery.of(context).size.width / 1.1
-                          : null,
-                      child: Card(
-                        elevation: 20,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child:
-                              myPeopleWatch.tabsWidget[myPeopleWatch.tabIndex],
+                  child: DoubleBackToCloseApp(
+                    snackBar: const SnackBar(
+                      content: Text('Tap back again to leave'),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: myPeopleWatch.tabIndex == 0
+                            ? MediaQuery.of(context).size.width / 1.1
+                            : null,
+                        child: Card(
+                          elevation: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: myPeopleWatch
+                                .tabsWidget[myPeopleWatch.tabIndex],
+                          ),
                         ),
                       ),
                     ),

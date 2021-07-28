@@ -27,7 +27,7 @@ class RelPeopleModel {
         paid = int.parse(json['paid'].toString()),
         support = int.parse(json['support'].toString()),
         travelId = int.parse(json['travel_id'].toString()),
-        bones = int.parse(json['bones'].toString()) == 1 ? true : false,
+        bones = int.parse(json['coupons'].toString()) == 1 ? true : false,
         houseId = int.parse(json['house_id'].toString()),
         roomId = int.parse(json['room_id'].toString());
 }

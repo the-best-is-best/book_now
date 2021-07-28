@@ -8,8 +8,6 @@ class RelPeopleProvider with ChangeNotifier {
   int? selectedPeople;
   int? selectedTravel;
 
-  bool bones = false;
-
   int? selectedhouseId;
   int? selectedRoom;
   List<RoomsModel> relRoom = [];
@@ -23,8 +21,10 @@ class RelPeopleProvider with ChangeNotifier {
     selectedTravel = val;
   }
 
-  void changeBonesState() {
-    bones = !bones;
+  bool coupons = false;
+
+  void changecouponsState(val) {
+    coupons = val;
   }
 
   void changeSelectedHouse(int? val) {

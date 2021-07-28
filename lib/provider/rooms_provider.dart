@@ -28,7 +28,10 @@ class RoomsProvider with ChangeNotifier {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
+
+    myRooms.sort((a, b) => a.floor.compareTo(b.floor));
     myRooms.sort((a, b) => a.name.compareTo(b.name));
+
     notifyListeners();
   }
 
@@ -60,8 +63,9 @@ class RoomsProvider with ChangeNotifier {
           roomUpdated.numbersOfBed = data['numbers_of_bed'];
       });
     }
-    myRooms.sort((a, b) => a.name.compareTo(b.name));
 
+    myRooms.sort((a, b) => a.floor.compareTo(b.floor));
+    myRooms.sort((a, b) => a.name.compareTo(b.name));
     notifyListeners();
   }
 
@@ -80,8 +84,9 @@ class RoomsProvider with ChangeNotifier {
       url: "insert_data/create_room.php",
       query: createRoom,
     );
-    myRooms.sort((a, b) => a.name.compareTo(b.name));
 
+    myRooms.sort((a, b) => a.floor.compareTo(b.floor));
+    myRooms.sort((a, b) => a.name.compareTo(b.name));
     notifyListeners();
 
     return response;
@@ -109,8 +114,9 @@ class RoomsProvider with ChangeNotifier {
       url: "update_data/room_update.php",
       query: data,
     );
-    myRooms.sort((a, b) => a.name.compareTo(b.name));
 
+    myRooms.sort((a, b) => a.floor.compareTo(b.floor));
+    myRooms.sort((a, b) => a.name.compareTo(b.name));
     notifyListeners();
 
     return response;

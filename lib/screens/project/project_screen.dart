@@ -2,6 +2,7 @@ import 'package:book_now/component/appBar_component.dart';
 import 'package:book_now/component/menu/buildMenu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/style/main_style.dart';
@@ -44,17 +45,22 @@ class _ProjectScreenState extends State<ProjectScreen> {
           body: myCheckLoading.loading
               ? Center(child: CircularProgressIndicator())
               : Center(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: myProjectWatch.tabIndex == 0
-                          ? MediaQuery.of(context).size.width / 1.1
-                          : null,
-                      child: Card(
-                        elevation: 20,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: myProjectWatch
-                              .tabsWidget[myProjectWatch.tabIndex],
+                  child: DoubleBackToCloseApp(
+                    snackBar: const SnackBar(
+                      content: Text('Tap back again to leave'),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: myProjectWatch.tabIndex == 0
+                            ? MediaQuery.of(context).size.width / 1.1
+                            : null,
+                        child: Card(
+                          elevation: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: myProjectWatch
+                                .tabsWidget[myProjectWatch.tabIndex],
+                          ),
                         ),
                       ),
                     ),

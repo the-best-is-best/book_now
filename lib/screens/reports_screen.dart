@@ -4,6 +4,7 @@ import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/style/main_style.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class ReportsScreen extends StatelessWidget {
               myRelPeopleRead.changeSelectedTravel(null);
               myRelPeopleRead.changeSelectedHouse(null);
               myRelPeopleRead.changeSelectedRoom(null);
+              myRelPeopleRead.changecouponsState(false);
               Navigator.pushReplacement(
                   context,
                   PageTransition(
@@ -42,10 +44,15 @@ class ReportsScreen extends StatelessWidget {
           ),
         ),
         body: myCheckLoading.loading
-            ? CircularProgressIndicator()
-            : Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+            ? Center(child: CircularProgressIndicator())
+            : DoubleBackToCloseApp(
+                snackBar: const SnackBar(
+                  content: Text('Tap back again to leave'),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: myReportWatch.tabsWidget[myReportWatch.tabIndex],
+                ),
               ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: myReportWatch.tabIndex,

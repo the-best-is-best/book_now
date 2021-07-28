@@ -89,7 +89,7 @@ ListView buildListView({
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: myPeopleWatch.loadingSearch
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : Container(
                 width: query.width,
                 child: searchPeopleController.text.isEmpty

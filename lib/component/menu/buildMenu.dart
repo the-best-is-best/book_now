@@ -1,3 +1,4 @@
+import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/screens/history_screen.dart';
 import 'package:book_now/screens/houses/houses_screen.dart';
@@ -7,8 +8,10 @@ import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 Widget buildMenu(int curPage, BuildContext context) {
+  final checkData = context.watch<CheckDataProvider>();
   return SafeArea(
     child: ListTileTheme(
       textColor: Colors.white,
@@ -87,6 +90,9 @@ Widget buildMenu(int curPage, BuildContext context) {
             onTap: curPage == 4
                 ? null
                 : () {
+                    checkData.getMaxPage();
+                    checkData.getDataPage(1);
+
                     Navigator.pushReplacement(
                         context,
                         PageTransition(

@@ -22,7 +22,7 @@ class RoomScreen extends StatelessWidget {
         appBar:
             AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
         body: myCheckLoading.loading
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : Center(
                 child: SingleChildScrollView(
                   child: Container(
