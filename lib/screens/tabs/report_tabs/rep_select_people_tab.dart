@@ -111,7 +111,7 @@ Widget repSelectPeople() {
                                   },
                                   validator: (int? val) {
                                     if (val == null || val == 0) {
-                                      return "select people plz";
+                                      return "select people please";
                                     }
                                   }),
                               SizedBox(

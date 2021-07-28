@@ -37,32 +37,32 @@ FutureBuilder getDataServer({
       if (val == true) {
         checkDataRead.displayLoading(true);
         if (checkDataWatch.insertProject.length > 0) {
-          myProjectRead.getData(checkDataWatch.insertProject);
+          await myProjectRead.getData(checkDataWatch.insertProject);
         }
         if (checkDataWatch.insertHouses.length > 0) {
-          housesDataRead
+          await housesDataRead
               .getHouses(checkDataWatch.insertHouses)
               .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses));
         }
         if (checkDataWatch.updateHouses.length > 0) {
-          housesDataRead
+          await housesDataRead
               .getUpdateHouses(checkDataWatch.updateHouses)
               .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
         }
         if (checkDataWatch.insertRooms.length > 0) {
-          roomsDataRead.getRooms(checkDataWatch.insertRooms);
+          await roomsDataRead.getRooms(checkDataWatch.insertRooms);
         }
         if (checkDataWatch.updateRooms.length > 0) {
-          roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
+          await roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
         }
         if (checkDataWatch.insertPeople.length > 0) {
-          peopleDataRead.getPeople(checkDataWatch.insertPeople);
+          await peopleDataRead.getPeople(checkDataWatch.insertPeople);
         }
         if (checkDataWatch.updatePeople.length > 0) {
-          peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
+          await peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
         }
         if (checkDataWatch.insertTravel.length > 0) {
-          travelDataRead.getTravel(checkDataWatch.insertTravel);
+          await travelDataRead.getTravel(checkDataWatch.insertTravel);
         }
 
         if (checkDataWatch.updateTravel.length > 0) {
@@ -77,7 +77,7 @@ FutureBuilder getDataServer({
           if (val == true) {
             checkDataRead.displayLoading(true);
             if (checkDataWatch.insertRelPeople.length > 0) {
-              myReportRead
+              await myReportRead
                   .getDataRelPeople(checkDataWatch.insertRelPeople)
                   .then((_) async {
                 myReportRead.getnumberofBedsRemaining();

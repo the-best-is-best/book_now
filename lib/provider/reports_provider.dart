@@ -4,7 +4,7 @@ import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
-import 'package:book_now/screens/tabs/report_tabs/rep_select_residence.dart';
+import 'package:book_now/screens/tabs/report_tabs/rep_details_residence.dart';
 import 'package:flutter/material.dart';
 import 'package:book_now/extention/to_map.dart';
 
@@ -60,7 +60,7 @@ class ReportsProvider with ChangeNotifier {
   int tabIndex = 0;
   List<Widget> tabsWidget = [
     RepSelectReportsTab(),
-    RepSelectResidenceTab(),
+    repDetailsResidenceTab(),
     repSelectPeople(),
   ];
 

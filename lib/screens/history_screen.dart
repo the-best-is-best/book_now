@@ -198,7 +198,7 @@ class HistoryScreen extends StatelessWidget {
                                     height: 50,
                                   ),
                                   Container(
-                                    height: query.height * 3 / 4,
+                                    height: query.height * 2.8 / 4,
                                     child: ListView(
                                       children: [
                                         Row(
