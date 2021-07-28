@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -175,17 +173,17 @@ class CheckDataProvider with ChangeNotifier {
   int maxPage = 0;
   List<ListenDataModel> history = [];
 
-  bool getHistoryData = false;
+  bool loadNewHistoryData = false;
   void getMaxPage() {
     maxPage = 0;
-    getHistoryData = true;
+    loadNewHistoryData = true;
 
     notifyListeners();
     bool decimal = false;
-    if (((listenData.length) / 10) % 1 != 0) {
+    if (((listenData.length) / 25) % 1 != 0) {
       decimal = true;
     }
-    maxPage = decimal ? listenData.length ~/ 10 + 1 : listenData.length ~/ 20;
+    maxPage = decimal ? listenData.length ~/ 25 + 1 : listenData.length ~/ 25;
   }
 
   int curPage = 1;
@@ -206,17 +204,31 @@ class CheckDataProvider with ChangeNotifier {
       history = [];
       curPage = 1;
     }
-    getHistoryData = true;
+    loadNewHistoryData = true;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 500), () {
       history = listenData
-          .getRange(0, page != maxPage ? page + 1 * 10 : listenData.length)
+          .getRange(0, page != maxPage ? page + 1 * 25 : listenData.length)
           .toList();
       sleep(const Duration(seconds: 1));
-      getHistoryData = false;
+      loadNewHistoryData = false;
       notifyListeners();
     });
+  }
 
-    print(history.length);
+  List<ListenDataModel> filterHistoryData = [];
+  bool filterd = false;
+  void filterHistory(DateTime from, DateTime to) {
+    filterHistoryData = history.where((his) {
+      return DateTime.parse(his.date).isAfter(from) &&
+          DateTime.parse(his.date).isBefore(to);
+    }).toList();
+    filterd = true;
+    notifyListeners();
+  }
+
+  void disableFilter() {
+    filterd = false;
+    notifyListeners();
   }
 }

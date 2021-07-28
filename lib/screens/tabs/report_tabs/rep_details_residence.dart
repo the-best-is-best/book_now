@@ -1,6 +1,8 @@
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/screens/change_room_residence.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 Widget repDetailsResidenceTab() {
@@ -98,7 +100,18 @@ Widget repDetailsResidenceTab() {
                                     child: IconButton(
                                       padding: EdgeInsets.all(0),
                                       icon: Icon(Icons.change_circle),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                duration:
+                                                    Duration(microseconds: 500),
+                                                type: PageTransitionType.fade,
+                                                child: ChangeRoomResidence(
+                                                    myReportWatch
+                                                        .myRelPeople[index]
+                                                        .id)));
+                                      },
                                     ),
                                   ),
                                 )

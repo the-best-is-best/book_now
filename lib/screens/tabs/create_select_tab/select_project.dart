@@ -51,7 +51,7 @@ Widget selectProjectTab() {
                                   child: ElevatedButton(
                                     child: Text(myProjectWatch
                                         .myProject[index].projectName),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       reportsRead.getDataProject(
                                           myProjectWatch.myProject[index]);
                                       checkDataRead
@@ -73,14 +73,15 @@ Widget selectProjectTab() {
                                           }
                                           checkDataRead.endRelList();
                                           checkDataRead.displayLoading(false);
+
+                                          Navigator.pushReplacement(
+                                              context,
+                                              PageTransition(
+                                                  duration: Duration(
+                                                      microseconds: 500),
+                                                  type: PageTransitionType.fade,
+                                                  child: ReportsScreen()));
                                         }
-                                        Navigator.pushReplacement(
-                                            context,
-                                            PageTransition(
-                                                duration:
-                                                    Duration(microseconds: 500),
-                                                type: PageTransitionType.fade,
-                                                child: ReportsScreen()));
                                       });
                                     },
                                   )),
