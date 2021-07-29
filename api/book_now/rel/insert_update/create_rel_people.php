@@ -92,7 +92,7 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('INSERT into rel_people (people_id , project_id , paid , support , travel_id , bones , house_id , room_id ) 
+    $query = $writeDB->prepare('INSERT into rel_people (people_id , project_id , paid , support , travel_id , coupons , house_id , room_id ) 
     VALUES (:people_id , :project_id , :paid , :support , :travel_id , :bones , :house_id , :room_id)');
 
     $query->bindParam(':people_id', $people_id, PDO::PARAM_STR);
@@ -128,7 +128,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue Select residence - please try again' . $ex);
+    $response->addMessage('There was an issue Create residence - please try again' . $ex);
     $response->send();
     exit;
 }

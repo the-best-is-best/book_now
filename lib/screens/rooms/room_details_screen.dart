@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
+import 'package:book_now/modals/rooms/add_bunk_bed.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -35,6 +36,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
         .firstWhere((house) => house.id == this.widget.room.houseId);
     if (!firstload) {
       newNumOfBedController.text = widget.room.numbersOfBed.toString();
+      newNumOfBunkBedController.text = widget.room.bunkBed.toString();
       firstload = true;
     }
     return Scaffold(
@@ -109,6 +111,11 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                             if (convertToInt == null) {
                                               return "Number not valid";
                                             }
+                                            if (int.parse(val) * 2 >
+                                                int.parse(newNumOfBedController
+                                                    .text)) {
+                                              return "Number of Bunk Bed issues";
+                                            }
                                             return null;
                                           }),
                                     ],
@@ -131,11 +138,16 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
 
                                           myRoomRead
                                               .updateRoom(
-                                            id: widget.room.name,
-                                            floor: widget.room.floor,
-                                            houseId: widget.room.houseId,
-                                            newNumberOfBed: int.parse(
-                                                newNumOfBedController.text),
+                                            addBunkBed: AddBunkBed(
+                                                room: widget.room.name,
+                                                floor: widget.room.floor,
+                                                houseId: widget.room.houseId,
+                                                bunkBed: int.parse(
+                                                    newNumOfBunkBedController
+                                                        .text),
+                                                numbersOfBed: int.parse(
+                                                    newNumOfBedController
+                                                        .text)),
                                           )
                                               .then(
                                             (response) async {
@@ -146,9 +158,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                                     .then((_) => myRoomRead
                                                             .loadingEnd()
                                                             .then((_) async {
-                                                          newNumOfBedController
-                                                              .text = "";
-
                                                           Navigator.pop(
                                                               context);
                                                           await Flushbar(
@@ -182,9 +191,38 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                       ),
                               ],
                             )
-                          : Text(
-                              "Number of bed : ${widget.room.numbersOfBed}",
-                              style: Theme.of(context).textTheme.headline5,
+                          : Column(
+                              children: [
+                                Text(
+                                  "Number of bed : ${widget.room.numbersOfBed}",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Number of Bunk Bed : ${widget.room.bunkBed}",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "Singe bed : ${widget.room.numbersOfBed - (widget.room.bunkBed * 2)}",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Bunk bed : ${(widget.room.bunkBed)} ",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                              ],
                             ),
                       SizedBox(
                         height: 20,

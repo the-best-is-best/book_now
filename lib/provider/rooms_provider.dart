@@ -1,4 +1,5 @@
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
+import 'package:book_now/modals/rooms/add_bunk_bed.dart';
 import 'package:book_now/modals/rooms/create_room_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
@@ -95,25 +96,14 @@ class RoomsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateRoom(
-      {required int id,
-      required int houseId,
-      required int floor,
-      required int newNumberOfBed}) async {
+  Future updateRoom({required AddBunkBed addBunkBed}) async {
     loading = true;
     notifyListeners();
-    Map<String, int> data = {
-      "id": id,
-      "floor": floor,
-      "house_id": houseId,
-      "numbers_of_bed": newNumberOfBed
-    };
+    var data = addBunkBed.toJson();
     var response = await DioHelper.putData(
       url: "update_data/room_update.php",
       query: data,
     );
-    // myRooms.sort((a, b) => a.name.compareTo(b.name));
-    // myRooms.sort((a, b) => a.floor.compareTo(b.floor));
 
     notifyListeners();
 

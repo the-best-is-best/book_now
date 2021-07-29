@@ -234,6 +234,7 @@ Widget repSelectPeople() {
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonFormField<int?>(
                                 hint: Text('Select Room'),
+                                isExpanded: true,
                                 value: myRelPeopleWatch.selectedRoom,
                                 items: myRelPeopleWatch.relRoom.map((room) {
                                   int? value = myReportWatch
@@ -250,7 +251,7 @@ Widget repSelectPeople() {
                                       ? DropdownMenuItem(
                                           value: value,
                                           child: Text(
-                                            "Room : ${room.name.toString()} - Floor : ${room.floor}",
+                                            "Room : ${room.name.toString()} - Floor : ${room.floor} - single bed ${room.numbersOfBed - (room.bunkBed * 2)}  Bunk bed : ${room.bunkBed}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2,
@@ -261,6 +262,7 @@ Widget repSelectPeople() {
                                           onTap: () => null,
                                           child: Text(
                                             "Room : ${room.name.toString()} - Floor : ${room.floor}",
+                                            overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2!

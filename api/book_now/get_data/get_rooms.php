@@ -46,7 +46,7 @@ try {
     }
     $get_id_data =  $_GET["id"];
 
-    $query = $readDB->prepare('SELECT * FROM rooms  WHERE id IN (' . implode(',', $get_id_data) . ')');
+    $query = $readDB->prepare('SELECT * FROM rooms  WHERE id IN (' . implode(',', $get_id_data) . ') ORDER BY name DESC , floor DESC');
 
     $query->execute();
 
