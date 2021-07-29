@@ -375,6 +375,7 @@ Widget repSelectPeople() {
                                     myRelPeopleRead.changeSelectedPeople(null);
                                     myRelPeopleRead.changeSelectedRoom(null);
                                     myRelPeopleRead.changeSelectedTravel(null);
+                                    myRelPeopleRead.changecouponsState(false);
 
                                     myReportRead.getNewData();
                                     await Flushbar(

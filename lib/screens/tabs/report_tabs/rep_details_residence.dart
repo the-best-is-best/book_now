@@ -60,70 +60,74 @@ Widget repDetailsResidenceTab() {
                     SizedBox(
                       height: 10,
                     ),
-                    ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: myReportWatch.myRelPeople.length,
-                        itemBuilder: (context, index) {
-                          String peopleName = myPeople.myPeople
-                              .firstWhere((people) =>
-                                  people.id ==
-                                  myReportWatch.myRelPeople[index].id)
-                              .name;
-                          return Container(
-                            height: 40,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                    width: query.width * .5,
-                                    child: Center(child: Text(peopleName))),
-                                Container(
-                                  width: 2,
-                                  color: Colors.grey,
-                                ),
-                                Container(
-                                  width: query.width * .2,
-                                  child: Center(
-                                    child: Text(myReportWatch
-                                        .myRelPeople[index].roomId
-                                        .toString()),
+                    Container(
+                      height: query.height * .6,
+                      child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: myReportWatch.myRelPeople.length,
+                          itemBuilder: (context, index) {
+                            String peopleName = myPeople.myPeople
+                                .firstWhere((people) =>
+                                    people.id ==
+                                    myReportWatch.myRelPeople[index].id)
+                                .name;
+                            return Container(
+                              height: 40,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                      width: query.width * .5,
+                                      child: Center(child: Text(peopleName))),
+                                  Container(
+                                    width: 2,
+                                    color: Colors.grey,
                                   ),
-                                ),
-                                Container(
-                                  width: 2,
-                                  color: Colors.grey,
-                                ),
-                                Container(
-                                  width: query.width * .2,
-                                  child: Center(
-                                    child: IconButton(
-                                      padding: EdgeInsets.all(0),
-                                      icon: Icon(Icons.change_circle),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            PageTransition(
-                                                duration:
-                                                    Duration(microseconds: 500),
-                                                type: PageTransitionType.fade,
-                                                child: ChangeRoomResidence(
-                                                    myReportWatch
-                                                        .myRelPeople[index]
-                                                        .id)));
-                                      },
+                                  Container(
+                                    width: query.width * .2,
+                                    child: Center(
+                                      child: Text(myReportWatch
+                                          .myRelPeople[index].roomId
+                                          .toString()),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Divider(
-                            thickness: 2,
-                          );
-                        }),
+                                  Container(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  Container(
+                                    width: query.width * .2,
+                                    child: Center(
+                                      child: IconButton(
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(Icons.change_circle),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  duration: Duration(
+                                                      microseconds: 500),
+                                                  type: PageTransitionType.fade,
+                                                  child: ChangeRoomResidence(
+                                                      myReportWatch
+                                                          .myRelPeople[index]
+                                                          .id)));
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                              thickness: 2,
+                            );
+                          }),
+                    ),
                   ],
                 ),
               ),

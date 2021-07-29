@@ -67,7 +67,8 @@ Widget createRoomTab() {
                       type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
-                          return "Empty !!";
+                          lastRoomController.text = val = 0.toString();
+                          return null;
                         }
                         int? convertToInt = int.tryParse(val);
                         if (convertToInt == null) {

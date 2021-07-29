@@ -55,14 +55,18 @@ class RoomsProvider with ChangeNotifier {
                 room.floor == data['floor'] &&
                 room.houseId == data['house_id'], orElse: () {
           return RoomsModel(
-              id: 0, name: 0, floor: 0, houseId: 0, numbersOfBed: 0);
+              id: 0,
+              name: 0,
+              floor: 0,
+              houseId: 0,
+              numbersOfBed: 0,
+              bunkBed: 0);
         });
 
         if (roomUpdated.id != 0)
           roomUpdated.numbersOfBed = data['numbers_of_bed'];
       });
     }
-    // myRooms.sort((a, b) => a.name.compareTo(b.name));
 
     notifyListeners();
   }
@@ -82,8 +86,6 @@ class RoomsProvider with ChangeNotifier {
       url: "insert_data/create_room.php",
       query: createRoom,
     );
-    // myRooms.sort((a, b) => a.name.compareTo(b.name));
-    // myRooms.sort((a, b) => a.floor.compareTo(b.floor));
 
     return response;
   }

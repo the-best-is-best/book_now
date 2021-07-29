@@ -281,11 +281,13 @@ class HistoryScreen extends StatelessWidget {
                                         ),
                                         onNotification: (dynamic scroll) {
                                           if (scroll is ScrollEndNotification) {
-                                            if (scrollListView
-                                                    .position.maxScrollExtent ==
-                                                scroll.metrics.pixels) {
-                                              print("end Scroll");
-                                              myHistoryRead.getNexPage();
+                                            if (myHistoryWatch.curPage !=
+                                                myHistoryWatch.maxPage) {
+                                              if (scrollListView.position
+                                                      .maxScrollExtent ==
+                                                  scroll.metrics.pixels) {
+                                                myHistoryRead.getNexPage();
+                                              }
                                             }
                                           }
                                           return true;

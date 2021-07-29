@@ -22,6 +22,8 @@ class RoomDetailsScreen extends StatefulWidget {
 class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
   final _keyForm = GlobalKey<FormState>();
   final newNumOfBedController = TextEditingController();
+  final newNumOfBunkBedController = TextEditingController();
+
   bool firstload = false;
 
   @override
@@ -70,21 +72,47 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                               children: [
                                 Form(
                                   key: _keyForm,
-                                  child: defaultFormField(
-                                      context: context,
-                                      controller: newNumOfBedController,
-                                      label: 'New number of bed',
-                                      type: TextInputType.number,
-                                      validate: (String? val) {
-                                        if (val == null || val.isEmpty) {
-                                          return 'empty !!';
-                                        }
-                                        int? convertToInt = int.tryParse(val);
-                                        if (convertToInt == null) {
-                                          return "Number not valid";
-                                        }
-                                        return null;
-                                      }),
+                                  child: Column(
+                                    children: [
+                                      defaultFormField(
+                                          context: context,
+                                          controller: newNumOfBedController,
+                                          label: 'New number of bed',
+                                          type: TextInputType.number,
+                                          validate: (String? val) {
+                                            if (val == null || val.isEmpty) {
+                                              return 'empty !!';
+                                            }
+                                            int? convertToInt =
+                                                int.tryParse(val);
+                                            if (convertToInt == null) {
+                                              return "Number not valid";
+                                            }
+                                            return null;
+                                          }),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      defaultFormField(
+                                          context: context,
+                                          controller: newNumOfBunkBedController,
+                                          label: 'New bunk bed',
+                                          type: TextInputType.number,
+                                          validate: (String? val) {
+                                            if (val == null || val.isEmpty) {
+                                              newNumOfBunkBedController.text =
+                                                  val = 0.toString();
+                                              return null;
+                                            }
+                                            int? convertToInt =
+                                                int.tryParse(val);
+                                            if (convertToInt == null) {
+                                              return "Number not valid";
+                                            }
+                                            return null;
+                                          }),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 20,

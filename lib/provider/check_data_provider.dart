@@ -170,7 +170,9 @@ class CheckDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int recInPage = 50;
   int maxPage = 0;
+
   List<ListenDataModel> history = [];
 
   bool loadNewHistoryData = false;
@@ -180,15 +182,16 @@ class CheckDataProvider with ChangeNotifier {
 
     notifyListeners();
     bool decimal = false;
-    if (((listenData.length) / 25) % 1 != 0) {
+    if (((listenData.length) / recInPage) % 1 != 0) {
       decimal = true;
     }
-    maxPage = decimal ? listenData.length ~/ 25 + 1 : listenData.length ~/ 25;
+    maxPage = decimal
+        ? listenData.length ~/ recInPage + 1
+        : listenData.length ~/ recInPage;
   }
 
   int curPage = 1;
   Future getNexPage() async {
-    print(maxPage);
     if (maxPage != 0) {
       if (curPage != maxPage) {
         curPage += 1;
@@ -208,7 +211,8 @@ class CheckDataProvider with ChangeNotifier {
     notifyListeners();
     Future.delayed(Duration(milliseconds: 500), () {
       history = listenData
-          .getRange(0, page != maxPage ? page + 1 * 25 : listenData.length)
+          .getRange(
+              0, page != maxPage ? page + 1 * recInPage : listenData.length)
           .toList();
       sleep(const Duration(seconds: 1));
       loadNewHistoryData = false;
