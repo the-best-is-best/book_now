@@ -9,6 +9,8 @@ import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:book_now/screens/project/project_screen.dart';
 import 'package:book_now/style/main_style.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,7 @@ class RunMyApp extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +86,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: ProjectScreen(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
     );
   }
 }

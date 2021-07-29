@@ -30,7 +30,6 @@ class ReportsScreen extends StatelessWidget {
               myReportRead.backProject();
               myRelPeopleRead.changeSelectedPeople(null);
               myRelPeopleRead.changeSelectedTravel(null);
-              myRelPeopleRead.changeSelectedHouse(null);
               myRelPeopleRead.changeSelectedRoom(null);
               myRelPeopleRead.changecouponsState(false);
               Navigator.pushReplacement(

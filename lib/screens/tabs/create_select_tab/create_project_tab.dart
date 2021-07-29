@@ -135,7 +135,7 @@ Widget createProjectTab() {
                                 CreateProjectModel(
                                     projectName: projectNameController.text,
                                     price: int.parse(priceController.text),
-                                    house: myProjectWatch.houseSelected!,
+                                    houseId: myProjectWatch.houseSelected!,
                                     endDate: endDateController.text);
                             myProjectRead
                                 .createProjectClicked(createProjectModel)

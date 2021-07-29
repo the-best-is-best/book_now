@@ -1,6 +1,8 @@
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
+import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/screens/reports_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -14,9 +16,10 @@ Widget selectProjectTab() {
           final myProjectWatch = context.watch<MyProjectProvider>();
 
           final reportsRead = context.read<ReportsProvider>();
-
+          final relPeopleRead = context.read<RelPeopleProvider>();
           final checkDataRead = context.read<CheckDataProvider>();
           final checkDataWatch = context.watch<CheckDataProvider>();
+          final myRoomWatch = context.watch<RoomsProvider>();
 
           final query = MediaQuery.of(context).size;
           return Column(
@@ -75,6 +78,11 @@ Widget selectProjectTab() {
                                           checkDataRead.displayLoading(false);
                                         }
                                       });
+                                      relPeopleRead.myHouse(myProjectWatch
+                                          .myProject[index].houseId);
+
+                                      relPeopleRead
+                                          .getRooms(myRoomWatch.myRooms);
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(

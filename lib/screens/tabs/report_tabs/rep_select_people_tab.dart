@@ -4,11 +4,9 @@ import 'package:book_now/component/round_check_box_component.dart';
 import 'package:book_now/component/search_component.dart';
 import 'package:book_now/modals/rel/people/create_rel_people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
-import 'package:book_now/provider/houses_provider.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
-import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +14,6 @@ import 'package:provider/provider.dart';
 Widget repSelectPeople() {
   final formKey = GlobalKey<FormState>();
   final searchPeopleController = TextEditingController();
-  final searchHouseController = TextEditingController();
   final paidController = TextEditingController();
   final supportController = TextEditingController();
   return Builder(
@@ -26,15 +23,11 @@ Widget repSelectPeople() {
       final myPeopleWatch = context.watch<PeopleProvider>();
       final myPeopleRead = context.read<PeopleProvider>();
 
-      final myHouseWatch = context.watch<HousesProvider>();
-      final myHouseRead = context.read<HousesProvider>();
-
       final myTravelWatch = context.watch<TravelProvider>();
 
       final myRelPeopleWatch = context.watch<RelPeopleProvider>();
       final myRelPeopleRead = context.read<RelPeopleProvider>();
 
-      final myRoomWatch = context.read<RoomsProvider>();
       return Container(
         child: Center(
           child: SingleChildScrollView(
@@ -239,69 +232,6 @@ Widget repSelectPeople() {
                             padding: EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 25),
                             width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                myHouseWatch.myHouses.length > 20
-                                    ? buildSearchComponent(
-                                        context: context,
-                                        searchController: searchHouseController,
-                                        searchTitle: "house name",
-                                        onSubmit: (String? val) {
-                                          myHouseRead.searchHouse(val!);
-                                        },
-                                      )
-                                    : Container(),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                DropdownButtonFormField<int?>(
-                                    icon: null,
-                                    hint: Text('Select House'),
-                                    value: myRelPeopleWatch.selectedhouseId,
-                                    items: searchHouseController.text.isEmpty
-                                        ? myHouseWatch.myHouses
-                                            .map((house) => DropdownMenuItem(
-                                                  value: house.id,
-                                                  child: Text(
-                                                    house.name,
-                                                  ),
-                                                ))
-                                            .toList()
-                                        : myHouseWatch.searchMyHouse
-                                            .map((house) => DropdownMenuItem(
-                                                  value: house.id,
-                                                  child: Text(
-                                                    house.name,
-                                                  ),
-                                                ))
-                                            .toList(),
-                                    onChanged: (value) {
-                                      myRelPeopleRead
-                                          .changeSelectedHouse(value!);
-                                      myRelPeopleRead.changeSelectedRoom(null);
-
-                                      myRelPeopleRead
-                                          .getRooms(myRoomWatch.myRooms);
-                                      myReportRead.getNewData();
-                                    },
-                                    validator: (int? val) {
-                                      if (val == null || val == 0) {
-                                        return "select house plz";
-                                      }
-                                    }),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black38),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 25),
-                            width: MediaQuery.of(context).size.width,
                             child: DropdownButtonFormField<int?>(
                                 hint: Text('Select Room'),
                                 value: myRelPeopleWatch.selectedRoom,
@@ -315,8 +245,8 @@ Widget repSelectPeople() {
                                                       .numberofBedsRemaining[
                                                   room.id]!
                                           ? room.id
-                                          : null;
-                                  return value != null
+                                          : 0;
+                                  return value != 0
                                       ? DropdownMenuItem(
                                           value: value,
                                           child: Text(
@@ -327,7 +257,7 @@ Widget repSelectPeople() {
                                           ),
                                         )
                                       : DropdownMenuItem(
-                                          value: null,
+                                          value: 0,
                                           onTap: () => null,
                                           child: Text(
                                             "Room : ${room.name.toString()} - Floor : ${room.floor}",
@@ -339,7 +269,7 @@ Widget repSelectPeople() {
                                         );
                                 }).toList(),
                                 onChanged: (value) {
-                                  if (value != null) {
+                                  if (value != 0) {
                                     myRelPeopleRead.changeSelectedRoom(value);
                                     myReportRead.getNewData();
                                   }
@@ -415,7 +345,8 @@ Widget repSelectPeople() {
                                 myReportWatch.myProject!.price) {
                               await Flushbar(
                                 title: 'Error',
-                                message: "Paid + suppot > price !!",
+                                message:
+                                    "Paid + suppot > price !! ${myReportWatch.myProject!.price}",
                                 duration: Duration(seconds: 3),
                               ).show(context);
                               return;
@@ -442,7 +373,6 @@ Widget repSelectPeople() {
                                         supportController.text = "";
 
                                     myRelPeopleRead.changeSelectedPeople(null);
-                                    myRelPeopleRead.changeSelectedHouse(null);
                                     myRelPeopleRead.changeSelectedRoom(null);
                                     myRelPeopleRead.changeSelectedTravel(null);
 

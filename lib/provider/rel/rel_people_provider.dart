@@ -12,6 +12,14 @@ class RelPeopleProvider with ChangeNotifier {
   int? selectedRoom;
   List<RoomsModel> relRoom = [];
 
+  void myHouse(int houseId) {
+    selectedhouseId = houseId;
+  }
+
+  void backProject() {
+    selectedhouseId = null;
+  }
+
   void changeSelectedPeople(int? val) {
     selectedPeople = val;
     notifyListeners();
@@ -25,10 +33,6 @@ class RelPeopleProvider with ChangeNotifier {
 
   void changecouponsState(val) {
     coupons = val;
-  }
-
-  void changeSelectedHouse(int? val) {
-    selectedhouseId = val;
   }
 
   Future getRooms(List<RoomsModel> room) async {
