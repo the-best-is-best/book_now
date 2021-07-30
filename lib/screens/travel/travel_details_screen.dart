@@ -153,7 +153,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                             )
                           : Text(
                               "Name : ${widget.travel.name}",
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context).textTheme.headline3,
                             ),
                       SizedBox(
                         height: 20,

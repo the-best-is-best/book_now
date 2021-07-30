@@ -21,7 +21,7 @@ Widget createTravelTab() {
           Center(
               child: Text(
             "Create Travel",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline1,
           )),
           SizedBox(
             height: 5,

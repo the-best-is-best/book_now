@@ -195,14 +195,14 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                               children: [
                                 Text(
                                   "Number of bed : ${widget.room.numbersOfBed}",
-                                  style: Theme.of(context).textTheme.headline5,
+                                  style: Theme.of(context).textTheme.headline3,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
                                 Text(
                                   "Number of Bunk Bed : ${widget.room.bunkBed}",
-                                  style: Theme.of(context).textTheme.headline5,
+                                  style: Theme.of(context).textTheme.headline3,
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -213,14 +213,14 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                 ),
                                 Text(
                                   "Singe bed : ${widget.room.numbersOfBed - (widget.room.bunkBed * 2)}",
-                                  style: Theme.of(context).textTheme.headline5,
+                                  style: Theme.of(context).textTheme.headline3,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
                                 Text(
-                                  "Bunk bed : ${(widget.room.bunkBed)} ",
-                                  style: Theme.of(context).textTheme.headline5,
+                                  "Bunk bed : ${(widget.room.bunkBed)} - (*2) ",
+                                  style: Theme.of(context).textTheme.headline3,
                                 ),
                               ],
                             ),

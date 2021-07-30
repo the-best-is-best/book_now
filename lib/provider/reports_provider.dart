@@ -36,7 +36,6 @@ class ReportsProvider with ChangeNotifier {
         url: 'rel/get_data/get_rel_people.php', query: data);
     if (response.statusCode == 201) {
       var datas = response.data['data'];
-      print(response);
       // update list
       datas.forEach((data) => myRelPeople.add(RelPeopleModel.fromJson(data)));
     }

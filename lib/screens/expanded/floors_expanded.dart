@@ -29,7 +29,7 @@ Widget buildFloorsExpanded(
             Center(
               child: Text(
                 "Floors",
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
             SizedBox(
@@ -101,7 +101,7 @@ Widget buildFloorsExpanded(
                   : Center(
                       child: Text(
                         "No floors",
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
             ),

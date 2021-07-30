@@ -26,7 +26,7 @@ Widget createRoomTab() {
           Center(
               child: Text(
             "Create Room",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline1,
           )),
           SizedBox(
             height: 5,

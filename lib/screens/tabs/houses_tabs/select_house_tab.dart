@@ -30,7 +30,7 @@ Widget selectHousesTab() {
             Center(
                 child: Text(
               "Select Houses",
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline1,
             )),
             SizedBox(
               height: 5,
@@ -53,7 +53,7 @@ Widget selectHousesTab() {
                       : Center(
                           child: Text(
                             "No houses",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         )
                   : myHousesWatch.searchMyHouse.length > 0
@@ -66,7 +66,7 @@ Widget selectHousesTab() {
                       : Center(
                           child: Text(
                             "No Houses",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
             ),
@@ -102,11 +102,11 @@ ListView buildListView({
                         header: searchControllerController.text.isEmpty
                             ? Text(
                                 "$index - ${myHousesWatch.myHouses[index].name}",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.headline3,
                               )
                             : Text(
                                 "$index - ${myHousesWatch.searchMyHouse[index].name}",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                         collapsed: Container(),
                         expanded: Container(

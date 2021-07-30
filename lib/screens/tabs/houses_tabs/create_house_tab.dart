@@ -23,7 +23,7 @@ Widget createHouseTab() {
           Center(
               child: Text(
             "Create Houses",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline1,
           )),
           SizedBox(
             height: 5,
@@ -42,7 +42,7 @@ Widget createHouseTab() {
                   defaultFormField(
                       context: context,
                       controller: houseNameController,
-                      label: 'House Name',
+                      label: 'House Name *',
                       type: TextInputType.text,
                       validate: (String? val) {
                         if (val == null || val.isEmpty || val.length < 3) {
@@ -56,7 +56,7 @@ Widget createHouseTab() {
                   defaultFormField(
                       context: context,
                       controller: floorNamberController,
-                      label: 'Total floors',
+                      label: 'Total floors *',
                       type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {

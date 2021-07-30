@@ -29,7 +29,7 @@ Widget selectProjectTab() {
               Center(
                   child: Text(
                 "Select Project",
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headline1,
               )),
               SizedBox(
                 height: 5,
@@ -103,7 +103,7 @@ Widget selectProjectTab() {
                       : Center(
                           child: Text(
                             "No projects",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
                 ),

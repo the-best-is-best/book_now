@@ -220,17 +220,53 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              Text(
-                                "Name : ${widget.people.name}",
-                                style: Theme.of(context).textTheme.headline6,
+                              RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "Name : ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3),
+                                  TextSpan(
+                                    text: "${widget.people.name}",
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                ]),
                               ),
-                              Text(
-                                "Telephone : ${widget.people.tel}",
-                                style: Theme.of(context).textTheme.headline6,
+                              SizedBox(
+                                height: 10,
                               ),
-                              Text(
-                                "City : ${widget.people.city}",
-                                style: Theme.of(context).textTheme.headline6,
+                              RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "Telephone : ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3),
+                                  TextSpan(
+                                    text: "${widget.people.tel}",
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                ]),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "City : ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3),
+                                  TextSpan(
+                                    text: "${widget.people.city}",
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                ]),
                               ),
                               SizedBox(
                                 height: 20,

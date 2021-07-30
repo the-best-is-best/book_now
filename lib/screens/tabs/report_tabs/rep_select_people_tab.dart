@@ -78,7 +78,7 @@ Widget repSelectPeople() {
                               ),
                               DropdownButtonFormField<int?>(
                                   icon: null,
-                                  hint: Text('Select People'),
+                                  hint: Text('Select People *'),
                                   value: myRelPeopleWatch.selectedPeople,
                                   items: searchPeopleController.text.isEmpty
                                       ? myPeopleWatch.myPeople
@@ -115,7 +115,7 @@ Widget repSelectPeople() {
                                   child: Text(
                                     "Person Information",
                                     style:
-                                        Theme.of(context).textTheme.headline5,
+                                        Theme.of(context).textTheme.headline3,
                                   ),
                                 ),
                               ),
@@ -125,20 +125,38 @@ Widget repSelectPeople() {
                               myRelPeopleWatch.selectedPeople != null
                                   ? Column(
                                       children: [
-                                        Text(
-                                          "Number : ${myPeopleWatch.myPeople.firstWhere((people) => people.id == myRelPeopleRead.selectedPeople).tel} ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
+                                        RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: "Number : ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline3),
+                                            TextSpan(
+                                                text:
+                                                    "${myPeopleWatch.myPeople.firstWhere((people) => people.id == myRelPeopleRead.selectedPeople).tel} ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4),
+                                          ]),
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "City : ${myPeopleWatch.myPeople.firstWhere((people) => people.id == myRelPeopleRead.selectedPeople).city} ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
+                                        RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: "City : ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline3),
+                                            TextSpan(
+                                                text:
+                                                    "${myPeopleWatch.myPeople.firstWhere((people) => people.id == myRelPeopleRead.selectedPeople).city} ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4),
+                                          ]),
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -148,7 +166,7 @@ Widget repSelectPeople() {
                                   : Text(
                                       "Please select People",
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline4,
                                     )
                             ]),
                           ),
@@ -158,7 +176,7 @@ Widget repSelectPeople() {
                           defaultFormField(
                             context: context,
                             controller: paidController,
-                            label: 'Paid',
+                            label: 'Paid *',
                             type: TextInputType.number,
                             validate: (String? val) {
                               if (val == null || val.isEmpty) {
@@ -181,7 +199,8 @@ Widget repSelectPeople() {
                             type: TextInputType.number,
                             validate: (String? val) {
                               if (val == null || val.isEmpty) {
-                                return "Empty !!";
+                                supportController.text = val = "0";
+                                return null;
                               }
                               int? convertToInt = int.tryParse(val);
                               if (convertToInt == null) {
@@ -202,7 +221,7 @@ Widget repSelectPeople() {
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonFormField<int?>(
                                 icon: null,
-                                hint: Text('Select Travel'),
+                                hint: Text('Select Travel *'),
                                 value: myRelPeopleWatch.selectedTravel,
                                 items: myTravelWatch.myTravel
                                     .map((travel) => DropdownMenuItem(
@@ -233,7 +252,7 @@ Widget repSelectPeople() {
                                 vertical: 4, horizontal: 25),
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonFormField<int?>(
-                                hint: Text('Select Room'),
+                                hint: Text('Select Room *'),
                                 isExpanded: true,
                                 value: myRelPeopleWatch.selectedRoom,
                                 items: myRelPeopleWatch.relRoom.map((room) {
@@ -251,7 +270,8 @@ Widget repSelectPeople() {
                                       ? DropdownMenuItem(
                                           value: value,
                                           child: Text(
-                                            "Room : ${room.name.toString()} - Floor : ${room.floor} - single bed ${room.numbersOfBed - (room.bunkBed * 2)}  Bunk bed : ${room.bunkBed}",
+                                            "Room : ${room.name.toString()} - Floor : ${room.floor} - single bed ${room.numbersOfBed - (room.bunkBed * 2)}  Bunk bed : ${room.bunkBed} - (*2)",
+                                            overflow: TextOverflow.fade,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2,
@@ -262,7 +282,7 @@ Widget repSelectPeople() {
                                           onTap: () => null,
                                           child: Text(
                                             "Room : ${room.name.toString()} - Floor : ${room.floor}",
-                                            overflow: TextOverflow.ellipsis,
+                                            overflow: TextOverflow.fade,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2!
@@ -292,7 +312,7 @@ Widget repSelectPeople() {
                               children: [
                                 Text(
                                   "coupons :",
-                                  style: Theme.of(context).textTheme.headline6,
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                                 SizedBox(
                                   width: 15,

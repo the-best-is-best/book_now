@@ -34,7 +34,7 @@ Widget selectPeopleTab() {
             Center(
                 child: Text(
               "Select People",
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline1,
             )),
             SizedBox(
               height: 5,
@@ -55,7 +55,7 @@ Widget selectPeopleTab() {
                     : Center(
                         child: Text(
                           "No people",
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       )
                 : myPeopleWatch.searchMypeople.length > 0

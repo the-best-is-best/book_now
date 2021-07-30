@@ -29,7 +29,7 @@ Widget createProjectTab() {
           Center(
               child: Text(
             "Create Project",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline1,
           )),
           SizedBox(
             height: 5,
@@ -48,7 +48,7 @@ Widget createProjectTab() {
                   defaultFormField(
                       context: context,
                       controller: projectNameController,
-                      label: 'Project Name',
+                      label: 'Project Name *',
                       type: TextInputType.text,
                       validate: (String? val) {
                         if (val == null || val.isEmpty || val.length < 3) {
@@ -67,7 +67,7 @@ Widget createProjectTab() {
                     width: MediaQuery.of(context).size.width,
                     child: DropdownButtonFormField<int?>(
                         icon: null,
-                        hint: Text('Select House'),
+                        hint: Text('Select House *'),
                         value: myProjectWatch.houseSelected,
                         items: myHousesWatch.myHouses
                             .map((house) => DropdownMenuItem(
@@ -92,7 +92,7 @@ Widget createProjectTab() {
                   defaultFormField(
                       context: context,
                       controller: priceController,
-                      label: 'Price',
+                      label: 'Price *',
                       type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
@@ -110,7 +110,7 @@ Widget createProjectTab() {
                   defaultDateTimePicker(
                       context: context,
                       controller: endDateController,
-                      label: "End Date",
+                      label: "End Date *",
                       validator: (String? val) {
                         if (val == null ||
                             val.isEmpty ||

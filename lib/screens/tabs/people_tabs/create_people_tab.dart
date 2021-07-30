@@ -23,7 +23,7 @@ Widget createPeopleTab() {
           Center(
               child: Text(
             "Create People",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline1,
           )),
           SizedBox(
             height: 5,
@@ -42,7 +42,7 @@ Widget createPeopleTab() {
                   defaultFormField(
                       context: context,
                       controller: peopleNameController,
-                      label: 'People Name',
+                      label: 'People Name *',
                       type: TextInputType.text,
                       validate: (String? val) {
                         if (val == null || val.isEmpty || val.length < 3) {
@@ -60,7 +60,8 @@ Widget createPeopleTab() {
                       type: TextInputType.number,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {
-                          return "Empty !!";
+                          telController.text = val = "0";
+                          return null;
                         }
                         int? convertToInt = int.tryParse(val);
                         if (convertToInt == null) {
@@ -74,7 +75,7 @@ Widget createPeopleTab() {
                   defaultFormField(
                       context: context,
                       controller: cityController,
-                      label: 'City',
+                      label: 'City *',
                       type: TextInputType.text,
                       validate: (String? val) {
                         if (val == null || val.isEmpty) {

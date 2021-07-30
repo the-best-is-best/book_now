@@ -17,7 +17,7 @@ Widget repDetailsResidenceTab() {
             children: [
               Text(
                 "Residence",
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 height: 10,
@@ -33,7 +33,11 @@ Widget repDetailsResidenceTab() {
                         children: [
                           Container(
                               width: query.width * .5,
-                              child: Center(child: Text("Name"))),
+                              child: Center(
+                                  child: Text(
+                                "Name",
+                                overflow: TextOverflow.fade,
+                              ))),
                           Container(
                             width: 2,
                             color: Colors.grey,

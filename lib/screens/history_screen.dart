@@ -49,7 +49,7 @@ class HistoryScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       "Filter Date",
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   SizedBox(
@@ -75,7 +75,7 @@ class HistoryScreen extends StatelessWidget {
                               width: 600 * .2,
                               child: Text(
                                 "From",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.headline4,
                               ),
                             ),
                             Container(
@@ -95,7 +95,7 @@ class HistoryScreen extends StatelessWidget {
                               width: 600 * .2,
                               child: Text(
                                 "To",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.headline4,
                               ),
                             ),
                             Container(
@@ -165,7 +165,7 @@ class HistoryScreen extends StatelessWidget {
                                               "Table Name",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline6,
+                                                  .headline3,
                                             ),
                                           ),
                                         ),
@@ -176,7 +176,7 @@ class HistoryScreen extends StatelessWidget {
                                               "Action",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline6,
+                                                  .headline3,
                                             ),
                                           ),
                                         ),
@@ -187,7 +187,7 @@ class HistoryScreen extends StatelessWidget {
                                               "Date",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline6,
+                                                  .headline3,
                                             ),
                                           ),
                                         ),

@@ -31,7 +31,7 @@ Widget selectRoomTab() {
             Center(
                 child: Text(
               "Select Room",
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline1,
             )),
             SizedBox(
               height: 5,
@@ -76,7 +76,7 @@ Widget selectRoomTab() {
                         : Center(
                             child: Text(
                               "No Rooms",
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context).textTheme.headline3,
                             ),
                           ),
                   ),
