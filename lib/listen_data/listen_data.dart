@@ -84,6 +84,8 @@ FutureBuilder getDataServer({
                       checkDataWatch.insertRelPeople, peopleDataWatch.myPeople)
                   .then((_) async {
                 myReportRead.getnumberofBedsRemaining();
+                myReportRead.getMaxPage();
+                myReportRead.getDataPage(1);
               });
             }
             checkDataRead.endRelList();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2021 at 09:02 PM
+-- Generation Time: Jul 30, 2021 at 09:36 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -77,7 +77,14 @@ INSERT INTO `book_now_log` (`id`, `record_id`, `action`, `table_name`, `date`) V
 (35, 1, 'updated', 'rooms', '2021-07-29 18:31:07'),
 (36, 1, 'updated', 'rooms', '2021-07-29 18:32:58'),
 (37, 1, 'updated', 'rooms', '2021-07-29 18:33:37'),
-(38, 1, 'updated', 'rooms', '2021-07-29 18:40:06');
+(38, 1, 'updated', 'rooms', '2021-07-29 18:40:06'),
+(39, 11, 'inserted', 'people', '2021-07-30 13:11:06'),
+(40, 17, 'inserted', 'people', '2021-07-30 13:14:05'),
+(41, 2, 'inserted', 'project', '2021-07-30 14:51:00'),
+(42, 18, 'inserted', 'people', '2021-07-30 19:20:09'),
+(43, 17, 'deleted', 'people', '2021-07-30 19:33:23'),
+(44, 18, 'deleted', 'people', '2021-07-30 19:33:23'),
+(45, 12, 'inserted', 'people', '2021-07-30 19:34:50');
 
 -- --------------------------------------------------------
 
@@ -107,7 +114,9 @@ INSERT INTO `book_now_rel_log` (`id`, `record_id`, `action`, `table_name`, `date
 (7, 7, 'inserted', 'rel_people', '2021-07-29 15:34:08'),
 (8, 8, 'inserted', 'rel_people', '2021-07-29 15:34:51'),
 (9, 9, 'inserted', 'rel_people', '2021-07-29 15:35:12'),
-(10, 10, 'inserted', 'rel_people', '2021-07-29 15:35:34');
+(10, 10, 'inserted', 'rel_people', '2021-07-29 15:35:34'),
+(11, 11, 'inserted', 'rel_people', '2021-07-30 13:24:53'),
+(12, 12, 'inserted', 'rel_people', '2021-07-30 19:35:21');
 
 -- --------------------------------------------------------
 
@@ -172,7 +181,9 @@ INSERT INTO `people` (`id`, `name`, `tel`, `city`) VALUES
 (7, 'People 7', 12874, 'Minia'),
 (8, 'People 8', 128742, 'Minia'),
 (9, 'People 9', 128770445, 'Alex'),
-(10, 'People 10', 128770446, 'Alex');
+(10, 'People 10', 128770446, 'Alex'),
+(11, 'People 11', 0, 'Alex'),
+(12, 'People 12', 0, 'Alex');
 
 --
 -- Triggers `people`
@@ -209,7 +220,8 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`id`, `project_name`, `price`, `house_id`, `end_date`) VALUES
-(1, 'Project', 150, 1, '2021-07-30 22:46:00');
+(1, 'Project', 150, 1, '2021-07-30 22:46:00'),
+(2, 'Project 2', 450, 2, '2021-08-10 14:53:00');
 
 --
 -- Triggers `project`
@@ -259,7 +271,9 @@ INSERT INTO `rel_people` (`id`, `people_id`, `project_id`, `paid`, `support`, `t
 (7, 7, 1, 150, 0, 3, 0, 1, 11),
 (8, 8, 1, 100, 50, 1, 0, 1, 10),
 (9, 9, 1, 50, 0, 2, 1, 1, 10),
-(10, 10, 1, 75, 25, 2, 0, 1, 3);
+(10, 10, 1, 75, 25, 2, 0, 1, 3),
+(11, 11, 1, 75, 0, 3, 0, 1, 11),
+(12, 12, 1, 125, 0, 2, 1, 1, 2);
 
 --
 -- Triggers `rel_people`
@@ -392,7 +406,6 @@ ALTER TABLE `houses`
 --
 ALTER TABLE `people`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `tel` (`tel`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
@@ -427,13 +440,13 @@ ALTER TABLE `travel`
 -- AUTO_INCREMENT for table `book_now_log`
 --
 ALTER TABLE `book_now_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `book_now_rel_log`
 --
 ALTER TABLE `book_now_rel_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `houses`
@@ -445,19 +458,19 @@ ALTER TABLE `houses`
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rel_people`
 --
 ALTER TABLE `rel_people`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `rooms`

@@ -36,7 +36,7 @@ Widget repSelectPeople() {
                 Center(
                     child: Text(
                   "Create Residence",
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headline1,
                 )),
                 SizedBox(
                   height: 5,
@@ -48,7 +48,6 @@ Widget repSelectPeople() {
                   height: 15,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.1,
                   child: Card(
                     child: Form(
                       key: formKey,

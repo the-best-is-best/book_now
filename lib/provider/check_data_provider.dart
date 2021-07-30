@@ -211,8 +211,7 @@ class CheckDataProvider with ChangeNotifier {
     notifyListeners();
     Future.delayed(Duration(milliseconds: 500), () {
       history = listenData
-          .getRange(
-              0, page != maxPage ? page + 1 * recInPage : listenData.length)
+          .getRange(0, page != maxPage ? page * recInPage : listenData.length)
           .toList();
       sleep(const Duration(seconds: 1));
       loadNewHistoryData = false;
@@ -222,12 +221,16 @@ class CheckDataProvider with ChangeNotifier {
 
   List<ListenDataModel> filterHistoryData = [];
   bool filterd = false;
+  bool filterLoading = false;
   void filterHistory(DateTime from, DateTime to) {
+    filterLoading = true;
+    notifyListeners();
     filterHistoryData = history.where((his) {
       return DateTime.parse(his.date).isAfter(from) &&
           DateTime.parse(his.date).isBefore(to);
     }).toList();
     filterd = true;
+    filterLoading = false;
     notifyListeners();
   }
 

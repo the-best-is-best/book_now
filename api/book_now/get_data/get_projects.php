@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
 
 
 try {
-    $query = $readDB->prepare("SELECT * FROM project");
+    $query = $readDB->prepare("SELECT * FROM project ORDER BY id DESC");
 
     $query->execute();
 

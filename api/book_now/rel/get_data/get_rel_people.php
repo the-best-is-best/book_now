@@ -62,6 +62,14 @@ try {
     $query->execute();
     $row = $query->fetchAll();
 
+    foreach ($row as $key => $data) {
+        $query = $readDB->prepare('SELECT * FROM people  WHERE id = ' . $data["people_id"] . '');
+        $query->execute();
+        $rowPeople = $query->fetchAll();
+
+        $row[$key]['people_name'] = $rowPeople[0][1];
+    }
+
     $returnData = $row;
     $response = new Response();
     $response->setHttpStatusCode(201);

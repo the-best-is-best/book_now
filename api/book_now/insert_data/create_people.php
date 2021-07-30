@@ -96,19 +96,21 @@ try {
         $response->send();
         exit;
     }
-    $query = $writeDB->prepare('SELECT id FROM people WHERE tel = :tel ');
-    $query->bindParam(':tel', $tel, PDO::PARAM_STR);
+    if ($tel != 0) {
+        $query = $writeDB->prepare('SELECT id FROM people WHERE tel = :tel ');
+        $query->bindParam(':tel', $tel, PDO::PARAM_STR);
 
-    $query->execute();
+        $query->execute();
 
-    $rowCount = $query->rowCount();
-    if ($rowCount !== 0) {
-        $response = new Response();
-        $response->setHttpStatusCode(409);
-        $response->setSuccess(false);
-        $response->addMessage('Telephone already exists');
-        $response->send();
-        exit;
+        $rowCount = $query->rowCount();
+        if ($rowCount !== 0) {
+            $response = new Response();
+            $response->setHttpStatusCode(409);
+            $response->setSuccess(false);
+            $response->addMessage('Telephone already exists');
+            $response->send();
+            exit;
+        }
     }
 
     $query = $writeDB->prepare('INSERT INTO people (name , tel , city ) VALUES (:name , :tel , :city )');

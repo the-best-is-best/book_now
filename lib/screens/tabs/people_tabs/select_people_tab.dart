@@ -65,7 +65,10 @@ Widget selectPeopleTab() {
                         query: query,
                       )
                     : Center(
-                        child: Text("No people"),
+                        child: Text(
+                          "No people",
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
                       ),
           ],
         );

@@ -46,7 +46,7 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->price) || !isset($jsonData->houseId)) {
+if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($jsonData->price) || !isset($jsonData->house_id)) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -56,7 +56,7 @@ if (!isset($jsonData->project_name) || !isset($jsonData->end_date) || !isset($js
     (!isset($jsonData->end_date) ?  $response->addMessage("End date not supplied") : false);
     (!isset($jsonData->price) ?  $response->addMessage("Price not supplied") : false);
 
-    (!isset($jsonData->houseId) ?  $response->addMessage("House not supplied") : false);
+    (!isset($jsonData->house_id) ?  $response->addMessage("House not supplied") : false);
     $response->send();
     exit;
 }
@@ -91,7 +91,7 @@ $date = date_create($jsonData->end_date);
 $project_name = trim($jsonData->project_name);
 $end_date = date_format($date, "Y/m/d H:i:s");
 $price = trim($jsonData->price);
-$houseId = $jsonData->houseId;
+$houseId = $jsonData->house_id;
 try {
 
     $query = $writeDB->prepare('SELECT id from project where project_name = :name');

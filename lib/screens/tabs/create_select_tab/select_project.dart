@@ -77,6 +77,10 @@ Widget selectProjectTab() {
                                                 .then((_) async {
                                               reportsRead
                                                   .getnumberofBedsRemaining();
+                                            }).then((_) {
+                                              reportsRead.getMaxPage();
+
+                                              reportsRead.getDataPage(1);
                                             });
                                           }
                                           checkDataRead.endRelList();

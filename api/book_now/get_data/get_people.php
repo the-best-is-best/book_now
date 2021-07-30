@@ -54,6 +54,7 @@ try {
 
     $row = $query->fetchAll();
 
+
     $returnData = $row;
     $response = new Response();
     $response->setHttpStatusCode(201);

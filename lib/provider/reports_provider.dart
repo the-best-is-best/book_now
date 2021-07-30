@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:book_now/modals/create_project/projects_model.dart';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/modals/people/people_model.dart';
@@ -76,15 +78,72 @@ class ReportsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int recInPage = 10;
+  int maxPage = 0;
+
+  List<RelPeopleModel> relPeopleData = [];
+
+  bool loadNewRelPeopleData = false;
+  void getMaxPage() {
+    maxPage = 0;
+    loadNewRelPeopleData = true;
+
+    notifyListeners();
+    bool decimal = false;
+    if (((myRelPeople.length) / recInPage) % 1 != 0) {
+      decimal = true;
+    }
+    maxPage = decimal
+        ? myRelPeople.length ~/ recInPage + 1
+        : myRelPeople.length ~/ recInPage;
+  }
+
+  int curPage = 1;
+  Future getNexPage() async {
+    if (maxPage != 0) {
+      if (curPage != maxPage) {
+        curPage += 1;
+        await getDataPage(curPage);
+      } else {
+        curPage = curPage;
+      }
+    }
+  }
+
+  Future getDataPage(int page) async {
+    if (page == 1) {
+      relPeopleData = [];
+      curPage = 1;
+    }
+    loadNewRelPeopleData = true;
+    notifyListeners();
+    Future.delayed(Duration(milliseconds: 500), () {
+      relPeopleData = myRelPeople
+          .getRange(0, page != maxPage ? page * recInPage : myRelPeople.length)
+          .toList();
+      sleep(const Duration(seconds: 1));
+      loadNewRelPeopleData = false;
+      notifyListeners();
+    });
+  }
+
   List<RelPeopleModel> searchRelPeople = [];
   bool loadingSearch = false;
+  bool searched = false;
   void searchInRelPeople(String search) {
+    print("Search");
     loadingSearch = true;
-    searchRelPeople = myRelPeople
-        .where((people) => people.peopleName.contains(search))
-        .toList();
-    notifyListeners();
+    if (search != "") {
+      searchRelPeople = myRelPeople
+          .where((people) => people.peopleName.contains(search))
+          .toList();
+      searched = true;
+    } else {
+      searchRelPeople = [];
+      searched = false;
+    }
 
     loadingSearch = false;
+    notifyListeners();
   }
 }

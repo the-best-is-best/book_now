@@ -18,7 +18,7 @@ class HistoryScreen extends StatelessWidget {
     final myHistoryWatch = context.watch<CheckDataProvider>();
     final myHistoryRead = context.read<CheckDataProvider>();
     final query = MediaQuery.of(context).size;
-    print(query.height);
+
     return AdvancedDrawer(
       openRatio: .75,
       backdropColor: Colors.blueGrey,
@@ -201,8 +201,10 @@ class HistoryScreen extends StatelessWidget {
                                     ),
                                     Container(
                                       height: myHistoryWatch.loadNewHistoryData
-                                          ? query.height * .50
-                                          : query.height * .58,
+                                          ? query.height *
+                                              (query.height * .5 / 640)
+                                          : query.height *
+                                              (query.height * .58 / 640),
                                       child: NotificationListener(
                                         child: ListView.separated(
                                           controller: scrollListView,
