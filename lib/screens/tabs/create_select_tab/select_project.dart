@@ -1,5 +1,6 @@
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/my_project_provider.dart';
+import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
@@ -17,6 +18,8 @@ Widget selectProjectTab() {
 
           final reportsRead = context.read<ReportsProvider>();
           final relPeopleRead = context.read<RelPeopleProvider>();
+          final myPeoplWatch = context.watch<PeopleProvider>();
+
           final checkDataRead = context.read<CheckDataProvider>();
           final checkDataWatch = context.watch<CheckDataProvider>();
           final myRoomWatch = context.watch<RoomsProvider>();
@@ -67,8 +70,10 @@ Widget selectProjectTab() {
                                                   .insertRelPeople.length >
                                               0) {
                                             reportsRead
-                                                .getDataRelPeople(checkDataWatch
-                                                    .insertRelPeople)
+                                                .getDataRelPeople(
+                                                    checkDataWatch
+                                                        .insertRelPeople,
+                                                    myPeoplWatch.myPeople)
                                                 .then((_) async {
                                               reportsRead
                                                   .getnumberofBedsRemaining();

@@ -9,12 +9,12 @@ Widget buildSearchComponent({
 }) {
   final query = MediaQuery.of(context).size;
   return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Center(
           child: Text(
         "Search",
-        style: Theme.of(context).textTheme.headline4,
+        style: Theme.of(context).textTheme.headline2,
       )),
       SizedBox(
         height: 5,
@@ -26,13 +26,14 @@ Widget buildSearchComponent({
         height: 5,
       ),
       Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: query.width * .7,
+            width: query.width * .75,
             child: defaultFormField(
               context: context,
               controller: searchController,
-              label: 'Search $searchTitle',
+              label: '$searchTitle',
               type: TextInputType.text,
               suffix: Icons.search,
               validate: (String? val) {
@@ -42,6 +43,9 @@ Widget buildSearchComponent({
             ),
           ),
         ],
+      ),
+      SizedBox(
+        height: 20,
       ),
     ],
   );

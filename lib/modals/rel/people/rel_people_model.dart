@@ -1,6 +1,6 @@
 class RelPeopleModel {
   int id;
-  int peopleId;
+  String peopleName;
   int projectId;
   int paid;
   int support;
@@ -11,7 +11,7 @@ class RelPeopleModel {
 
   RelPeopleModel({
     required this.id,
-    required this.peopleId,
+    required this.peopleName,
     required this.projectId,
     required this.houseId,
     required this.bones,
@@ -22,7 +22,7 @@ class RelPeopleModel {
   });
   RelPeopleModel.fromJson(Map<String, dynamic> json)
       : id = int.parse(json['id'].toString()),
-        peopleId = int.parse(json['people_id'].toString()),
+        peopleName = json['people_name'],
         projectId = int.parse(json['project_id'].toString()),
         paid = int.parse(json['paid'].toString()),
         support = int.parse(json['support'].toString()),

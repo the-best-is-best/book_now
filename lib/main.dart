@@ -81,8 +81,8 @@ class MyApp extends StatelessWidget {
             headline4: MainStyle.getFontSize(context, 4),
             headline5: MainStyle.getFontSize(context, 5),
             headline6: MainStyle.getFontSize(context, 6),
-            bodyText1: MainStyle.getFontSize(context, 3),
-            bodyText2: MainStyle.getFontSize(context, 4)),
+            bodyText1: MainStyle.getFontSize(context, 5),
+            bodyText2: MainStyle.getFontSize(context, 6)),
         iconTheme: IconThemeData(color: mainColor),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

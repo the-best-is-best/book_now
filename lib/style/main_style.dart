@@ -23,18 +23,21 @@ class MainStyle {
           return Theme.of(context)
               .textTheme
               .headline2!
-              .copyWith(fontSize: 24, fontWeight: FontWeight.w500);
+              .copyWith(fontSize: 24, fontWeight: FontWeight.w600);
         }
       case 3:
         {
           return Theme.of(context)
               .textTheme
               .headline3!
-              .copyWith(fontSize: 19, fontWeight: FontWeight.w500);
+              .copyWith(fontSize: 19, fontWeight: FontWeight.w600);
         }
       case 4:
         {
-          return Theme.of(context).textTheme.headline4!.copyWith(fontSize: 16);
+          return Theme.of(context)
+              .textTheme
+              .headline4!
+              .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
         }
       case 5:
         {

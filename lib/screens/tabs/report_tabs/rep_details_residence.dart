@@ -1,3 +1,4 @@
+import 'package:book_now/component/search_component.dart';
 import 'package:book_now/provider/people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/change_room_residence.dart';
@@ -6,11 +7,11 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 Widget repDetailsResidenceTab() {
+  final searchPeople = TextEditingController();
   return Builder(
     builder: (context) {
       final query = MediaQuery.of(context).size;
       final myReportWatch = context.watch<ReportsProvider>();
-      final myPeople = context.watch<PeopleProvider>();
       return Container(
         child: Center(
           child: Column(
@@ -20,12 +21,19 @@ Widget repDetailsResidenceTab() {
                 style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 5),
                 child: Column(
                   children: [
+                    Center(
+                      child: buildSearchComponent(
+                          context: context,
+                          searchController: searchPeople,
+                          searchTitle: "People Name",
+                          onSubmit: (val) {}),
+                    ),
                     Container(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,27 +64,22 @@ Widget repDetailsResidenceTab() {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     Divider(
                       thickness: 2,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     Container(
-                      height: query.height * .6,
+                      height: query.height * .43,
                       child: ListView.separated(
                           shrinkWrap: true,
                           itemCount: myReportWatch.myRelPeople.length,
                           itemBuilder: (context, index) {
-                            String peopleName = myPeople.myPeople
-                                .firstWhere((people) =>
-                                    people.id ==
-                                    myReportWatch.myRelPeople[index].id)
-                                .name;
                             return Container(
-                              height: 40,
+                              height: 25,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -84,7 +87,9 @@ Widget repDetailsResidenceTab() {
                                 children: [
                                   Container(
                                       width: query.width * .5,
-                                      child: Center(child: Text(peopleName))),
+                                      child: Center(
+                                          child: Text(myReportWatch
+                                              .myRelPeople[index].peopleName))),
                                   Container(
                                     width: 2,
                                     color: Colors.grey,

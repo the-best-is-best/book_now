@@ -1,5 +1,6 @@
 import 'package:book_now/modals/create_project/projects_model.dart';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
+import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
@@ -23,7 +24,8 @@ class ReportsProvider with ChangeNotifier {
     numberofBedsRemaining = {};
   }
 
-  Future getDataRelPeople(List<ListenDataModel> listenData) async {
+  Future getDataRelPeople(
+      List<ListenDataModel> listenData, List<PeopleModel> people) async {
     List<int> id = [];
     listenData.forEach((val) {
       id.add(val.recordId);
@@ -37,7 +39,9 @@ class ReportsProvider with ChangeNotifier {
     if (response.statusCode == 201) {
       var datas = response.data['data'];
       // update list
-      datas.forEach((data) => myRelPeople.add(RelPeopleModel.fromJson(data)));
+      datas.forEach((data) {
+        myRelPeople.add(RelPeopleModel.fromJson(data));
+      });
     }
     notifyListeners();
   }
@@ -70,5 +74,17 @@ class ReportsProvider with ChangeNotifier {
 
   void getNewData() {
     notifyListeners();
+  }
+
+  List<RelPeopleModel> searchRelPeople = [];
+  bool loadingSearch = false;
+  void searchInRelPeople(String search) {
+    loadingSearch = true;
+    searchRelPeople = myRelPeople
+        .where((people) => people.peopleName.contains(search))
+        .toList();
+    notifyListeners();
+
+    loadingSearch = false;
   }
 }

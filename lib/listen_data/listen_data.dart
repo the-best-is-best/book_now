@@ -26,6 +26,8 @@ FutureBuilder getDataServer({
   final RoomsProvider roomsDataRead = context.read<RoomsProvider>();
 
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
+  final PeopleProvider peopleDataWatch = context.watch<PeopleProvider>();
+
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
   final ReportsProvider myReportRead = context.read<ReportsProvider>();
@@ -78,7 +80,8 @@ FutureBuilder getDataServer({
             checkDataRead.displayLoading(true);
             if (checkDataWatch.insertRelPeople.length > 0) {
               await myReportRead
-                  .getDataRelPeople(checkDataWatch.insertRelPeople)
+                  .getDataRelPeople(
+                      checkDataWatch.insertRelPeople, peopleDataWatch.myPeople)
                   .then((_) async {
                 myReportRead.getnumberofBedsRemaining();
               });
