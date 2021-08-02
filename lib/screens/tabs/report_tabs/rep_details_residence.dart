@@ -13,6 +13,10 @@ Widget repDetailsResidenceTab() {
       final query = MediaQuery.of(context).size;
       final myReportWatch = context.watch<ReportsProvider>();
       final myReportRead = context.read<ReportsProvider>();
+      final padding = MediaQuery.of(context).padding;
+      final height =
+          query.height - padding.top - padding.bottom - kToolbarHeight;
+
       return Container(
         child: Center(
           child: Column(
@@ -29,13 +33,15 @@ Widget repDetailsResidenceTab() {
                 child: Column(
                   children: [
                     Center(
-                      child: buildSearchComponent(
-                          context: context,
-                          searchController: searchPeople,
-                          searchTitle: "People Name",
-                          onSubmit: (val) {
-                            myReportRead.searchInRelPeople(val);
-                          }),
+                      child: myReportWatch.myRelPeople.length > 20
+                          ? buildSearchComponent(
+                              context: context,
+                              searchController: searchPeople,
+                              searchTitle: "People Name",
+                              onSubmit: (val) {
+                                myReportRead.searchInRelPeople(val);
+                              })
+                          : Container(),
                     ),
                     Container(
                       child: Row(
@@ -76,9 +82,13 @@ Widget repDetailsResidenceTab() {
                       height: 5,
                     ),
                     Container(
-                      height: myReportWatch.loadNewRelPeopleData
-                          ? query.height * (query.height * .35 / 640)
-                          : query.height * (query.height * .43 / 640),
+                      height: myReportWatch.myRelPeople.length > 20
+                          ? myReportWatch.loadNewRelPeopleData
+                              ? height * (height * .40 / 640)
+                              : height * (height * .45 / 640)
+                          : myReportWatch.loadNewRelPeopleData
+                              ? height * (height * .66 / 640)
+                              : height * (height * .68 / 640),
                       child: NotificationListener(
                         child: myReportWatch.loadingSearch
                             ? Center(child: CircularProgressIndicator())

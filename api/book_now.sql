@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2021 at 09:36 PM
+-- Generation Time: Aug 02, 2021 at 10:15 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -84,7 +84,11 @@ INSERT INTO `book_now_log` (`id`, `record_id`, `action`, `table_name`, `date`) V
 (42, 18, 'inserted', 'people', '2021-07-30 19:20:09'),
 (43, 17, 'deleted', 'people', '2021-07-30 19:33:23'),
 (44, 18, 'deleted', 'people', '2021-07-30 19:33:23'),
-(45, 12, 'inserted', 'people', '2021-07-30 19:34:50');
+(45, 12, 'inserted', 'people', '2021-07-30 19:34:50'),
+(46, 3, 'inserted', 'houses', '2021-07-31 11:57:01'),
+(47, 4, 'inserted', 'houses', '2021-07-31 11:57:11'),
+(48, 5, 'inserted', 'houses', '2021-07-31 11:57:23'),
+(49, 6, 'inserted', 'houses', '2021-07-31 11:57:41');
 
 -- --------------------------------------------------------
 
@@ -136,7 +140,11 @@ CREATE TABLE `houses` (
 
 INSERT INTO `houses` (`id`, `name`, `floor`) VALUES
 (1, 'House 1', 2),
-(2, 'House 2', 1);
+(2, 'House 2', 1),
+(3, 'House 3', 0),
+(4, 'House 4', 0),
+(5, 'House 5', 0),
+(6, 'House 6', 0);
 
 --
 -- Triggers `houses`
@@ -440,7 +448,7 @@ ALTER TABLE `travel`
 -- AUTO_INCREMENT for table `book_now_log`
 --
 ALTER TABLE `book_now_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `book_now_rel_log`
@@ -452,7 +460,7 @@ ALTER TABLE `book_now_rel_log`
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `people`
