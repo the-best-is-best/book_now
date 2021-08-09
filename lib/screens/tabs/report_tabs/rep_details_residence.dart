@@ -1,5 +1,6 @@
 import 'package:book_now/component/search_component.dart';
 import 'package:book_now/provider/reports_provider.dart';
+import 'package:book_now/provider/rooms_provider.dart';
 import 'package:book_now/screens/change_room_residence.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -10,9 +11,10 @@ Widget repDetailsResidenceTab() {
   final scrollListView = ScrollController();
   return Builder(
     builder: (context) {
-      final query = MediaQuery.of(context).size;
       final myReportWatch = context.watch<ReportsProvider>();
       final myReportRead = context.read<ReportsProvider>();
+      final allRoomsWatch = context.watch<RoomsProvider>();
+      final query = MediaQuery.of(context).size;
       final padding = MediaQuery.of(context).padding;
       final height =
           query.height - padding.top - padding.bottom - kToolbarHeight;
@@ -49,7 +51,7 @@ Widget repDetailsResidenceTab() {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                              width: query.width * .5,
+                              width: query.width * .4,
                               child: Center(
                                   child: Text(
                                 "Name",
@@ -60,7 +62,10 @@ Widget repDetailsResidenceTab() {
                             color: Colors.grey,
                           ),
                           Container(
-                              width: query.width * .2,
+                              width: query.width * .15,
+                              child: Center(child: Text("Floor"))),
+                          Container(
+                              width: query.width * .15,
                               child: Center(child: Text("Room"))),
                           Container(
                             width: 2,
@@ -108,7 +113,7 @@ Widget repDetailsResidenceTab() {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                            width: query.width * .5,
+                                            width: query.width * .4,
                                             child: Center(
                                                 child: Text(myReportWatch
                                                         .searched
@@ -123,15 +128,43 @@ Widget repDetailsResidenceTab() {
                                           color: Colors.grey,
                                         ),
                                         Container(
-                                          width: query.width * .2,
+                                          width: query.width * .15,
                                           child: Center(
                                             child: Text(myReportWatch.searched
                                                 ? myReportWatch
                                                     .searchRelPeople[index]
-                                                    .roomId
+                                                    .floor
                                                     .toString()
                                                 : myReportWatch
-                                                    .relPeopleData[index].roomId
+                                                    .relPeopleData[index].floor
+                                                    .toString()),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: query.width * .15,
+                                          child: Center(
+                                            child: Text(myReportWatch.searched
+                                                ? allRoomsWatch.myRooms
+                                                    .firstWhere((room) =>
+                                                        room.id ==
+                                                        myReportWatch
+                                                            .searchRelPeople[
+                                                                index]
+                                                            .roomId)
+                                                    .name
+                                                    .toString()
+                                                : allRoomsWatch.myRooms
+                                                    .firstWhere((room) =>
+                                                        room.id ==
+                                                        myReportWatch
+                                                            .relPeopleData[
+                                                                index]
+                                                            .roomId)
+                                                    .name
                                                     .toString()),
                                           ),
                                         ),
@@ -155,10 +188,21 @@ Widget repDetailsResidenceTab() {
                                                             .fade,
                                                         child:
                                                             ChangeRoomResidence(
-                                                                myReportWatch
-                                                                    .myRelPeople[
-                                                                        index]
-                                                                    .id)));
+                                                          myReportWatch
+                                                                  .myRelPeople[
+                                                              index],
+                                                          allRoomsWatch.myRooms.firstWhere((room) =>
+                                                              room.houseId ==
+                                                                  myReportWatch
+                                                                      .myRelPeople[
+                                                                          index]
+                                                                      .houseId &&
+                                                              room.id ==
+                                                                  myReportWatch
+                                                                      .myRelPeople[
+                                                                          index]
+                                                                      .roomId),
+                                                        )));
                                               },
                                             ),
                                           ),
@@ -174,11 +218,11 @@ Widget repDetailsResidenceTab() {
                                   );
                                 }),
                         onNotification: (dynamic scroll) {
-                          if (myReportWatch.curPage != myReportWatch.maxPage) {
-                            if (scrollListView.position.maxScrollExtent ==
-                                scroll.metrics.pixels) {
-                              myReportWatch.getNexPage();
-                            }
+                          if (scroll is ScrollEndNotification &&
+                              myReportWatch.curPage != myReportWatch.maxPage &&
+                              scrollListView.position.maxScrollExtent ==
+                                  scroll.metrics.pixels) {
+                            myReportWatch.getNexPage();
                           }
 
                           return true;

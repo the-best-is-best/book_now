@@ -1,3 +1,4 @@
+import 'package:book_now/provider/change_room_provider.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -25,14 +26,17 @@ FutureBuilder getDataServer({
 
   final RoomsProvider roomsDataRead = context.read<RoomsProvider>();
 
+  final RoomsProvider roomsDataWatch = context.watch<RoomsProvider>();
+
   final PeopleProvider peopleDataRead = context.read<PeopleProvider>();
-  final PeopleProvider peopleDataWatch = context.watch<PeopleProvider>();
 
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
   final ReportsProvider myReportRead = context.read<ReportsProvider>();
 
   final ReportsProvider myReportWatch = context.watch<ReportsProvider>();
+
+  final ChangeRoomProvider changeRoomRead = context.read<ChangeRoomProvider>();
 
   return FutureBuilder(
     future: checkDataRead.getMAinListenData().then((val) async {
@@ -81,11 +85,19 @@ FutureBuilder getDataServer({
             if (checkDataWatch.insertRelPeople.length > 0) {
               await myReportRead
                   .getDataRelPeople(
-                      checkDataWatch.insertRelPeople, peopleDataWatch.myPeople)
+                      checkDataWatch.insertRelPeople, roomsDataWatch.myRooms)
                   .then((_) async {
                 myReportRead.getnumberofBedsRemaining();
                 myReportRead.getMaxPage();
                 myReportRead.getDataPage(1);
+              });
+            }
+            if (checkDataWatch.updateRelPeople.length > 0) {
+              await myReportRead
+                  .getUpdateDataRelPeople(
+                      checkDataWatch.updateRelPeople, roomsDataWatch.myRooms)
+                  .then((_) {
+                myReportRead.getnumberofBedsRemaining();
               });
             }
             checkDataRead.endRelList();

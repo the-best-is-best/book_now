@@ -29,15 +29,12 @@ class RoomsProvider with ChangeNotifier {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
-    // myRooms.sort((a, b) => a.name.compareTo(b.name));
-    // myRooms.sort((a, b) => a.floor.compareTo(b.floor));
 
     notifyListeners();
   }
 
   Future getUpdateRoom(List<ListenDataModel> listenData) async {
     List<int> id = [];
-
     listenData.forEach((val) => id.add(val.recordId));
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));

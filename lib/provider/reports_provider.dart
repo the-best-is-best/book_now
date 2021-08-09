@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:book_now/modals/create_project/projects_model.dart';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
-import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
+import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
@@ -27,7 +27,7 @@ class ReportsProvider with ChangeNotifier {
   }
 
   Future getDataRelPeople(
-      List<ListenDataModel> listenData, List<PeopleModel> people) async {
+      List<ListenDataModel> listenData, List<RoomsModel> myRoom) async {
     List<int> id = [];
     listenData.forEach((val) {
       id.add(val.recordId);
@@ -42,7 +42,41 @@ class ReportsProvider with ChangeNotifier {
       var datas = response.data['data'];
       // update list
       datas.forEach((data) {
+        data['floor'] = myRoom
+            .firstWhere((room) =>
+                room.id == data['room_id'] && room.houseId == data['house_id'])
+            .floor;
         myRelPeople.add(RelPeopleModel.fromJson(data));
+      });
+    }
+    notifyListeners();
+  }
+
+  Future getUpdateDataRelPeople(
+      List<ListenDataModel> listenData, List<RoomsModel> myRoom) async {
+    List<int> id = [];
+    listenData.forEach((val) {
+      id.add(val.recordId);
+    });
+    Map<String, dynamic> data = {};
+    data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
+    data["project_id"] = myProject!.id;
+
+    var response = await DioHelper.getData(
+        url: 'rel/get_data/get_rel_people.php', query: data);
+    if (response.statusCode == 201) {
+      var datas = response.data['data'];
+      // update list
+      datas.forEach((data) {
+        data['floor'] = myRoom
+            .firstWhere((room) =>
+                room.id == data['room_id'] && room.houseId == data['house_id'])
+            .floor;
+        RelPeopleModel getRelPeopleData = myRelPeople.firstWhere((people) =>
+            people.id == data['people_id'] &&
+            people.projectId == data['project_id']);
+
+        getRelPeopleData.roomId = data['room_id'];
       });
     }
     notifyListeners();
@@ -60,6 +94,7 @@ class ReportsProvider with ChangeNotifier {
         numberofBedsRemaining[key] = 1;
       }
     });
+    notifyListeners();
   }
 
   int tabIndex = 0;
@@ -131,7 +166,6 @@ class ReportsProvider with ChangeNotifier {
   bool loadingSearch = false;
   bool searched = false;
   void searchInRelPeople(String search) {
-    print("Search");
     loadingSearch = true;
     if (search != "") {
       searchRelPeople = myRelPeople

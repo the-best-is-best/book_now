@@ -8,6 +8,7 @@ class RelPeopleModel {
   bool bones;
   int houseId;
   int roomId;
+  int floor;
 
   RelPeopleModel({
     required this.id,
@@ -19,6 +20,7 @@ class RelPeopleModel {
     required this.roomId,
     required this.support,
     required this.travelId,
+    required this.floor,
   });
   RelPeopleModel.fromJson(Map<String, dynamic> json)
       : id = int.parse(json['id'].toString()),
@@ -29,5 +31,6 @@ class RelPeopleModel {
         travelId = int.parse(json['travel_id'].toString()),
         bones = int.parse(json['coupons'].toString()) == 1 ? true : false,
         houseId = int.parse(json['house_id'].toString()),
-        roomId = int.parse(json['room_id'].toString());
+        roomId = int.parse(json['room_id'].toString()),
+        floor = int.parse(json['floor'].toString());
 }

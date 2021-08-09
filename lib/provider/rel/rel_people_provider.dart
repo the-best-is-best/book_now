@@ -51,7 +51,7 @@ class RelPeopleProvider with ChangeNotifier {
     notifyListeners();
     var createRelPeople = createRelPeopleModel.toJson();
     var response = await DioHelper.postData(
-      url: "rel/insert_update/create_rel_people.php",
+      url: "rel/insert/create_rel_people.php",
       query: createRelPeople,
     );
 

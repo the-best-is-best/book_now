@@ -1,3 +1,4 @@
+import 'package:book_now/provider/change_room_provider.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -52,13 +53,14 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: TravelProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
       ChangeNotifierProvider.value(value: RelPeopleProvider()),
+      ChangeNotifierProvider.value(value: ChangeRoomProvider()),
     ], child: MyApp());
   }
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {

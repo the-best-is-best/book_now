@@ -22,8 +22,6 @@ Widget selectRoomTab() {
             .where((room) => room.houseId == houseId && room.floor == floor)
             .toList();
 
-        curRoomes.sort((a, b) => a.name.compareTo(b.name));
-
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -39,6 +39,7 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> listenRelDataUpdated = [];
 
   List<ListenDataModel> insertRelPeople = [];
+  List<ListenDataModel> updateRelPeople = [];
 
   Future<bool> getMAinListenData() async {
     if (!GetDataListen.getData) {
@@ -131,9 +132,11 @@ class CheckDataProvider with ChangeNotifier {
 
       if (response.data['messages'][0] == 'data changed') {
         var data = response.data;
+
         return await toRelList(data['data']);
       }
     }
+
     return false;
   }
 
@@ -149,6 +152,11 @@ class CheckDataProvider with ChangeNotifier {
     insertRelPeople = listenRelDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rel_people")
         .toList();
+
+    updateRelPeople = listenRelDataUpdated
+        .where((e) => e.action == "updated" && e.tableName == "rel_people")
+        .toList();
+
     return true;
   }
 
@@ -159,6 +167,7 @@ class CheckDataProvider with ChangeNotifier {
   void endRelList() {
     listenRelDataUpdated = [];
     insertRelPeople = [];
+    updateRelPeople = [];
   }
 
   void destroyListenProject() {
