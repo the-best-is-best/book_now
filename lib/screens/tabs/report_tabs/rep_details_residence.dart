@@ -30,6 +30,9 @@ Widget repDetailsResidenceTab() {
               SizedBox(
                 height: 5,
               ),
+              Divider(
+                thickness: 3,
+              ),
               Container(
                 padding: EdgeInsets.only(top: 5),
                 child: Column(
@@ -89,11 +92,11 @@ Widget repDetailsResidenceTab() {
                     Container(
                       height: myReportWatch.myRelPeople.length > 20
                           ? myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .40 / 640)
-                              : height * (height * .45 / 640)
+                              ? height * (height * .38 / 640)
+                              : height * (height * .5 / 640)
                           : myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .66 / 640)
-                              : height * (height * .68 / 640),
+                              ? height * (height * .63 / 640)
+                              : height * (height * .8 / 640),
                       child: NotificationListener(
                         child: myReportWatch.loadingSearch
                             ? Center(child: CircularProgressIndicator())

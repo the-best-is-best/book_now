@@ -11,20 +11,6 @@ Widget buildSearchComponent({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Center(
-          child: Text(
-        "Search",
-        style: Theme.of(context).textTheme.headline2,
-      )),
-      SizedBox(
-        height: 5,
-      ),
-      Divider(
-        thickness: 3,
-      ),
-      SizedBox(
-        height: 5,
-      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

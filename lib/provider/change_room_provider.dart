@@ -1,6 +1,7 @@
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
+import 'package:book_now/screens/tabs/change_room/by_person.dart';
 import 'package:book_now/screens/tabs/change_room/by_room.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class ChangeRoomProvider with ChangeNotifier {
 
   List<Widget> tabsWidget = [
     byRoom(),
+    byPerson(),
   ];
   void changeTabIndex(index) {
     tabIndex = index;
