@@ -28,6 +28,7 @@ class TravelProvider with ChangeNotifier {
       // update list
       datas.forEach((data) => myTravel.add(TravelModel.fromJson(data)));
     }
+
     notifyListeners();
   }
 
@@ -52,6 +53,7 @@ class TravelProvider with ChangeNotifier {
         }
       });
     }
+
     notifyListeners();
   }
 
@@ -84,7 +86,6 @@ class TravelProvider with ChangeNotifier {
       url: "update_data/travel_update.php",
       query: data,
     );
-
     notifyListeners();
 
     return response;

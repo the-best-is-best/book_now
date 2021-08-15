@@ -19,7 +19,6 @@ Widget repSelectPeople() {
   return Builder(
     builder: (context) {
       final myReportWatch = context.watch<ReportsProvider>();
-      final myReportRead = context.read<ReportsProvider>();
       final myPeopleWatch = context.watch<PeopleProvider>();
       final myPeopleRead = context.read<PeopleProvider>();
 
@@ -68,7 +67,6 @@ Widget repSelectPeople() {
                                       searchTitle: "people name",
                                       onSubmit: (String? val) {
                                         myPeopleRead.searchPeople(val!);
-                                        myReportRead.getNewData();
                                       },
                                     )
                                   : Container(),
@@ -99,7 +97,6 @@ Widget repSelectPeople() {
                                   onChanged: (value) {
                                     myRelPeopleRead
                                         .changeSelectedPeople(value!);
-                                    myReportRead.getNewData();
                                   },
                                   validator: (int? val) {
                                     if (val == null || val == 0) {
@@ -232,7 +229,7 @@ Widget repSelectPeople() {
                                     .toList(),
                                 onChanged: (value) {
                                   myRelPeopleRead.changeSelectedTravel(value!);
-                                  myReportRead.getNewData();
+                                  //     myReportRead.getNewData();
                                 },
                                 validator: (int? val) {
                                   if (val == null || val == 0) {
@@ -292,7 +289,7 @@ Widget repSelectPeople() {
                                 onChanged: (value) {
                                   if (value != 0) {
                                     myRelPeopleRead.changeSelectedRoom(value);
-                                    myReportRead.getNewData();
+                                    //     myReportRead.getNewData();
                                   }
                                 },
                                 validator: (int? val) {
@@ -398,7 +395,7 @@ Widget repSelectPeople() {
                                     myRelPeopleRead.changeSelectedTravel(null);
                                     myRelPeopleRead.changecouponsState(false);
 
-                                    myReportRead.getNewData();
+                                    //     myReportRead.getNewData();
                                     await Flushbar(
                                       title: 'Success',
                                       message: "Added",

@@ -24,7 +24,7 @@ try {
     $response->send();
     exit;
 }
-/*
+
 if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
     $response = new Response();
     $response->setHttpStatusCode(405);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']  !== 'GET') {
     $response->addMessage('Request method not allowed');
     $response->send();
     exit;
-}*/
+}
 
 
 try {

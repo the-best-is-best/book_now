@@ -1,6 +1,6 @@
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
-import 'package:book_now/provider/change_room_provider.dart';
+import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/style/main_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,9 +14,9 @@ class ChangeRoomResidence extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final changeRoomRead = context.read<ChangeRoomProvider>();
-    final changeRoomWatch = context.watch<ChangeRoomProvider>();
-    changeRoomRead.getRoomPeope(room, people);
+    final changeRoomRead = context.read<RelPeopleProvider>();
+    final changeRoomWatch = context.watch<RelPeopleProvider>();
+    changeRoomRead.getCurPeopeData(room, people);
     return Scaffold(
       appBar: AppBar(
         title: Text("Change Room"),

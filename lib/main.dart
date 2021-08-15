@@ -1,4 +1,3 @@
-import 'package:book_now/provider/change_room_provider.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -53,7 +52,6 @@ class RunMyApp extends StatelessWidget {
       ChangeNotifierProvider.value(value: TravelProvider()),
       ChangeNotifierProvider.value(value: ReportsProvider()),
       ChangeNotifierProvider.value(value: RelPeopleProvider()),
-      ChangeNotifierProvider.value(value: ChangeRoomProvider()),
     ], child: MyApp());
   }
 }
@@ -88,7 +86,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(color: mainColor),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(10),
             textStyle: Theme.of(context)
                 .textTheme
                 .headline6!

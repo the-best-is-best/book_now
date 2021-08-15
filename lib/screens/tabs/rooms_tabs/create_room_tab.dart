@@ -153,10 +153,10 @@ Widget createRoomTab() {
                                 }
                               });
                             } else {
-                              for (int i = cur; i <= last; i++) {
+                              for (int i = cur; i < last; i++) {
                                 rooms.add(i);
                               }
-                              rooms.sort((a, b) => a.compareTo(b));
+                              print(rooms.length);
                               for (int i = 0; i < rooms.length; i++) {
                                 CreateRoomModel createRoomModel =
                                     CreateRoomModel(

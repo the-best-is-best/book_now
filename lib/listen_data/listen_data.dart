@@ -1,4 +1,3 @@
-import 'package:book_now/provider/change_room_provider.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/floor_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -35,8 +34,6 @@ FutureBuilder getDataServer({
   final ReportsProvider myReportRead = context.read<ReportsProvider>();
 
   final ReportsProvider myReportWatch = context.watch<ReportsProvider>();
-
-  final ChangeRoomProvider changeRoomRead = context.read<ChangeRoomProvider>();
 
   return FutureBuilder(
     future: checkDataRead.getMAinListenData().then((val) async {
@@ -100,6 +97,7 @@ FutureBuilder getDataServer({
                 myReportRead.getnumberofBedsRemaining();
               });
             }
+            myReportRead.getNewData();
             checkDataRead.endRelList();
             checkDataRead.displayLoading(false);
           }
@@ -107,8 +105,6 @@ FutureBuilder getDataServer({
       }
       checkDataRead.endedLoadDataFromServer();
     }),
-    builder: (context, snapshot) => Container(
-        width: MediaQuery.of(context).size.width > 750 ? 750 : null,
-        child: Center(child: child)),
+    builder: (context, snapshot) => Container(child: Center(child: child)),
   );
 }

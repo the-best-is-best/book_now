@@ -179,7 +179,7 @@ class CheckDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int recInPage = 10;
+  int recInPage = 20;
   int maxPage = 0;
 
   List<ListenDataModel> history = [];

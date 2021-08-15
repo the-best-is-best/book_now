@@ -77,6 +77,9 @@ class ReportsProvider with ChangeNotifier {
             people.projectId == data['project_id']);
 
         getRelPeopleData.roomId = data['room_id'];
+        getRelPeopleData.floor = data['floor'];
+        getRelPeopleData.paid = data['paid'];
+        getRelPeopleData.support = data['support'];
       });
     }
     notifyListeners();
@@ -113,7 +116,7 @@ class ReportsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int recInPage = 10;
+  int recInPage = 20;
   int maxPage = 0;
 
   List<RelPeopleModel> relPeopleData = [];

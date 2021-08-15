@@ -182,6 +182,8 @@ Widget repDetailsResidenceTab() {
                                               padding: EdgeInsets.all(0),
                                               icon: Icon(Icons.change_circle),
                                               onPressed: () {
+                                                myReportRead
+                                                    .searchInRelPeople("");
                                                 Navigator.push(
                                                     context,
                                                     PageTransition(

@@ -29,7 +29,6 @@ class RoomsProvider with ChangeNotifier {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
-
     notifyListeners();
   }
 

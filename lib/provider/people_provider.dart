@@ -25,6 +25,7 @@ class PeopleProvider with ChangeNotifier {
         myPeople.add(PeopleModel.fromJson(data));
       });
     }
+
     notifyListeners();
   }
 
