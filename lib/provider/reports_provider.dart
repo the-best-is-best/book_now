@@ -80,6 +80,8 @@ class ReportsProvider with ChangeNotifier {
         getRelPeopleData.floor = data['floor'];
         getRelPeopleData.paid = data['paid'];
         getRelPeopleData.support = data['support'];
+        getRelPeopleData.bones = data['coupons'] == 1 ? true : false;
+        getRelPeopleData.travelId = data['travel_id'];
       });
     }
     notifyListeners();

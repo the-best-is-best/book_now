@@ -30,7 +30,7 @@ class RoomsProvider with ChangeNotifier {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
-    myRooms.sort((a, b) => a.id.compareTo(b.id));
+    myRooms.sort((a, b) => a.name.compareTo(b.name));
     notifyListeners();
   }
 

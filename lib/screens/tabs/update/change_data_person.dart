@@ -1,7 +1,10 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:book_now/component/form_field.dart';
+import 'package:book_now/component/round_check_box_component.dart';
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
+import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
@@ -13,7 +16,7 @@ class ChangeDataPerson extends StatelessWidget {
   final RoomsModel room;
 
   ChangeDataPerson(this.people, this.room);
-
+  final formKey = GlobalKey<FormState>();
   final searchPeopleController = TextEditingController();
   final paidController = TextEditingController();
   final supportController = TextEditingController();
@@ -30,10 +33,12 @@ class ChangeDataPerson extends StatelessWidget {
 
     relPeopleRead.getCurPeopeData(room, people);
 
-    relPeopleRead.changeSelectedTravel(relPeopleWatch.curPeople!.travelId);
+    relPeopleRead.changeSelectedTravel(people.travelId);
 
-    paidController.text = relPeopleWatch.curPeople!.paid.toString();
-    supportController.text = relPeopleWatch.curPeople!.support.toString();
+    relPeopleRead.changecouponsState(people.bones);
+
+    paidController.text = people.paid.toString();
+    supportController.text = people.support.toString();
     return Scaffold(
       appBar: AppBar(title: Text("Change data person")),
       body: getDataServer(
@@ -68,7 +73,7 @@ class ChangeDataPerson extends StatelessWidget {
                   height: 15,
                 ),
                 Form(
-                    key: key,
+                    key: formKey,
                     child: Column(
                       children: [
                         defaultFormField(
@@ -165,11 +170,103 @@ class ChangeDataPerson extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
+                        Opacity(
+                          opacity: people.bones ? 0 : 1,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "coupons :",
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                defaultRoundCheckBox(
+                                    (val) =>
+                                        relPeopleRead.changecouponsState(val),
+                                    relPeopleWatch.coupons),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Container(
                           width: query.width * .2,
                           child: Center(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                formKey.currentState!.save();
+                                if (!formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                int paid = int.parse(paidController.text);
+                                int support = int.parse(supportController.text);
+                                if (paid + support >
+                                    reportWatch.myProject!.price) {
+                                  await Flushbar(
+                                    title: 'Error',
+                                    message:
+                                        "Paid + suppot > price !! ${reportWatch.myProject!.price}",
+                                    duration: Duration(seconds: 3),
+                                  ).show(context);
+                                  return;
+                                }
+                                relPeopleRead
+                                    .changePeopleData(
+                                        peopleId: people.id,
+                                        paid: paid,
+                                        support: support,
+                                        travelId:
+                                            relPeopleWatch.selectedTravel!,
+                                        coupons: relPeopleWatch.coupons ? 1 : 0,
+                                        project: reportWatch.myProject!.id)
+                                    .then((response) {
+                                  var data = response.data;
+
+                                  if (data['messages'][0] ==
+                                      "People data updated") {
+                                    DioHelper.postNotification().then((_) {
+                                      relPeopleRead
+                                          .loadingEnd()
+                                          .then((_) async {
+                                        paidController.text =
+                                            supportController.text = "";
+
+                                        relPeopleRead
+                                            .changeSelectedTravel(null);
+                                        relPeopleRead.changecouponsState(false);
+                                        Navigator.pop(context);
+                                        await Flushbar(
+                                          title: 'Success',
+                                          message: "Updated",
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      });
+                                    });
+                                  } else {
+                                    relPeopleRead.loadingEnd().then((_) async {
+                                      List<dynamic> messages = data['messages'];
+                                      for (int i = 0;
+                                          i < messages.length;
+                                          i++) {
+                                        await Flushbar(
+                                          title: 'Error',
+                                          message: messages[i],
+                                          duration: Duration(seconds: 3),
+                                        ).show(context);
+                                      }
+                                    });
+                                  }
+                                });
+                              },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment
                                     .center, // Center the Widgets.

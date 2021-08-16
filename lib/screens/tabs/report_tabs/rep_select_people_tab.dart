@@ -229,7 +229,6 @@ Widget repSelectPeople() {
                                     .toList(),
                                 onChanged: (value) {
                                   myRelPeopleRead.changeSelectedTravel(value!);
-                                  //     myReportRead.getNewData();
                                 },
                                 validator: (int? val) {
                                   if (val == null || val == 0) {
@@ -289,7 +288,6 @@ Widget repSelectPeople() {
                                 onChanged: (value) {
                                   if (value != 0) {
                                     myRelPeopleRead.changeSelectedRoom(value);
-                                    //     myReportRead.getNewData();
                                   }
                                 },
                                 validator: (int? val) {
@@ -395,7 +393,6 @@ Widget repSelectPeople() {
                                     myRelPeopleRead.changeSelectedTravel(null);
                                     myRelPeopleRead.changecouponsState(false);
 
-                                    //     myReportRead.getNewData();
                                     await Flushbar(
                                       title: 'Success',
                                       message: "Added",

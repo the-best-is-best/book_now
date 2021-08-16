@@ -242,7 +242,6 @@ Widget byPerson() {
 
                                                             Navigator.pop(
                                                                 context);
-                                                            //  myReportRead.getNewData();
                                                             await Flushbar(
                                                               title: 'Success',
                                                               message: "Added",

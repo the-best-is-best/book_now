@@ -44,7 +44,7 @@ class RelPeopleProvider with ChangeNotifier {
 
   bool coupons = false;
 
-  void changecouponsState(val) {
+  void changecouponsState(bool val) {
     coupons = val;
   }
 
@@ -94,6 +94,8 @@ class RelPeopleProvider with ChangeNotifier {
       {required int peopleId,
       required int paid,
       required int support,
+      required int coupons,
+      required int travelId,
       required int project}) async {
     loading = true;
     notifyListeners();
@@ -101,10 +103,12 @@ class RelPeopleProvider with ChangeNotifier {
       'people_id': peopleId,
       'paid': paid,
       'support': support,
-      'project': project
+      'project': project,
+      'travel_id': travelId,
+      'coupons': coupons,
     };
     var response = await DioHelper.putData(
-      url: "rel/update/update_people_room.php",
+      url: "rel/update/update_people_data.php",
       query: data,
     );
 
