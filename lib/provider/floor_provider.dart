@@ -19,5 +19,6 @@ class FloorProvider with ChangeNotifier {
       }
       myFloor.add(FloorModel(houseId: house.id, floor: floors));
     });
+    notifyListeners();
   }
 }

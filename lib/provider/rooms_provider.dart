@@ -25,10 +25,12 @@ class RoomsProvider with ChangeNotifier {
         await DioHelper.getData(url: 'get_data/get_rooms.php', query: data);
     if (response.statusCode == 201) {
       var datas = response.data['data'];
+
       datas.forEach((data) {
         myRooms.add(RoomsModel.fromJson(data));
       });
     }
+    myRooms.sort((a, b) => a.id.compareTo(b.id));
     notifyListeners();
   }
 

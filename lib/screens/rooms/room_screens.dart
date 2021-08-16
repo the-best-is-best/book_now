@@ -16,51 +16,47 @@ class RoomScreen extends StatelessWidget {
     final myRoomsRead = context.read<RoomsProvider>();
     final myRoomsWatch = context.watch<RoomsProvider>();
     final myCheckLoading = context.watch<CheckDataProvider>();
-    return getDataServer(
-      context: context,
-      child: Scaffold(
-        appBar:
-            AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
-        body: myCheckLoading.loading
-            ? Center(child: CircularProgressIndicator())
-            : Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: myRoomsWatch.tabIndex == 0
-                        ? MediaQuery.of(context).size.width / 1.1
-                        : null,
-                    child: Card(
-                      elevation: 20,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: myRoomsWatch.tabsWidget[myRoomsWatch.tabIndex],
-                      ),
+    return Scaffold(
+      appBar: AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
+      body: myCheckLoading.loading
+          ? Center(child: CircularProgressIndicator())
+          : Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: myRoomsWatch.tabIndex == 0
+                      ? MediaQuery.of(context).size.width / 1.1
+                      : null,
+                  child: Card(
+                    elevation: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: myRoomsWatch.tabsWidget[myRoomsWatch.tabIndex],
                     ),
                   ),
                 ),
               ),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 20,
-          onTap: (val) {
-            myRoomsRead.changeTabIndex(val);
-          },
-          currentIndex: myRoomsWatch.tabIndex,
-          unselectedFontSize: 15,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: mainColor,
-          fixedColor: Colors.black,
-          unselectedItemColor: Colors.brown,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.create),
-              label: 'Create',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.select_all),
-              label: 'Select',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 20,
+        onTap: (val) {
+          myRoomsRead.changeTabIndex(val);
+        },
+        currentIndex: myRoomsWatch.tabIndex,
+        unselectedFontSize: 15,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: mainColor,
+        fixedColor: Colors.black,
+        unselectedItemColor: Colors.brown,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.create),
+            label: 'Create',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.select_all),
+            label: 'Select',
+          ),
+        ],
       ),
     );
   }

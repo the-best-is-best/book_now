@@ -156,7 +156,6 @@ Widget createRoomTab() {
                               for (int i = cur; i < last; i++) {
                                 rooms.add(i);
                               }
-                              print(rooms.length);
                               for (int i = 0; i < rooms.length; i++) {
                                 CreateRoomModel createRoomModel =
                                     CreateRoomModel(
