@@ -4,6 +4,7 @@ import 'package:book_now/modals/create_project/projects_model.dart';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
+import 'package:book_now/modals/travel/travel_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
@@ -14,7 +15,18 @@ import 'package:book_now/extention/to_map.dart';
 class ReportsProvider with ChangeNotifier {
   ProjectsModel? myProject;
   List<RelPeopleModel> myRelPeople = [];
+
   Map<int, int> numberofBedsRemaining = {};
+
+  Map<int, int> travelPlaceCount = {};
+
+  int totalPayments = 0;
+
+  int supportPayment = 0;
+
+  int couponReceived = 0;
+
+  int indexManagment = 0;
 
   void getDataProject(ProjectsModel project) {
     myProject = project;
@@ -102,6 +114,32 @@ class ReportsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void calcMangmentData(List<TravelModel> travelData) {
+    travelPlaceCount = {};
+    travelData.forEach((travel) {
+      myRelPeople.forEach((people) {
+        if (people.travelId == travel.id) {
+          if (travelPlaceCount.containsKey(travel.id)) {
+            travelPlaceCount[travel.id] = travelPlaceCount[travel.id]! + 1;
+          } else {
+            travelPlaceCount[travel.id] = 1;
+          }
+        }
+      });
+    });
+    totalPayments = 0;
+    supportPayment = 0;
+    couponReceived = 0;
+    myRelPeople.forEach((people) {
+      totalPayments += people.paid;
+      supportPayment += people.support;
+      if (people.bones) {
+        couponReceived++;
+      }
+    });
+    notifyListeners();
+  }
+
   int tabIndex = 0;
   List<Widget> tabsWidget = [
     repManagementReportsTab(),
@@ -183,6 +221,11 @@ class ReportsProvider with ChangeNotifier {
     }
 
     loadingSearch = false;
+    notifyListeners();
+  }
+
+  void changeindexManagment(int index) {
+    indexManagment = index;
     notifyListeners();
   }
 }

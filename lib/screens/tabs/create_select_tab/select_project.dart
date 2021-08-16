@@ -3,6 +3,7 @@ import 'package:book_now/provider/my_project_provider.dart';
 import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/rooms_provider.dart';
+import 'package:book_now/provider/travel_provider.dart';
 import 'package:book_now/screens/reports_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -21,6 +22,8 @@ Widget selectProjectTab() {
           final checkDataRead = context.read<CheckDataProvider>();
           final checkDataWatch = context.watch<CheckDataProvider>();
           final myRoomWatch = context.watch<RoomsProvider>();
+
+          final travelDataWatch = context.watch<TravelProvider>();
 
           final query = MediaQuery.of(context).size;
           return Column(
@@ -56,9 +59,16 @@ Widget selectProjectTab() {
                                     child: Text(myProjectWatch
                                         .myProject[index].projectName),
                                     onPressed: () async {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                              duration:
+                                                  Duration(microseconds: 500),
+                                              type: PageTransitionType.fade,
+                                              child: ReportsScreen()));
                                       reportsRead.getDataProject(
                                           myProjectWatch.myProject[index]);
-                                      checkDataRead
+                                      await checkDataRead
                                           .getRelListenData(fromProject: true)
                                           .then((val) async {
                                         if (val == true) {
@@ -67,7 +77,7 @@ Widget selectProjectTab() {
                                           if (checkDataRead
                                                   .insertRelPeople.length >
                                               0) {
-                                            reportsRead
+                                            await reportsRead
                                                 .getDataRelPeople(
                                                     checkDataWatch
                                                         .insertRelPeople,
@@ -83,20 +93,17 @@ Widget selectProjectTab() {
                                           }
                                           checkDataRead.endRelList();
                                           checkDataRead.displayLoading(false);
+
+                                          relPeopleRead.myHouse(myProjectWatch
+                                              .myProject[index].houseId);
+
+                                          relPeopleRead
+                                              .getRooms(myRoomWatch.myRooms);
+
+                                          reportsRead.calcMangmentData(
+                                              travelDataWatch.myTravel);
                                         }
                                       });
-                                      relPeopleRead.myHouse(myProjectWatch
-                                          .myProject[index].houseId);
-
-                                      relPeopleRead
-                                          .getRooms(myRoomWatch.myRooms);
-                                      Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                              duration:
-                                                  Duration(microseconds: 500),
-                                              type: PageTransitionType.fade,
-                                              child: ReportsScreen()));
                                     },
                                   )),
                             ));

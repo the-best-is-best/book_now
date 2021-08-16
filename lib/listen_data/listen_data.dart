@@ -31,6 +31,8 @@ FutureBuilder getDataServer({
 
   final TravelProvider travelDataRead = context.read<TravelProvider>();
 
+  final TravelProvider travelDataWatch = context.watch<TravelProvider>();
+
   final ReportsProvider myReportRead = context.read<ReportsProvider>();
 
   final ReportsProvider myReportWatch = context.watch<ReportsProvider>();
@@ -97,6 +99,7 @@ FutureBuilder getDataServer({
                 myReportRead.getnumberofBedsRemaining();
               });
             }
+            myReportRead.calcMangmentData(travelDataWatch.myTravel);
             myReportRead.getNewData();
             checkDataRead.endRelList();
             checkDataRead.displayLoading(false);
