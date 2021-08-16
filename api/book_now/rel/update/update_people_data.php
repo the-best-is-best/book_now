@@ -65,15 +65,18 @@ $project_id = $jsonData->project;
 $paid =$jsonData->paid;
 $support = $jsonData->support;
 $people_id =$jsonData->people_id;
-
+$coupons =$jsonData->coupons;
+$travel_id = $jsonData->travel_id;
 
 
 try {
 
-    $query = $writeDB->prepare('UPDATE rel_people SET paid = :paid , support=:support WHERE project_id = :project_id AND people_id=:people_id ');
+    $query = $writeDB->prepare('UPDATE rel_people SET paid = :paid , support=:support , travel_id=:travel_id, coupons=:coupons WHERE project_id = :project_id AND people_id=:people_id ');
 
     $query->bindParam(':paid', $paid, PDO::PARAM_STR);
     $query->bindParam(':support', $support, PDO::PARAM_STR);
+    $query->bindParam(':coupons', $coupons, PDO::PARAM_STR);
+    $query->bindParam(':travel_id', $travel_id, PDO::PARAM_STR);
 
     $query->bindParam(':project_id', $project_id, PDO::PARAM_STR);
     $query->bindParam(':people_id', $people_id, PDO::PARAM_STR);
@@ -86,7 +89,7 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue update people room - please try again');
+        $response->addMessage('There was an issue update people data updated - please try again');
         $response->send();
         exit;
     }
@@ -96,7 +99,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(201);
     $response->setSuccess(true);
-    $response->addMessage('People room updated');
+    $response->addMessage('People data updated');
     $response->send();
     exit;
 
@@ -105,7 +108,7 @@ try {
     $response = new Response();
     $response->setHttpStatusCode(500);
     $response->setSuccess(false);
-    $response->addMessage('There was an issue update people room - please try again' . $ex);
+    $response->addMessage('There was an issue update people data people - please try again' . $ex);
     $response->send();
     exit;
 }

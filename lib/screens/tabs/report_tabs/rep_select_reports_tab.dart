@@ -1,8 +1,6 @@
 import 'package:book_now/component/search_component.dart';
-import 'package:book_now/modals/people/people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/modals/travel/travel_model.dart';
-import 'package:book_now/provider/rel/rel_people_provider.dart';
 import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/provider/travel_provider.dart';
 import 'package:book_now/screens/tabs/update/change_data_person.dart';

@@ -48,6 +48,18 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  flutter_launcher_icons: ^0.9.1
+  flutter_native_splash: ^1.2.1 
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "logo/logo_book_now.png"
+  
+flutter_native_splash:
+ color: "#42a5f5"
+ image: logo/logo_book_now.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
