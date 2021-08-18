@@ -34,6 +34,7 @@ class ReportsProvider with ChangeNotifier {
     myProject = project;
     var getDate = await DioHelper.getData(url: "time.php", query: {});
     dateServer = DateTime.parse(getDate.data['data']);
+   
   }
 
   void backProject() {
