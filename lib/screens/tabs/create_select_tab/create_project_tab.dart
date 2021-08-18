@@ -66,25 +66,26 @@ Widget createProjectTab() {
                     padding: EdgeInsets.symmetric(vertical: 4, horizontal: 25),
                     width: MediaQuery.of(context).size.width,
                     child: DropdownButtonFormField<int?>(
-                        icon: null,
-                        hint: Text('Select House *'),
-                        value: myProjectWatch.houseSelected,
-                        items: myHousesWatch.myHouses
-                            .map((house) => DropdownMenuItem(
-                                  value: house.id,
-                                  child: Text(
-                                    house.name,
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (value) {
-                          myProjectRead.changeHouseSelected(value);
-                        },
-                        validator: (int? val) {
-                          if (val == null || val == 0) {
-                            return "select house plz";
-                          }
-                        }),
+                      icon: null,
+                      hint: Text('Select House *'),
+                      value: myProjectWatch.houseSelected,
+                      items: myHousesWatch.myHouses
+                          .map((house) => DropdownMenuItem(
+                                value: house.id,
+                                child: Text(
+                                  house.name,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        myProjectRead.changeHouseSelected(value);
+                      },
+                      validator: (int? val) {
+                        if (val == null || val == 0) {
+                          return "select house plz";
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(
                     height: 15,

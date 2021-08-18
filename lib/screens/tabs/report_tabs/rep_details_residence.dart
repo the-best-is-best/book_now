@@ -92,11 +92,11 @@ Widget repDetailsResidenceTab() {
                     Container(
                       height: myReportWatch.myRelPeople.length > 20
                           ? myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .38 / 640)
-                              : height * (height * .5 / 640)
+                              ? height * (height * .48 / 640)
+                              : height * (height * .56 / 640)
                           : myReportWatch.loadNewRelPeopleData
                               ? height * (height * .63 / 640)
-                              : height * (height * .8 / 640),
+                              : height * (height * .70 / 640),
                       child: NotificationListener(
                         child: myReportWatch.loadingSearch
                             ? Center(child: CircularProgressIndicator())
@@ -181,34 +181,39 @@ Widget repDetailsResidenceTab() {
                                             child: IconButton(
                                               padding: EdgeInsets.all(0),
                                               icon: Icon(Icons.change_circle),
-                                              onPressed: () {
-                                                myReportRead
-                                                    .searchInRelPeople("");
-                                                Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                        duration: Duration(
-                                                            microseconds: 500),
-                                                        type: PageTransitionType
-                                                            .fade,
-                                                        child:
-                                                            ChangeRoomResidence(
-                                                          myReportWatch
-                                                                  .myRelPeople[
-                                                              index],
-                                                          allRoomsWatch.myRooms.firstWhere((room) =>
-                                                              room.houseId ==
-                                                                  myReportWatch
-                                                                      .myRelPeople[
-                                                                          index]
-                                                                      .houseId &&
-                                                              room.id ==
-                                                                  myReportWatch
-                                                                      .myRelPeople[
-                                                                          index]
-                                                                      .roomId),
-                                                        )));
-                                              },
+                                              onPressed:
+                                                  myReportWatch.dateServer
+                                                          .isBefore(
+                                                              myReportWatch
+                                                                  .myProject!
+                                                                  .endDate)
+                                                      ? () {
+                                                          myReportRead
+                                                              .searchInRelPeople(
+                                                                  "");
+                                                          Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                  duration: Duration(
+                                                                      microseconds:
+                                                                          500),
+                                                                  type:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  child:
+                                                                      ChangeRoomResidence(
+                                                                    myReportWatch
+                                                                            .myRelPeople[
+                                                                        index],
+                                                                    allRoomsWatch
+                                                                        .myRooms
+                                                                        .firstWhere((room) =>
+                                                                            room.houseId == myReportWatch.myRelPeople[index].houseId &&
+                                                                            room.id ==
+                                                                                myReportWatch.myRelPeople[index].roomId),
+                                                                  )));
+                                                        }
+                                                      : null,
                                             ),
                                           ),
                                         )

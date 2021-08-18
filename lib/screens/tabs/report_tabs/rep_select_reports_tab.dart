@@ -39,14 +39,14 @@ Widget repManagementReportsTab() {
                         size: 40,
                       )),
                   SizedBox(
-                    width: 20,
+                    width: 15,
                   ),
                   Text(
                     "Management",
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 15,
                   ),
                   IconButton(
                       onPressed: myReportWatch.indexManagment == 1
@@ -88,34 +88,24 @@ Widget repManagementReportsTab() {
   );
 }
 
-Container getDataManagment(Size query, double height, BuildContext context,
+Widget getDataManagment(Size query, double height, BuildContext context,
     TravelProvider travelWatch, ReportsProvider myReportWatch) {
-  return Container(
-    width: query.width * 2 / 3,
-    height: height * .57,
-    child: SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Number of subscribers",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  for (TravelModel travelData in travelWatch.myTravel) ...{
+  return Center(
+    child: Container(
+      width: query.width > 320 ? query.width * 2 / 3 : query.width,
+      padding: const EdgeInsets.all(10),
+      height: height * .7,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(children: [
+              Expanded(
+                child: Column(
+                  children: [
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Transport ${travelData.name}",
+                        "Number of subscribers",
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.headline3,
                       ),
@@ -123,176 +113,220 @@ Container getDataManagment(Size query, double height, BuildContext context,
                     SizedBox(
                       height: 20,
                     ),
-                  }
-                ],
+                    for (TravelModel travelData in travelWatch.myTravel) ...{
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Transport ${travelData.name}",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    }
+                  ],
+                ),
               ),
-            ),
-            Spacer(),
-            Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    myReportWatch.relPeopleData.length.toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  for (TravelModel travelData in travelWatch.myTravel) ...{
-                    Text(
-                      myReportWatch.travelPlaceCount[travelData.id].toString(),
-                      textAlign: TextAlign.right,
-                      style: Theme.of(context).textTheme.headline3,
+              //  Spacer(),
+              Expanded(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        myReportWatch.relPeopleData.length.toString(),
+                        textAlign: TextAlign.right,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                  }
-                ],
+                    for (TravelModel travelData in travelWatch.myTravel) ...{
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          myReportWatch.travelPlaceCount[travelData.id] == null
+                              ? "0"
+                              : myReportWatch.travelPlaceCount[travelData.id]
+                                  .toString(),
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    }
+                  ],
+                ),
               ),
+            ]),
+            Divider(
+              thickness: 3,
             ),
-          ]),
-          Divider(
-            thickness: 3,
-          ),
-          Row(children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "The total amount",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+            Row(children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "The total amount",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Total payments",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Total support",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Total payments",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Remaining ",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Coupons received",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Total support",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Coupons not received",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline3,
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Remaining ",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Coupons received",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Coupons not received",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Spacer(),
-            Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    (myReportWatch.myProject!.price *
-                            myReportWatch.relPeopleData.length)
-                        .toString(),
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    myReportWatch.totalPayments.toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    myReportWatch.supportPayment.toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    (myReportWatch.myProject!.price *
-                                myReportWatch.relPeopleData.length -
-                            myReportWatch.totalPayments -
-                            myReportWatch.supportPayment)
-                        .toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    myReportWatch.couponReceived.toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    (myReportWatch.relPeopleData.length -
-                            myReportWatch.couponReceived)
-                        .toString(),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+              //Spacer(),
+              Expanded(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        (myReportWatch.myProject!.price *
+                                myReportWatch.myRelPeople.length)
+                            .toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        myReportWatch.totalPayments.toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        myReportWatch.supportPayment.toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        (myReportWatch.myProject!.price *
+                                    myReportWatch.myRelPeople.length -
+                                myReportWatch.totalPayments -
+                                myReportWatch.supportPayment)
+                            .toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        myReportWatch.couponReceived.toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        (myReportWatch.relPeopleData.length -
+                                myReportWatch.couponReceived)
+                            .toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
+            ]),
+            SizedBox(
+              height: 20,
             ),
-          ]),
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -322,229 +356,266 @@ Widget peopleData(
       ),
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Container(
-          width: 1000,
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                      width: 1000 * .3,
-                      child: Center(
-                          child: Text(
-                        "Name",
-                        overflow: TextOverflow.fade,
-                      ))),
-                  Container(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                      width: query.width * .1,
-                      child: Center(child: Text("Travel"))),
-                  Container(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                      width: query.width * .12,
-                      child: Center(child: Text("paid up"))),
-                  Container(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                      width: query.width * .12,
-                      child: Center(child: Text("Support"))),
-                  Container(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                      width: query.width * .12,
-                      child: Center(child: Text("coupons"))),
-                  Container(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                      width: query.width * .2,
-                      child: Center(child: Text("Change"))),
-                ],
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Divider(
-                    thickness: 2,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    height: myReportWatch.myRelPeople.length > 20
-                        ? myReportWatch.loadNewRelPeopleData
-                            ? height * (height * .36 / 640)
-                            : height * (height * .48 / 640)
-                        : myReportWatch.loadNewRelPeopleData
-                            ? height * (height * .61 / 640)
-                            : height * (height * .78 / 640),
-                    width: 1000,
-                    child: NotificationListener(
-                      child: myReportWatch.loadingSearch
-                          ? Center(child: CircularProgressIndicator())
-                          : ListView.separated(
-                              controller: scrollListView,
-                              shrinkWrap: true,
-                              itemCount: myReportWatch.searched
-                                  ? myReportWatch.searchRelPeople.length
-                                  : myReportWatch.relPeopleData.length,
-                              itemBuilder: (context, index) {
-                                final int people = myReportWatch.searched
-                                    ? myReportWatch
-                                        .searchRelPeople[index].travelId
-                                    : myReportWatch
-                                        .relPeopleData[index].travelId;
-                                String travelName = travelWatch.myTravel
-                                    .firstWhere((travel) => travel.id == people)
-                                    .name;
-                                return Container(
-                                  height: 25,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                          width: query.width * .3,
+        child: Center(
+          child: Container(
+            width: 800,
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: 800 * .3,
+                        child: Center(
+                            child: Text(
+                          "Name",
+                          overflow: TextOverflow.fade,
+                        ))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                        width: 800 * .1, child: Center(child: Text("Travel"))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                        width: 800 * .12,
+                        child: Center(child: Text("paid up"))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                        width: 800 * .12,
+                        child: Center(child: Text("Support"))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                        width: 800 * .12,
+                        child: Center(child: Text("coupons"))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                        width: 800 * .2, child: Center(child: Text("Change"))),
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Divider(
+                      thickness: 2,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      height: myReportWatch.myRelPeople.length > 20
+                          ? myReportWatch.loadNewRelPeopleData
+                              ? height * (height * .48 / 640)
+                              : height * (height * .56 / 640)
+                          : myReportWatch.loadNewRelPeopleData
+                              ? height * (height * .61 / 640)
+                              : height * (height * .68 / 640),
+                      width: 800,
+                      child: NotificationListener(
+                        child: myReportWatch.loadingSearch
+                            ? Center(child: CircularProgressIndicator())
+                            : ListView.separated(
+                                controller: scrollListView,
+                                shrinkWrap: true,
+                                itemCount: myReportWatch.searched
+                                    ? myReportWatch.searchRelPeople.length
+                                    : myReportWatch.relPeopleData.length,
+                                itemBuilder: (context, index) {
+                                  final int people = myReportWatch.searched
+                                      ? myReportWatch
+                                          .searchRelPeople[index].travelId
+                                      : myReportWatch
+                                          .relPeopleData[index].travelId;
+                                  String travelName = travelWatch.myTravel
+                                      .firstWhere(
+                                          (travel) => travel.id == people)
+                                      .name;
+                                  return Container(
+                                    height: 25,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                            width: 800 * .3,
+                                            child: Center(
+                                                child: Text(myReportWatch
+                                                        .searched
+                                                    ? myReportWatch
+                                                        .searchRelPeople[index]
+                                                        .peopleName
+                                                    : myReportWatch
+                                                        .relPeopleData[index]
+                                                        .peopleName))),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                            width: 800 * .1,
+                                            child: Center(
+                                                child: Text(travelName))),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: 800 * .12,
                                           child: Center(
-                                              child: Text(myReportWatch.searched
-                                                  ? myReportWatch
-                                                      .searchRelPeople[index]
-                                                      .peopleName
-                                                  : myReportWatch
-                                                      .relPeopleData[index]
-                                                      .peopleName))),
-                                      Container(
-                                        width: 2,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                          width: query.width * .1,
-                                          child:
-                                              Center(child: Text(travelName))),
-                                      Container(
-                                        width: 2,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                        width: query.width * .12,
-                                        child: Center(
-                                          child: Text(myReportWatch.searched
-                                              ? myReportWatch
-                                                  .searchRelPeople[index].paid
-                                                  .toString()
-                                              : myReportWatch
-                                                  .relPeopleData[index].paid
-                                                  .toString()),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 2,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                        width: query.width * .12,
-                                        child: Center(
-                                          child: Text(myReportWatch.searched
-                                              ? myReportWatch
-                                                  .searchRelPeople[index]
-                                                  .support
-                                                  .toString()
-                                              : myReportWatch
-                                                  .relPeopleData[index].support
-                                                  .toString()),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 2,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                        width: query.width * .12,
-                                        child: Center(
-                                          child: Text(myReportWatch.searched
-                                              ? myReportWatch
-                                                  .searchRelPeople[index].bones
-                                                  .toString()
-                                              : myReportWatch
-                                                  .relPeopleData[index].bones
-                                                  .toString()),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 2,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                        width: query.width * .2,
-                                        child: Center(
-                                          child: IconButton(
-                                            padding: EdgeInsets.all(0),
-                                            icon: Icon(Icons.change_circle),
-                                            onPressed: () {
-                                              myReportRead
-                                                  .searchInRelPeople("");
-                                              Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                      duration: Duration(
-                                                          microseconds: 500),
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      child: ChangeDataPerson(
-                                                          myReportWatch.searched
-                                                              ? myReportWatch
-                                                                      .searchRelPeople[
-                                                                  index]
-                                                              : myReportWatch
-                                                                      .relPeopleData[
-                                                                  index],
-                                                          RoomsModel(
-                                                              id: 0,
-                                                              bunkBed: 0,
-                                                              name: 0,
-                                                              floor: 0,
-                                                              houseId: 0,
-                                                              numbersOfBed:
-                                                                  0))));
-                                            },
+                                            child: Text(myReportWatch.searched
+                                                ? myReportWatch
+                                                    .searchRelPeople[index].paid
+                                                    .toString()
+                                                : myReportWatch
+                                                    .relPeopleData[index].paid
+                                                    .toString()),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return Divider(
-                                  thickness: 2,
-                                );
-                              }),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: 800 * .12,
+                                          child: Center(
+                                            child: Text(myReportWatch.searched
+                                                ? myReportWatch
+                                                    .searchRelPeople[index]
+                                                    .support
+                                                    .toString()
+                                                : myReportWatch
+                                                    .relPeopleData[index]
+                                                    .support
+                                                    .toString()),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: 800 * .12,
+                                          child: Center(
+                                            child: Text(myReportWatch.searched
+                                                ? myReportWatch
+                                                    .searchRelPeople[index]
+                                                    .bones
+                                                    .toString()
+                                                : myReportWatch
+                                                    .relPeopleData[index].bones
+                                                    .toString()),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: 800 * .2,
+                                          child: Center(
+                                            child: IconButton(
+                                              padding: EdgeInsets.all(0),
+                                              icon: Icon(Icons.change_circle),
+                                              onPressed:
+                                                  myReportWatch.dateServer
+                                                          .isBefore(
+                                                              myReportWatch
+                                                                  .myProject!
+                                                                  .endDate)
+                                                      ? () {
+                                                          myReportRead
+                                                              .searchInRelPeople(
+                                                                  "");
+                                                          Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                  duration: Duration(
+                                                                      microseconds:
+                                                                          500),
+                                                                  type:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  child: ChangeDataPerson(
+                                                                      myReportWatch.searched
+                                                                          ? myReportWatch.searchRelPeople[
+                                                                              index]
+                                                                          : myReportWatch.relPeopleData[
+                                                                              index],
+                                                                      RoomsModel(
+                                                                          id: 0,
+                                                                          bunkBed:
+                                                                              0,
+                                                                          name:
+                                                                              0,
+                                                                          floor:
+                                                                              0,
+                                                                          houseId:
+                                                                              0,
+                                                                          numbersOfBed:
+                                                                              0))));
+                                                        }
+                                                      : null,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return Divider(
+                                    thickness: 2,
+                                  );
+                                }),
+                        onNotification: (dynamic scroll) {
+                          if (scroll is ScrollEndNotification &&
+                              myReportWatch.curPage != myReportWatch.maxPage &&
+                              scrollListView.position.maxScrollExtent ==
+                                  scroll.metrics.pixels) {
+                            myReportRead.getNexPage();
+                          }
+                          return true;
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      myReportWatch.loadNewRelPeopleData
+          ? Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
+            )
+          : Container()
     ],
   );
 }

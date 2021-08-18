@@ -14,6 +14,8 @@ import 'package:book_now/extention/to_map.dart';
 
 class ReportsProvider with ChangeNotifier {
   ProjectsModel? myProject;
+  DateTime dateServer = DateTime.now();
+
   List<RelPeopleModel> myRelPeople = [];
 
   Map<int, int> numberofBedsRemaining = {};
@@ -28,14 +30,17 @@ class ReportsProvider with ChangeNotifier {
 
   int indexManagment = 0;
 
-  void getDataProject(ProjectsModel project) {
+  Future<void> getDataProject(ProjectsModel project) async {
     myProject = project;
+    var getDate = await DioHelper.getData(url: "time.php", query: {});
+    dateServer = DateTime.parse(getDate.data['data']);
   }
 
   void backProject() {
     myProject = null;
     myRelPeople = [];
     numberofBedsRemaining = {};
+    dateServer = DateTime.now();
   }
 
   Future getDataRelPeople(
@@ -164,16 +169,15 @@ class ReportsProvider with ChangeNotifier {
   bool loadNewRelPeopleData = false;
   void getMaxPage() {
     maxPage = 0;
-    loadNewRelPeopleData = true;
-
-    notifyListeners();
     bool decimal = false;
-    if (((myRelPeople.length) / recInPage) % 1 != 0) {
-      decimal = true;
+    if (myRelPeople.length > 0) {
+      if (((myRelPeople.length) / recInPage) % 1 != 0) {
+        decimal = true;
+      }
+      maxPage = decimal
+          ? myRelPeople.length ~/ recInPage + 1
+          : myRelPeople.length ~/ recInPage;
     }
-    maxPage = decimal
-        ? myRelPeople.length ~/ recInPage + 1
-        : myRelPeople.length ~/ recInPage;
   }
 
   int curPage = 1;
@@ -195,11 +199,15 @@ class ReportsProvider with ChangeNotifier {
     }
     loadNewRelPeopleData = true;
     notifyListeners();
+
     Future.delayed(Duration(milliseconds: 500), () {
-      relPeopleData = myRelPeople
-          .getRange(0, page != maxPage ? page * recInPage : myRelPeople.length)
-          .toList();
-      sleep(const Duration(seconds: 1));
+      if (myRelPeople.length > 0) {
+        relPeopleData = myRelPeople
+            .getRange(
+                0, page != maxPage ? page * recInPage : myRelPeople.length)
+            .toList();
+        sleep(const Duration(seconds: 1));
+      }
       loadNewRelPeopleData = false;
       notifyListeners();
     });

@@ -81,7 +81,7 @@ if ($jsonData->end_date <= date("Y-m-d")) {
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
-    $response->addMessage("Date time not correct" . $jsonData->end_date . "-" . date("d-m-Y h:m") . "");
+    $response->addMessage("Date time not correct" . $jsonData->end_date . "-" . date("Y-m-d h:m") . "");
     $response->send();
     exit;
 }

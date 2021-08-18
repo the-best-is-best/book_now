@@ -65,7 +65,10 @@ class ReportsScreen extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.report), label: "Report"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_filled), label: "Overnight stay"),
-            BottomNavigationBarItem(icon: Icon(Icons.people), label: "People"),
+            if (myReportWatch.dateServer
+                .isBefore(myReportWatch.myProject!.endDate))
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.people), label: "People"),
           ],
         ),
       ),
