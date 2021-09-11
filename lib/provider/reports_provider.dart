@@ -7,8 +7,8 @@ import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/modals/travel/travel_model.dart';
 import 'package:book_now/network/dio_helper.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_select_people_tab.dart';
-import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
 import 'package:book_now/screens/tabs/report_tabs/rep_details_residence.dart';
+import 'package:book_now/screens/tabs/report_tabs/rep_select_reports_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:book_now/extention/to_map.dart';
 
@@ -99,6 +99,7 @@ class ReportsProvider with ChangeNotifier {
         getRelPeopleData.support = data['support'];
         getRelPeopleData.bones = data['coupons'] == 1 ? true : false;
         getRelPeopleData.travelId = data['travel_id'];
+        getRelPeopleData.note = data['note'];
       });
     }
     notifyListeners();

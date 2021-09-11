@@ -11,16 +11,28 @@ import 'package:book_now/provider/travel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChangeDataPerson extends StatelessWidget {
+class ChangeDataPerson extends StatefulWidget {
   final RelPeopleModel people;
   final RoomsModel room;
 
+  const ChangeDataPerson(this.people, this.room, {Key? key}) : super(key: key);
+
+  @override
+  State<ChangeDataPerson> createState() => _ChangeDataPersonState();
+}
+
+class _ChangeDataPersonState extends State<ChangeDataPerson> {
   final formKey = GlobalKey<FormState>();
+
   final searchPeopleController = TextEditingController();
+
   final paidController = TextEditingController();
+
   final supportController = TextEditingController();
 
-  ChangeDataPerson(this.people, this.room, {Key? key}) : super(key: key);
+  final noteController = TextEditingController();
+
+  bool firstLoad = true;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +44,20 @@ class ChangeDataPerson extends StatelessWidget {
 
     final myTravelWatch = context.watch<TravelProvider>();
 
-    relPeopleRead.getCurPeopeData(room, people);
+    if (firstLoad) {
+      relPeopleRead.getCurPeopeData(widget.room, widget.people);
 
-    relPeopleRead.changeSelectedTravel(people.travelId);
+      relPeopleRead.changeSelectedTravel(widget.people.travelId);
 
-    relPeopleRead.changecouponsState(people.bones);
+      relPeopleRead.changecouponsState(widget.people.bones);
 
-    paidController.text = people.paid.toString();
-    supportController.text = people.support.toString();
+      paidController.text = widget.people.paid.toString();
+      supportController.text = widget.people.support.toString();
+
+      noteController.text = widget.people.note;
+      firstLoad = false;
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Change data person")),
       body: getDataServer(
@@ -126,7 +144,7 @@ class ChangeDataPerson extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Remaining : ${reportWatch.myProject!.price - int.parse(paidController.text) - int.parse(supportController.text)}",
+                              "Remaining : ${reportWatch.myProject!.price - widget.people.paid - widget.people.support}",
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ],
@@ -172,7 +190,7 @@ class ChangeDataPerson extends StatelessWidget {
                           height: 15,
                         ),
                         Opacity(
-                          opacity: people.bones ? 0 : 1,
+                          opacity: widget.people.bones ? 0 : 1,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 15.0),
@@ -199,8 +217,17 @@ class ChangeDataPerson extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
+                        defaultFormField(
+                            context: context,
+                            controller: noteController,
+                            type: TextInputType.name,
+                            validate: null,
+                            label: 'note'),
+                        const SizedBox(
+                          height: 30,
+                        ),
                         SizedBox(
-                          width: query.width * .2,
+                          width: query.width * .3,
                           child: Center(
                             child: ElevatedButton(
                               onPressed: () async {
@@ -222,13 +249,14 @@ class ChangeDataPerson extends StatelessWidget {
                                 }
                                 relPeopleRead
                                     .changePeopleData(
-                                        peopleId: people.id,
-                                        paid: paid,
-                                        support: support,
-                                        travelId:
-                                            relPeopleWatch.selectedTravel!,
-                                        coupons: relPeopleWatch.coupons ? 1 : 0,
-                                        project: reportWatch.myProject!.id)
+                                  peopleId: widget.people.peopleId,
+                                  paid: paid,
+                                  support: support,
+                                  travelId: relPeopleWatch.selectedTravel!,
+                                  coupons: relPeopleWatch.coupons ? 1 : 0,
+                                  project: reportWatch.myProject!.id,
+                                  note: noteController.text,
+                                )
                                     .then((response) {
                                   var data = response.data;
 

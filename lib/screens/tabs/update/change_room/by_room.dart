@@ -83,7 +83,7 @@ Widget byRoom() {
               height: 5,
             ),
             SizedBox(
-              height: height * (height * .8 / 640),
+              height: height * (height * .57 / 640),
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: curRoomes.length,
@@ -140,11 +140,12 @@ Widget byRoom() {
                                                 curRoomes[index].numbersOfBed
                                             ? () => changeRoomRead
                                                     .changeRoom(
-                                                        project: reportsWatch
-                                                            .myProject!.id,
-                                                        peopleId:
-                                                            changeRoomWatch
-                                                                .curPeople!.id,
+                                                        project:
+                                                            reportsWatch
+                                                                .myProject!.id,
+                                                        peopleId: changeRoomWatch
+                                                            .curPeople!
+                                                            .peopleId,
                                                         roomId:
                                                             curRoomes[index].id)
                                                     .then((response) async {
@@ -188,7 +189,7 @@ Widget byRoom() {
                                                     project: reportsWatch
                                                         .myProject!.id,
                                                     peopleId: changeRoomWatch
-                                                        .curPeople!.id,
+                                                        .curPeople!.peopleId,
                                                     roomId: curRoomes[index].id)
                                                 .then((response) async {
                                               var data = response.data;

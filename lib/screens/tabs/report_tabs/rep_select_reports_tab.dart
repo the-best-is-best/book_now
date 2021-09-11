@@ -356,7 +356,7 @@ Widget peopleData(
         scrollDirection: Axis.horizontal,
         child: Center(
           child: SizedBox(
-            width: 800,
+            width: 850,
             child: Column(
               children: [
                 Row(
@@ -364,7 +364,7 @@ Widget peopleData(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const SizedBox(
-                        width: 800 * .3,
+                        width: 850 * .25,
                         child: Center(
                             child: Text(
                           "Name",
@@ -375,34 +375,37 @@ Widget peopleData(
                       color: Colors.grey,
                     ),
                     const SizedBox(
-                        width: 800 * .1, child: Center(child: Text("Travel"))),
+                        width: 850 * .1, child: Center(child: Text("Travel"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
                     const SizedBox(
-                        width: 800 * .12,
-                        child: Center(child: Text("paid up"))),
+                        width: 850 * .1, child: Center(child: Text("paid up"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
                     const SizedBox(
-                        width: 800 * .12,
-                        child: Center(child: Text("Support"))),
+                        width: 850 * .1, child: Center(child: Text("Support"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
                     const SizedBox(
-                        width: 800 * .12,
-                        child: Center(child: Text("coupons"))),
+                        width: 850 * .1, child: Center(child: Text("coupons"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
                     const SizedBox(
-                        width: 800 * .2, child: Center(child: Text("Change"))),
+                        width: 850 * .2, child: Center(child: Text("Note"))),
+                    Container(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(
+                        width: 850 * .1, child: Center(child: Text("Edit"))),
                   ],
                 ),
                 Column(
@@ -419,12 +422,12 @@ Widget peopleData(
                     SizedBox(
                       height: myReportWatch.myRelPeople.length > 20
                           ? myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .48 / 640)
-                              : height * (height * .56 / 640)
+                              ? height * (height * .45 / 640)
+                              : height * (height * .50 / 640)
                           : myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .61 / 640)
-                              : height * (height * .68 / 640),
-                      width: 800,
+                              ? height * (height * .53 / 640)
+                              : height * (height * .57 / 640),
+                      width: 850,
                       child: NotificationListener(
                         child: myReportWatch.loadingSearch
                             ? const Center(child: CircularProgressIndicator())
@@ -453,7 +456,7 @@ Widget peopleData(
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         SizedBox(
-                                            width: 800 * .3,
+                                            width: 850 * .25,
                                             child: Center(
                                                 child: Text(myReportWatch
                                                         .searched
@@ -468,7 +471,7 @@ Widget peopleData(
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
-                                            width: 800 * .1,
+                                            width: 850 * .1,
                                             child: Center(
                                                 child: Text(travelName))),
                                         Container(
@@ -476,7 +479,7 @@ Widget peopleData(
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
-                                          width: 800 * .12,
+                                          width: 850 * .1,
                                           child: Center(
                                             child: Text(myReportWatch.searched
                                                 ? myReportWatch
@@ -492,7 +495,7 @@ Widget peopleData(
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
-                                          width: 800 * .12,
+                                          width: 850 * .1,
                                           child: Center(
                                             child: Text(myReportWatch.searched
                                                 ? myReportWatch
@@ -510,7 +513,7 @@ Widget peopleData(
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
-                                          width: 800 * .12,
+                                          width: 850 * .1,
                                           child: Center(
                                             child: Text(myReportWatch.searched
                                                 ? myReportWatch
@@ -527,54 +530,69 @@ Widget peopleData(
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
-                                          width: 800 * .2,
+                                          width: 850 * .2,
+                                          child: Center(
+                                            child: Text(myReportWatch.searched
+                                                ? myReportWatch
+                                                    .searchRelPeople[index].note
+                                                : myReportWatch
+                                                    .relPeopleData[index].note),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(
+                                          width: 850 * .1,
                                           child: Center(
                                             child: IconButton(
                                               padding: const EdgeInsets.all(0),
-                                              icon: const Icon(
-                                                  Icons.change_circle),
-                                              onPressed:
-                                                  myReportWatch.dateServer
-                                                          .isBefore(
-                                                              myReportWatch
-                                                                  .myProject!
-                                                                  .endDate)
-                                                      ? () {
-                                                          myReportRead
-                                                              .searchInRelPeople(
-                                                                  "");
-                                                          Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                  duration: const Duration(
-                                                                      microseconds:
-                                                                          500),
-                                                                  type:
-                                                                      PageTransitionType
-                                                                          .fade,
-                                                                  child: ChangeDataPerson(
-                                                                      myReportWatch.searched
-                                                                          ? myReportWatch.searchRelPeople[
-                                                                              index]
-                                                                          : myReportWatch.relPeopleData[
-                                                                              index],
-                                                                      RoomsModel(
-                                                                          id: 0,
-                                                                          bunkBed:
-                                                                              0,
-                                                                          name:
-                                                                              0,
-                                                                          floor:
-                                                                              0,
-                                                                          houseId:
-                                                                              0,
-                                                                          numbersOfBed:
-                                                                              0))));
-                                                        }
-                                                      : null,
+                                              icon: const Icon(Icons.edit),
+                                              onPressed: myReportWatch
+                                                      .dateServer
+                                                      .isBefore(myReportWatch
+                                                          .myProject!.endDate)
+                                                  ? () {
+                                                      myReportRead
+                                                          .searchInRelPeople(
+                                                              "");
+                                                      Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                          duration:
+                                                              const Duration(
+                                                                  microseconds:
+                                                                      500),
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          child:
+                                                              ChangeDataPerson(
+                                                            myReportWatch
+                                                                    .searched
+                                                                ? myReportWatch
+                                                                        .searchRelPeople[
+                                                                    index]
+                                                                : myReportWatch
+                                                                        .relPeopleData[
+                                                                    index],
+                                                            RoomsModel(
+                                                                id: 0,
+                                                                bunkBed: 0,
+                                                                name: 0,
+                                                                floor: 0,
+                                                                houseId: 0,
+                                                                numbersOfBed:
+                                                                    0),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }
+                                                  : null,
                                             ),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   );

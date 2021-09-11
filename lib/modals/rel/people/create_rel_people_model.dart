@@ -7,6 +7,7 @@ class CreateRelPeopleModel {
   int bones;
   int houseId;
   int roomId;
+  String note;
 
   CreateRelPeopleModel({
     required this.peopleId,
@@ -17,6 +18,7 @@ class CreateRelPeopleModel {
     required this.roomId,
     required this.support,
     required this.travelId,
+    required this.note,
   });
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +29,7 @@ class CreateRelPeopleModel {
         'travel_id': travelId,
         'bones': bones,
         'house_id': houseId,
-        'room_id': roomId
+        'room_id': roomId,
+        'note': note,
       };
 }

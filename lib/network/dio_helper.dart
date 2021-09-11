@@ -5,18 +5,18 @@ class DioHelper {
   static late Dio sendMessage;
 
   static init() {
-    /*
     dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.7/book_now/',
+      baseUrl: 'http://192.168.1.2/book_now/',
       receiveDataWhenStatusError: true,
-    ));*/
+    ));
 
     //online
 
-    dio = Dio(BaseOptions(
-      baseUrl: 'http://tbib.onlinewebshop.net/book_now/',
-      receiveDataWhenStatusError: true,
-    ));
+    // dio = Dio(BaseOptions(
+    //   baseUrl: 'http://tbib.onlinewebshop.net/book_now/',
+    //   receiveDataWhenStatusError: true,
+    // ));
+
     sendMessage = Dio(BaseOptions(
       baseUrl: 'https://fcm.googleapis.com/fcm/send',
       receiveDataWhenStatusError: true,

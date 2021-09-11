@@ -90,13 +90,15 @@ class RelPeopleProvider with ChangeNotifier {
     return response;
   }
 
-  Future changePeopleData(
-      {required int peopleId,
-      required int paid,
-      required int support,
-      required int coupons,
-      required int travelId,
-      required int project}) async {
+  Future changePeopleData({
+    required int peopleId,
+    required int paid,
+    required int support,
+    required int coupons,
+    required int travelId,
+    required int project,
+    required String note,
+  }) async {
     loading = true;
     notifyListeners();
     var data = {
@@ -106,6 +108,7 @@ class RelPeopleProvider with ChangeNotifier {
       'project': project,
       'travel_id': travelId,
       'coupons': coupons,
+      'note': note,
     };
     var response = await DioHelper.putData(
       url: "rel/update/update_people_data.php",

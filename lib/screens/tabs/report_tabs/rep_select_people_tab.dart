@@ -16,6 +16,8 @@ Widget repSelectPeople() {
   final searchPeopleController = TextEditingController();
   final paidController = TextEditingController();
   final supportController = TextEditingController();
+  final noteController = TextEditingController();
+
   return Builder(
     builder: (context) {
       final myReportWatch = context.watch<ReportsProvider>();
@@ -314,6 +316,15 @@ Widget repSelectPeople() {
                       const SizedBox(
                         height: 15,
                       ),
+                      defaultFormField(
+                          context: context,
+                          controller: noteController,
+                          type: TextInputType.name,
+                          validate: null,
+                          label: "Note"),
+                      const SizedBox(
+                        height: 15,
+                      ),
                     ],
                   ),
                 ),
@@ -365,6 +376,7 @@ Widget repSelectPeople() {
                             projectId: myReportWatch.myProject!.id,
                             paid: paid,
                             support: support,
+                            note: noteController.text,
                           );
                           myRelPeopleRead
                               .sendData(createRelPeopleModel)

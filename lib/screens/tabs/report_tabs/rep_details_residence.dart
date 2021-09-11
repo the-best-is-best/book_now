@@ -89,11 +89,11 @@ Widget repDetailsResidenceTab() {
                   SizedBox(
                     height: myReportWatch.myRelPeople.length > 20
                         ? myReportWatch.loadNewRelPeopleData
-                            ? height * (height * .48 / 640)
-                            : height * (height * .56 / 640)
+                            ? height * (height * .45 / 640)
+                            : height * (height * .50 / 640)
                         : myReportWatch.loadNewRelPeopleData
-                            ? height * (height * .63 / 640)
-                            : height * (height * .70 / 640),
+                            ? height * (height * .53 / 640)
+                            : height * (height * .57 / 640),
                     child: NotificationListener(
                       child: myReportWatch.loadingSearch
                           ? const Center(child: CircularProgressIndicator())
