@@ -10,7 +10,8 @@ class ChangeRoomResidence extends StatelessWidget {
   final RelPeopleModel people;
   final RoomsModel room;
 
-  const ChangeRoomResidence(this.people, this.room);
+  const ChangeRoomResidence(this.people, this.room, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class ChangeRoomResidence extends StatelessWidget {
     changeRoomRead.getCurPeopeData(room, people);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Change Room"),
+        title: const Text("Change Room"),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
@@ -33,7 +34,7 @@ class ChangeRoomResidence extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: mainColor,
         selectedItemColor: secColor,
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.restroom), label: "Rooms"),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: "People"),

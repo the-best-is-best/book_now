@@ -38,55 +38,51 @@ Widget byRoom() {
               "Select Room",
               style: Theme.of(context).textTheme.headline1,
             )),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
             Center(
-              child: Container(
-                child: Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                          width: query.width * .5,
-                          child: Center(
-                              child: Text(
-                            "Name",
-                            overflow: TextOverflow.fade,
-                          ))),
-                      Container(
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                      Container(
-                          width: query.width * .2,
-                          child: Center(child: Text("Floor"))),
-                      Container(
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                      Container(
-                          width: query.width * .25,
-                          child: Center(child: Text("Change"))),
-                    ],
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                      width: query.width * .5,
+                      child: const Center(
+                          child: Text(
+                        "Name",
+                        overflow: TextOverflow.fade,
+                      ))),
+                  Container(
+                    width: 2,
+                    color: Colors.grey,
                   ),
-                ),
+                  SizedBox(
+                      width: query.width * .2,
+                      child: const Center(child: Text("Floor"))),
+                  Container(
+                    width: 2,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                      width: query.width * .25,
+                      child: const Center(child: Text("Change"))),
+                ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Container(
+            SizedBox(
               height: height * (height * .8 / 640),
               child: ListView.separated(
                 shrinkWrap: true,
@@ -104,13 +100,13 @@ Widget byRoom() {
                                 ? 1
                                 : .5
                             : 1,
-                    child: Container(
+                    child: SizedBox(
                       height: 25,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          SizedBox(
                               width: query.width * .5,
                               child: Center(
                                 child: Text(curRoomes[index].name.toString()),
@@ -119,7 +115,7 @@ Widget byRoom() {
                             width: 2,
                             color: Colors.grey,
                           ),
-                          Container(
+                          SizedBox(
                             width: query.width * .2,
                             child: Center(
                               child: Text(curRoomes[index].floor.toString()),
@@ -129,12 +125,12 @@ Widget byRoom() {
                             width: 2,
                             color: Colors.grey,
                           ),
-                          Container(
+                          SizedBox(
                             width: query.width * .25,
                             child: Center(
                               child: IconButton(
-                                padding: EdgeInsets.all(0),
-                                icon: Icon(Icons.change_circle),
+                                padding: const EdgeInsets.all(0),
+                                icon: const Icon(Icons.change_circle),
                                 onPressed: curRoomes[index].id == roomPeople.id
                                     ? null
                                     : reportsWatch.numberofBedsRemaining[curRoomes[index].id] !=
@@ -164,8 +160,9 @@ Widget byRoom() {
                                                       await Flushbar(
                                                         title: 'Success',
                                                         message: "Added",
-                                                        duration: Duration(
-                                                            seconds: 3),
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 3),
                                                       ).show(context);
                                                     });
                                                   } else {
@@ -178,8 +175,9 @@ Widget byRoom() {
                                                       await Flushbar(
                                                         title: 'Error',
                                                         message: messages[i],
-                                                        duration: Duration(
-                                                            seconds: 3),
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 3),
                                                       ).show(context);
                                                     }
                                                   }
@@ -205,8 +203,8 @@ Widget byRoom() {
                                                   await Flushbar(
                                                     title: 'Success',
                                                     message: "Updated",
-                                                    duration:
-                                                        Duration(seconds: 3),
+                                                    duration: const Duration(
+                                                        seconds: 3),
                                                   ).show(context);
                                                 });
                                               } else {
@@ -219,8 +217,8 @@ Widget byRoom() {
                                                   await Flushbar(
                                                     title: 'Error',
                                                     message: messages[i],
-                                                    duration:
-                                                        Duration(seconds: 3),
+                                                    duration: const Duration(
+                                                        seconds: 3),
                                                   ).show(context);
                                                 }
                                               }
@@ -234,7 +232,7 @@ Widget byRoom() {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 2,
                   );
                 },

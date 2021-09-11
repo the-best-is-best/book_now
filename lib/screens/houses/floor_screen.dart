@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 class FloorRoom extends StatelessWidget {
   final HouseModel myHouse;
 
-  const FloorRoom({required this.myHouse});
+  const FloorRoom({required this.myHouse, Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final myHousesRead = context.read<HousesProvider>();
@@ -25,117 +26,115 @@ class FloorRoom extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            child: Card(
-              elevation: 20,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                        child: Text(
-                      "Add Floor",
-                      style: Theme.of(context).textTheme.headline4,
-                    )),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      thickness: 3,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Center(
-                      child: Form(
-                        key: _keyForm,
-                        child: Column(
-                          children: [
-                            defaultFormField(
-                                context: context,
-                                controller: newFloorNamberController,
-                                label: 'Add new floors',
-                                type: TextInputType.number,
-                                validate: (String? val) {
-                                  if (val == null || val.isEmpty) {
-                                    return "empty !!";
-                                  }
-                                  int? convertToInt = int.tryParse(val);
-                                  if (convertToInt == null) {
-                                    return "Number not valid";
-                                  }
-                                  return null;
-                                }),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            myHousesWatch.loading
-                                ? CircularProgressIndicator()
-                                : ElevatedButton(
-                                    child: Text("Add"),
-                                    onPressed: () {
-                                      _keyForm.currentState!.save();
-                                      if (!_keyForm.currentState!.validate()) {
-                                        return;
-                                      }
-                                      _keyForm.currentState!.save();
+          Card(
+            elevation: 20,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                      child: Text(
+                    "Add Floor",
+                    style: Theme.of(context).textTheme.headline4,
+                  )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    thickness: 3,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                    child: Form(
+                      key: _keyForm,
+                      child: Column(
+                        children: [
+                          defaultFormField(
+                              context: context,
+                              controller: newFloorNamberController,
+                              label: 'Add new floors',
+                              type: TextInputType.number,
+                              validate: (String? val) {
+                                if (val == null || val.isEmpty) {
+                                  return "empty !!";
+                                }
+                                int? convertToInt = int.tryParse(val);
+                                if (convertToInt == null) {
+                                  return "Number not valid";
+                                }
+                                return null;
+                              }),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          myHousesWatch.loading
+                              ? const CircularProgressIndicator()
+                              : ElevatedButton(
+                                  child: const Text("Add"),
+                                  onPressed: () {
+                                    _keyForm.currentState!.save();
+                                    if (!_keyForm.currentState!.validate()) {
+                                      return;
+                                    }
+                                    _keyForm.currentState!.save();
 
-                                      myHousesRead
-                                          .updateFloor(
-                                              myHouse.id,
-                                              int.parse(newFloorNamberController
-                                                  .text))
-                                          .then(
-                                        (response) async {
-                                          var data = response.data;
-                                          if (data['messages'][0] ==
-                                              "Floor updated") {
-                                            DioHelper.postNotification().then(
-                                                (_) => myHousesRead
-                                                        .loadingEnd()
-                                                        .then((_) async {
-                                                      newFloorNamberController
-                                                          .text = "";
+                                    myHousesRead
+                                        .updateFloor(
+                                            myHouse.id,
+                                            int.parse(
+                                                newFloorNamberController.text))
+                                        .then(
+                                      (response) async {
+                                        var data = response.data;
+                                        if (data['messages'][0] ==
+                                            "Floor updated") {
+                                          DioHelper.postNotification().then(
+                                              (_) => myHousesRead
+                                                      .loadingEnd()
+                                                      .then((_) async {
+                                                    newFloorNamberController
+                                                        .text = "";
 
-                                                      Navigator.pop(context);
+                                                    Navigator.pop(context);
 
-                                                      await Flushbar(
-                                                        title: 'Success',
-                                                        message: "Added",
-                                                        duration: Duration(
-                                                            seconds: 3),
-                                                      ).show(context);
-                                                    }));
-                                          } else {
-                                            myHousesRead
-                                                .loadingEnd()
-                                                .then((_) async {
-                                              List<dynamic> messages =
-                                                  data['messages'];
-                                              for (int i = 0;
-                                                  i < messages.length;
-                                                  i++) {
-                                                await Flushbar(
-                                                  title: 'Error',
-                                                  message: messages[i],
-                                                  duration:
-                                                      Duration(seconds: 3),
-                                                ).show(context);
-                                              }
-                                            });
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                          ],
-                        ),
+                                                    await Flushbar(
+                                                      title: 'Success',
+                                                      message: "Added",
+                                                      duration: const Duration(
+                                                          seconds: 3),
+                                                    ).show(context);
+                                                  }));
+                                        } else {
+                                          myHousesRead
+                                              .loadingEnd()
+                                              .then((_) async {
+                                            List<dynamic> messages =
+                                                data['messages'];
+                                            for (int i = 0;
+                                                i < messages.length;
+                                                i++) {
+                                              await Flushbar(
+                                                title: 'Error',
+                                                message: messages[i],
+                                                duration:
+                                                    const Duration(seconds: 3),
+                                              ).show(context);
+                                            }
+                                          });
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

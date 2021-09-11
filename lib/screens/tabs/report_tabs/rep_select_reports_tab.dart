@@ -21,67 +21,65 @@ Widget repManagementReportsTab() {
           query.height - padding.top - padding.bottom - kToolbarHeight;
 
       final travelWatch = context.watch<TravelProvider>();
-      return Container(
-        child: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: myReportWatch.indexManagment == 0
-                          ? null
-                          : () {
-                              myReportRead.changeindexManagment(0);
-                            },
-                      icon: Icon(
-                        Icons.arrow_left_rounded,
-                        size: 40,
-                      )),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "Management",
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  IconButton(
-                      onPressed: myReportWatch.indexManagment == 1
-                          ? null
-                          : () {
-                              myReportRead.changeindexManagment(1);
-                            },
-                      icon: Icon(
-                        Icons.arrow_right_rounded,
-                        size: 40,
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              Container(
-                  padding: EdgeInsets.only(top: 5),
-                  child: myReportWatch.indexManagment == 0
-                      ? peopleData(
-                          myReportWatch,
-                          context,
-                          searchPeople,
-                          myReportRead,
-                          query,
-                          height,
-                          scrollListView,
-                          travelWatch)
-                      : getDataManagment(
-                          query, height, context, travelWatch, myReportWatch)),
-            ],
-          ),
+      return Center(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: myReportWatch.indexManagment == 0
+                        ? null
+                        : () {
+                            myReportRead.changeindexManagment(0);
+                          },
+                    icon: const Icon(
+                      Icons.arrow_left_rounded,
+                      size: 40,
+                    )),
+                const SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  "Management",
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                IconButton(
+                    onPressed: myReportWatch.indexManagment == 1
+                        ? null
+                        : () {
+                            myReportRead.changeindexManagment(1);
+                          },
+                    icon: const Icon(
+                      Icons.arrow_right_rounded,
+                      size: 40,
+                    )),
+              ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            const Divider(
+              thickness: 3,
+            ),
+            Container(
+                padding: const EdgeInsets.only(top: 5),
+                child: myReportWatch.indexManagment == 0
+                    ? peopleData(
+                        myReportWatch,
+                        context,
+                        searchPeople,
+                        myReportRead,
+                        query,
+                        height,
+                        scrollListView,
+                        travelWatch)
+                    : getDataManagment(
+                        query, height, context, travelWatch, myReportWatch)),
+          ],
         ),
       );
     },
@@ -110,7 +108,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     for (TravelModel travelData in travelWatch.myTravel) ...{
@@ -122,7 +120,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     }
@@ -141,7 +139,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     for (TravelModel travelData in travelWatch.myTravel) ...{
@@ -156,7 +154,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     }
@@ -164,7 +162,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                 ),
               ),
             ]),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
             Row(children: [
@@ -179,7 +177,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -190,7 +188,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -201,7 +199,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -212,7 +210,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -223,7 +221,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -234,7 +232,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
@@ -254,7 +252,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -265,7 +263,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -276,7 +274,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -291,7 +289,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -302,7 +300,7 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -315,14 +313,14 @@ Widget getDataManagment(Size query, double height, BuildContext context,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
                 ),
               ),
             ]),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],
@@ -357,7 +355,7 @@ Widget peopleData(
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: 800,
             child: Column(
               children: [
@@ -365,7 +363,7 @@ Widget peopleData(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
+                    const SizedBox(
                         width: 800 * .3,
                         child: Center(
                             child: Text(
@@ -376,49 +374,49 @@ Widget peopleData(
                       width: 2,
                       color: Colors.grey,
                     ),
-                    Container(
+                    const SizedBox(
                         width: 800 * .1, child: Center(child: Text("Travel"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
-                    Container(
+                    const SizedBox(
                         width: 800 * .12,
                         child: Center(child: Text("paid up"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
-                    Container(
+                    const SizedBox(
                         width: 800 * .12,
                         child: Center(child: Text("Support"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
-                    Container(
+                    const SizedBox(
                         width: 800 * .12,
                         child: Center(child: Text("coupons"))),
                     Container(
                       width: 2,
                       color: Colors.grey,
                     ),
-                    Container(
+                    const SizedBox(
                         width: 800 * .2, child: Center(child: Text("Change"))),
                   ],
                 ),
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 2,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Container(
+                    SizedBox(
                       height: myReportWatch.myRelPeople.length > 20
                           ? myReportWatch.loadNewRelPeopleData
                               ? height * (height * .48 / 640)
@@ -429,7 +427,7 @@ Widget peopleData(
                       width: 800,
                       child: NotificationListener(
                         child: myReportWatch.loadingSearch
-                            ? Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator())
                             : ListView.separated(
                                 controller: scrollListView,
                                 shrinkWrap: true,
@@ -446,7 +444,7 @@ Widget peopleData(
                                       .firstWhere(
                                           (travel) => travel.id == people)
                                       .name;
-                                  return Container(
+                                  return SizedBox(
                                     height: 25,
                                     child: Row(
                                       crossAxisAlignment:
@@ -454,7 +452,7 @@ Widget peopleData(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                             width: 800 * .3,
                                             child: Center(
                                                 child: Text(myReportWatch
@@ -469,7 +467,7 @@ Widget peopleData(
                                           width: 2,
                                           color: Colors.grey,
                                         ),
-                                        Container(
+                                        SizedBox(
                                             width: 800 * .1,
                                             child: Center(
                                                 child: Text(travelName))),
@@ -477,7 +475,7 @@ Widget peopleData(
                                           width: 2,
                                           color: Colors.grey,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 800 * .12,
                                           child: Center(
                                             child: Text(myReportWatch.searched
@@ -493,7 +491,7 @@ Widget peopleData(
                                           width: 2,
                                           color: Colors.grey,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 800 * .12,
                                           child: Center(
                                             child: Text(myReportWatch.searched
@@ -511,7 +509,7 @@ Widget peopleData(
                                           width: 2,
                                           color: Colors.grey,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 800 * .12,
                                           child: Center(
                                             child: Text(myReportWatch.searched
@@ -528,12 +526,13 @@ Widget peopleData(
                                           width: 2,
                                           color: Colors.grey,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 800 * .2,
                                           child: Center(
                                             child: IconButton(
-                                              padding: EdgeInsets.all(0),
-                                              icon: Icon(Icons.change_circle),
+                                              padding: const EdgeInsets.all(0),
+                                              icon: const Icon(
+                                                  Icons.change_circle),
                                               onPressed:
                                                   myReportWatch.dateServer
                                                           .isBefore(
@@ -547,7 +546,7 @@ Widget peopleData(
                                                           Navigator.push(
                                                               context,
                                                               PageTransition(
-                                                                  duration: Duration(
+                                                                  duration: const Duration(
                                                                       microseconds:
                                                                           500),
                                                                   type:
@@ -582,7 +581,7 @@ Widget peopleData(
                                 },
                                 separatorBuilder:
                                     (BuildContext context, int index) {
-                                  return Divider(
+                                  return const Divider(
                                     thickness: 2,
                                   );
                                 }),
@@ -606,11 +605,12 @@ Widget peopleData(
       ),
       myReportWatch.loadNewRelPeopleData
           ? Column(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Center(
+                const Center(
                   child: CircularProgressIndicator(),
                 )
               ],

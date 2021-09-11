@@ -14,7 +14,9 @@ class MyProjectProvider with ChangeNotifier {
     myProject = [];
 
     List<int> id = [];
-    listenData.forEach((val) => id.add(val.recordId));
+    for (var val in listenData) {
+      id.add(val.recordId);
+    }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
@@ -27,11 +29,11 @@ class MyProjectProvider with ChangeNotifier {
       datas.forEach((data) {
         myProject.add(ProjectsModel.fromJson(data));
       });
-      myProject.forEach((data) {
+      for (var data in myProject) {
         if (data.endDate.isAfter(DateTime.now())) {
           projectId = data.id;
         }
-      });
+      }
       if (projectId != null) {
         return projectId;
       } else {

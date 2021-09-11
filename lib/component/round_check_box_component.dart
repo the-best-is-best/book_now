@@ -9,11 +9,11 @@ RoundCheckBox defaultRoundCheckBox(dynamic function, bool? value) {
     size: 40,
     uncheckedColor: secColor,
     checkedColor: mainColor,
-    uncheckedWidget: Icon(
+    uncheckedWidget: const Icon(
       Icons.check_box_outline_blank_rounded,
       color: Colors.black,
     ),
-    checkedWidget: Icon(
+    checkedWidget: const Icon(
       Icons.check_box_rounded,
       color: Colors.white,
     ),

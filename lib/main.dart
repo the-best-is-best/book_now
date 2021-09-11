@@ -35,10 +35,12 @@ void main() async {
   DioHelper.init();
 
   initializeDateFormatting();
-  runApp(RunMyApp());
+  runApp(const RunMyApp());
 }
 
 class RunMyApp extends StatelessWidget {
+  const RunMyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -60,12 +62,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
+  MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     GetDataListen.getData = false;
 
     return MaterialApp(
-      supportedLocales: [
+      supportedLocales: const [
         Locale("en"),
       ],
       debugShowCheckedModeBanner: false,
@@ -86,7 +90,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(color: mainColor),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             textStyle: Theme.of(context)
                 .textTheme
                 .headline6!
@@ -94,7 +98,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: ProjectScreen(),
+      home: const ProjectScreen(),
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],

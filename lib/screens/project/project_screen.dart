@@ -1,5 +1,5 @@
-import 'package:book_now/component/appBar_component.dart';
-import 'package:book_now/component/menu/buildMenu.dart';
+import 'package:book_now/component/app_bar_component.dart';
+import 'package:book_now/component/menu/build_menu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProjectScreen extends StatefulWidget {
+  const ProjectScreen({Key? key}) : super(key: key);
+
   @override
   _ProjectScreenState createState() => _ProjectScreenState();
 }
@@ -37,20 +39,20 @@ class _ProjectScreenState extends State<ProjectScreen> {
               blurRadius: 5.0,
             ),
           ],
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         drawer: buildMenu(0, context),
         child: Scaffold(
           appBar: buildAppBar("My Project", _advancedDrawerController),
           body: myCheckLoading.loading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Center(
                   child: DoubleBackToCloseApp(
                     snackBar: const SnackBar(
                       content: Text('Tap back again to leave'),
                     ),
                     child: SingleChildScrollView(
-                      child: Container(
+                      child: SizedBox(
                         width: myProjectWatch.tabIndex == 0
                             ? MediaQuery.of(context).size.width / 1.1
                             : null,
@@ -77,12 +79,13 @@ class _ProjectScreenState extends State<ProjectScreen> {
             backgroundColor: mainColor,
             fixedColor: Colors.black,
             unselectedItemColor: Colors.brown,
+            // ignore: prefer_const_literals_to_create_immutables
             items: [
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.create),
                 label: 'Create',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.select_all),
                 label: 'Select',
               ),

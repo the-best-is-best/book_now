@@ -23,13 +23,13 @@ Widget createTravelTab() {
             "Create Travel",
             style: Theme.of(context).textTheme.headline1,
           )),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Divider(
+          const Divider(
             thickness: 3,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Center(
@@ -48,13 +48,13 @@ Widget createTravelTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   myTravelWatch.loading
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          child: Text("Create"),
+                          child: const Text("Create"),
                           onPressed: () async {
                             _keyForm.currentState!.save();
                             if (!_keyForm.currentState!.validate()) {
@@ -79,7 +79,7 @@ Widget createTravelTab() {
                                         await Flushbar(
                                           title: 'Success',
                                           message: "Added",
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       }));
                                 } else {
@@ -89,7 +89,7 @@ Widget createTravelTab() {
                                       await Flushbar(
                                         title: 'Error',
                                         message: messages[i],
-                                        duration: Duration(seconds: 3),
+                                        duration: const Duration(seconds: 3),
                                       ).show(context);
                                     }
                                   });
@@ -102,7 +102,7 @@ Widget createTravelTab() {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],

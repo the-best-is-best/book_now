@@ -25,14 +25,14 @@ Widget buildMenu(int curPage, BuildContext context) {
                     Navigator.pushReplacement(
                         context,
                         PageTransition(
-                            duration: Duration(microseconds: 500),
+                            duration: const Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: ProjectScreen()));
+                            child: const ProjectScreen()));
                   },
-            leading: FaIcon(
+            leading: const FaIcon(
               FontAwesomeIcons.projectDiagram,
             ),
-            title: Text(
+            title: const Text(
               'My Project',
             ),
           ),
@@ -44,12 +44,12 @@ Widget buildMenu(int curPage, BuildContext context) {
                     Navigator.pushReplacement(
                         context,
                         PageTransition(
-                            duration: Duration(microseconds: 500),
+                            duration: const Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: HousesScreen()));
+                            child: const HousesScreen()));
                   },
-            leading: FaIcon(FontAwesomeIcons.houseUser),
-            title: Text('Houses'),
+            leading: const FaIcon(FontAwesomeIcons.houseUser),
+            title: const Text('Houses'),
           ),
           ListTile(
             selected: curPage == 2 ? true : false,
@@ -59,12 +59,12 @@ Widget buildMenu(int curPage, BuildContext context) {
                     Navigator.pushReplacement(
                         context,
                         PageTransition(
-                            duration: Duration(microseconds: 500),
+                            duration: const Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: PeopleScreen()));
+                            child: const PeopleScreen()));
                   },
-            leading: Icon(Icons.people_alt),
-            title: Text('People'),
+            leading: const Icon(Icons.people_alt),
+            title: const Text('People'),
           ),
           ListTile(
             selected: curPage == 3 ? true : false,
@@ -74,12 +74,12 @@ Widget buildMenu(int curPage, BuildContext context) {
                     Navigator.pushReplacement(
                         context,
                         PageTransition(
-                            duration: Duration(microseconds: 500),
+                            duration: const Duration(microseconds: 500),
                             type: PageTransitionType.fade,
-                            child: TravelScreen()));
+                            child: const TravelScreen()));
                   },
-            leading: Icon(Icons.travel_explore),
-            title: Text('Travel'),
+            leading: const Icon(Icons.travel_explore),
+            title: const Text('Travel'),
           ),
           /*
           ListTile(

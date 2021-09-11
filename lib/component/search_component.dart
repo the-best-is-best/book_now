@@ -14,12 +14,12 @@ Widget buildSearchComponent({
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: query.width * .75,
             child: defaultFormField(
               context: context,
               controller: searchController,
-              label: '$searchTitle',
+              label: searchTitle,
               type: TextInputType.text,
               suffix: Icons.search,
               validate: (String? val) {
@@ -30,7 +30,7 @@ Widget buildSearchComponent({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 20,
       ),
     ],

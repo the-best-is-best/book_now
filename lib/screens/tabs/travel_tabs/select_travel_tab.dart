@@ -23,16 +23,16 @@ Widget selectTravelTab() {
               "Select Travel",
               style: Theme.of(context).textTheme.headline1,
             )),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            myTravelWatch.myTravel.length > 0
+            myTravelWatch.myTravel.isNotEmpty
                 ? buildListView(
                     myTravelWatch: myTravelWatch,
                     query: query,
@@ -56,19 +56,19 @@ ListView buildListView({
 }) {
   return ListView.separated(
     shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     itemCount: myTravelWatch.myTravel.length,
     itemBuilder: (BuildContext context, int index) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
-        child: Container(
+        child: SizedBox(
             width: query.width,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     PageTransition(
-                        duration: Duration(microseconds: 500),
+                        duration: const Duration(microseconds: 500),
                         type: PageTransitionType.fade,
                         child: TravelDetailsScreen(
                             travel: myTravelWatch.myTravel[index])));
@@ -78,7 +78,7 @@ ListView buildListView({
       );
     },
     separatorBuilder: (BuildContext context, int index) {
-      return Divider(
+      return const Divider(
         thickness: 2,
       );
     },

@@ -19,243 +19,241 @@ Widget repDetailsResidenceTab() {
       final height =
           query.height - padding.top - padding.bottom - kToolbarHeight;
 
-      return Container(
-        child: Center(
-          child: Column(
-            children: [
-              Text(
-                "Residence",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 5),
-                child: Column(
-                  children: [
-                    Center(
-                      child: myReportWatch.myRelPeople.length > 20
-                          ? buildSearchComponent(
-                              context: context,
-                              searchController: searchPeople,
-                              searchTitle: "People Name",
-                              onSubmit: (val) {
-                                myReportRead.searchInRelPeople(val);
-                              })
-                          : Container(),
-                    ),
-                    Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                              width: query.width * .4,
-                              child: Center(
-                                  child: Text(
-                                "Name",
-                                overflow: TextOverflow.fade,
-                              ))),
-                          Container(
-                            width: 2,
-                            color: Colors.grey,
-                          ),
-                          Container(
-                              width: query.width * .15,
-                              child: Center(child: Text("Floor"))),
-                          Container(
-                              width: query.width * .15,
-                              child: Center(child: Text("Room"))),
-                          Container(
-                            width: 2,
-                            color: Colors.grey,
-                          ),
-                          Container(
-                              width: query.width * .2,
-                              child: Center(child: Text("Change"))),
-                        ],
+      return Center(
+        child: Column(
+          children: [
+            Text(
+              "Residence",
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Divider(
+              thickness: 3,
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: Column(
+                children: [
+                  Center(
+                    child: myReportWatch.myRelPeople.length > 20
+                        ? buildSearchComponent(
+                            context: context,
+                            searchController: searchPeople,
+                            searchTitle: "People Name",
+                            onSubmit: (val) {
+                              myReportRead.searchInRelPeople(val);
+                            })
+                        : Container(),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                          width: query.width * .4,
+                          child: const Center(
+                              child: Text(
+                            "Name",
+                            overflow: TextOverflow.fade,
+                          ))),
+                      Container(
+                        width: 2,
+                        color: Colors.grey,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: myReportWatch.myRelPeople.length > 20
-                          ? myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .48 / 640)
-                              : height * (height * .56 / 640)
-                          : myReportWatch.loadNewRelPeopleData
-                              ? height * (height * .63 / 640)
-                              : height * (height * .70 / 640),
-                      child: NotificationListener(
-                        child: myReportWatch.loadingSearch
-                            ? Center(child: CircularProgressIndicator())
-                            : ListView.separated(
-                                controller: scrollListView,
-                                shrinkWrap: true,
-                                itemCount: myReportWatch.searched
-                                    ? myReportWatch.searchRelPeople.length
-                                    : myReportWatch.relPeopleData.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 25,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                            width: query.width * .4,
-                                            child: Center(
-                                                child: Text(myReportWatch
-                                                        .searched
-                                                    ? myReportWatch
-                                                        .searchRelPeople[index]
-                                                        .peopleName
-                                                    : myReportWatch
-                                                        .relPeopleData[index]
-                                                        .peopleName))),
-                                        Container(
-                                          width: 2,
-                                          color: Colors.grey,
-                                        ),
-                                        Container(
-                                          width: query.width * .15,
+                      SizedBox(
+                          width: query.width * .15,
+                          child: const Center(child: Text("Floor"))),
+                      SizedBox(
+                          width: query.width * .15,
+                          child: const Center(child: Text("Room"))),
+                      Container(
+                        width: 2,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                          width: query.width * .2,
+                          child: const Center(child: Text("Change"))),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    thickness: 2,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  SizedBox(
+                    height: myReportWatch.myRelPeople.length > 20
+                        ? myReportWatch.loadNewRelPeopleData
+                            ? height * (height * .48 / 640)
+                            : height * (height * .56 / 640)
+                        : myReportWatch.loadNewRelPeopleData
+                            ? height * (height * .63 / 640)
+                            : height * (height * .70 / 640),
+                    child: NotificationListener(
+                      child: myReportWatch.loadingSearch
+                          ? const Center(child: CircularProgressIndicator())
+                          : ListView.separated(
+                              controller: scrollListView,
+                              shrinkWrap: true,
+                              itemCount: myReportWatch.searched
+                                  ? myReportWatch.searchRelPeople.length
+                                  : myReportWatch.relPeopleData.length,
+                              itemBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 25,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SizedBox(
+                                          width: query.width * .4,
                                           child: Center(
-                                            child: Text(myReportWatch.searched
-                                                ? myReportWatch
-                                                    .searchRelPeople[index]
-                                                    .floor
-                                                    .toString()
-                                                : myReportWatch
-                                                    .relPeopleData[index].floor
-                                                    .toString()),
+                                              child: Text(myReportWatch.searched
+                                                  ? myReportWatch
+                                                      .searchRelPeople[index]
+                                                      .peopleName
+                                                  : myReportWatch
+                                                      .relPeopleData[index]
+                                                      .peopleName))),
+                                      Container(
+                                        width: 2,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(
+                                        width: query.width * .15,
+                                        child: Center(
+                                          child: Text(myReportWatch.searched
+                                              ? myReportWatch
+                                                  .searchRelPeople[index].floor
+                                                  .toString()
+                                              : myReportWatch
+                                                  .relPeopleData[index].floor
+                                                  .toString()),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 2,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(
+                                        width: query.width * .15,
+                                        child: Center(
+                                          child: Text(myReportWatch.searched
+                                              ? allRoomsWatch.myRooms
+                                                  .firstWhere((room) =>
+                                                      room.id ==
+                                                      myReportWatch
+                                                          .searchRelPeople[
+                                                              index]
+                                                          .roomId)
+                                                  .name
+                                                  .toString()
+                                              : allRoomsWatch.myRooms
+                                                  .firstWhere((room) =>
+                                                      room.id ==
+                                                      myReportWatch
+                                                          .relPeopleData[index]
+                                                          .roomId)
+                                                  .name
+                                                  .toString()),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 2,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(
+                                        width: query.width * .2,
+                                        child: Center(
+                                          child: IconButton(
+                                            padding: const EdgeInsets.all(0),
+                                            icon:
+                                                const Icon(Icons.change_circle),
+                                            onPressed:
+                                                myReportWatch.dateServer
+                                                        .isBefore(myReportWatch
+                                                            .myProject!.endDate)
+                                                    ? () {
+                                                        myReportRead
+                                                            .searchInRelPeople(
+                                                                "");
+                                                        Navigator.push(
+                                                            context,
+                                                            PageTransition(
+                                                                duration:
+                                                                    const Duration(
+                                                                        microseconds:
+                                                                            500),
+                                                                type:
+                                                                    PageTransitionType
+                                                                        .fade,
+                                                                child:
+                                                                    ChangeRoomResidence(
+                                                                  myReportWatch
+                                                                          .myRelPeople[
+                                                                      index],
+                                                                  allRoomsWatch.myRooms.firstWhere((room) =>
+                                                                      room.houseId ==
+                                                                          myReportWatch
+                                                                              .myRelPeople[
+                                                                                  index]
+                                                                              .houseId &&
+                                                                      room.id ==
+                                                                          myReportWatch
+                                                                              .myRelPeople[index]
+                                                                              .roomId),
+                                                                )));
+                                                      }
+                                                    : null,
                                           ),
                                         ),
-                                        Container(
-                                          width: 2,
-                                          color: Colors.grey,
-                                        ),
-                                        Container(
-                                          width: query.width * .15,
-                                          child: Center(
-                                            child: Text(myReportWatch.searched
-                                                ? allRoomsWatch.myRooms
-                                                    .firstWhere((room) =>
-                                                        room.id ==
-                                                        myReportWatch
-                                                            .searchRelPeople[
-                                                                index]
-                                                            .roomId)
-                                                    .name
-                                                    .toString()
-                                                : allRoomsWatch.myRooms
-                                                    .firstWhere((room) =>
-                                                        room.id ==
-                                                        myReportWatch
-                                                            .relPeopleData[
-                                                                index]
-                                                            .roomId)
-                                                    .name
-                                                    .toString()),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 2,
-                                          color: Colors.grey,
-                                        ),
-                                        Container(
-                                          width: query.width * .2,
-                                          child: Center(
-                                            child: IconButton(
-                                              padding: EdgeInsets.all(0),
-                                              icon: Icon(Icons.change_circle),
-                                              onPressed:
-                                                  myReportWatch.dateServer
-                                                          .isBefore(
-                                                              myReportWatch
-                                                                  .myProject!
-                                                                  .endDate)
-                                                      ? () {
-                                                          myReportRead
-                                                              .searchInRelPeople(
-                                                                  "");
-                                                          Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                  duration: Duration(
-                                                                      microseconds:
-                                                                          500),
-                                                                  type:
-                                                                      PageTransitionType
-                                                                          .fade,
-                                                                  child:
-                                                                      ChangeRoomResidence(
-                                                                    myReportWatch
-                                                                            .myRelPeople[
-                                                                        index],
-                                                                    allRoomsWatch
-                                                                        .myRooms
-                                                                        .firstWhere((room) =>
-                                                                            room.houseId == myReportWatch.myRelPeople[index].houseId &&
-                                                                            room.id ==
-                                                                                myReportWatch.myRelPeople[index].roomId),
-                                                                  )));
-                                                        }
-                                                      : null,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return Divider(
-                                    thickness: 2,
-                                  );
-                                }),
-                        onNotification: (dynamic scroll) {
-                          if (scroll is ScrollEndNotification &&
-                              myReportWatch.curPage != myReportWatch.maxPage &&
-                              scrollListView.position.maxScrollExtent ==
-                                  scroll.metrics.pixels) {
-                            myReportWatch.getNexPage();
-                          }
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider(
+                                  thickness: 2,
+                                );
+                              }),
+                      onNotification: (dynamic scroll) {
+                        if (scroll is ScrollEndNotification &&
+                            myReportWatch.curPage != myReportWatch.maxPage &&
+                            scrollListView.position.maxScrollExtent ==
+                                scroll.metrics.pixels) {
+                          myReportWatch.getNexPage();
+                        }
 
-                          return true;
-                        },
-                      ),
+                        return true;
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              myReportWatch.loadNewRelPeopleData
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      ],
-                    )
-                  : Container()
-            ],
-          ),
+            ),
+            myReportWatch.loadNewRelPeopleData
+                ? Column(
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                  )
+                : Container()
+          ],
         ),
       );
     },

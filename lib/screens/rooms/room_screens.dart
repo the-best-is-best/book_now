@@ -9,7 +9,9 @@ class RoomScreen extends StatelessWidget {
   final HouseModel house;
   final int floor;
 
-  const RoomScreen({required this.house, required this.floor});
+  const RoomScreen({required this.house, required this.floor, Key? key})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final myRoomsRead = context.read<RoomsProvider>();
@@ -18,10 +20,10 @@ class RoomScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Rooms for - ${house.name} - floor: $floor ")),
       body: myCheckLoading.loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Center(
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   width: myRoomsWatch.tabIndex == 0
                       ? MediaQuery.of(context).size.width / 1.1
                       : null,
@@ -46,12 +48,13 @@ class RoomScreen extends StatelessWidget {
         backgroundColor: mainColor,
         fixedColor: Colors.black,
         unselectedItemColor: Colors.brown,
+        // ignore: prefer_const_literals_to_create_immutables
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.create),
             label: 'Create',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.select_all),
             label: 'Select',
           ),

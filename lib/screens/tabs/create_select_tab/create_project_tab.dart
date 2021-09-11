@@ -31,13 +31,13 @@ Widget createProjectTab() {
             "Create Project",
             style: Theme.of(context).textTheme.headline1,
           )),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Divider(
+          const Divider(
             thickness: 3,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Center(
@@ -56,18 +56,19 @@ Widget createProjectTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black38),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 25),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 25),
                     width: MediaQuery.of(context).size.width,
                     child: DropdownButtonFormField<int?>(
                       icon: null,
-                      hint: Text('Select House *'),
+                      hint: const Text('Select House *'),
                       value: myProjectWatch.houseSelected,
                       items: myHousesWatch.myHouses
                           .map((house) => DropdownMenuItem(
@@ -87,7 +88,7 @@ Widget createProjectTab() {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   defaultFormField(
@@ -105,7 +106,7 @@ Widget createProjectTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   defaultDateTimePicker(
@@ -120,13 +121,13 @@ Widget createProjectTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   myProjectWatch.loading
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          child: Text("Create"),
+                          child: const Text("Create"),
                           onPressed: () {
                             _keyForm.currentState!.save();
                             if (!_keyForm.currentState!.validate()) {
@@ -156,7 +157,7 @@ Widget createProjectTab() {
                                         await Flushbar(
                                           title: 'Success',
                                           message: "Added",
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       }));
                                 } else {
@@ -166,7 +167,7 @@ Widget createProjectTab() {
                                       await Flushbar(
                                         title: 'Error',
                                         message: messages[i],
-                                        duration: Duration(seconds: 3),
+                                        duration: const Duration(seconds: 3),
                                       ).show(context);
                                     }
                                   });

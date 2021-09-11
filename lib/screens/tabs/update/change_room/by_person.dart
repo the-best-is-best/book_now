@@ -23,381 +23,356 @@ Widget byPerson() {
     final height = query.height - padding.top - padding.bottom - kToolbarHeight;
     return getDataServer(
       context: context,
-      child: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                  child: Text(
-                "Select Person",
-                style: Theme.of(context).textTheme.headline1,
-              )),
-              SizedBox(
-                height: 5,
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              Center(
-                child: myReportWatch.myRelPeople.length > 20
-                    ? buildSearchComponent(
-                        context: context,
-                        searchController: searchPeople,
-                        searchTitle: "People Name",
-                        onSubmit: (val) {
-                          myReportRead.searchInRelPeople(val);
-                        })
-                    : Container(),
-              ),
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                        width: query.width * .4,
-                        child: Center(
-                            child: Text(
-                          "Name",
-                          overflow: TextOverflow.fade,
-                        ))),
-                    Container(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    Container(
-                        width: query.width * .15,
-                        child: Center(child: Text("Floor"))),
-                    Container(
-                        width: query.width * .15,
-                        child: Center(child: Text("Room"))),
-                    Container(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    Container(
-                        width: query.width * .2,
-                        child: Center(child: Text("Change"))),
-                  ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+                child: Text(
+              "Select Person",
+              style: Theme.of(context).textTheme.headline1,
+            )),
+            const SizedBox(
+              height: 5,
+            ),
+            const Divider(
+              thickness: 3,
+            ),
+            Center(
+              child: myReportWatch.myRelPeople.length > 20
+                  ? buildSearchComponent(
+                      context: context,
+                      searchController: searchPeople,
+                      searchTitle: "People Name",
+                      onSubmit: (val) {
+                        myReportRead.searchInRelPeople(val);
+                      })
+                  : Container(),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                    width: query.width * .4,
+                    child: const Center(
+                        child: Text(
+                      "Name",
+                      overflow: TextOverflow.fade,
+                    ))),
+                Container(
+                  width: 2,
+                  color: Colors.grey,
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Divider(
-                thickness: 2,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: myReportWatch.myRelPeople.length > 20
-                    ? myReportWatch.loadNewRelPeopleData
-                        ? height * (height * .38 / 640)
-                        : height * (height * .5 / 640)
-                    : myReportWatch.loadNewRelPeopleData
-                        ? height * (height * .63 / 640)
-                        : height * (height * .8 / 640),
-                child: NotificationListener(
-                  child: myReportWatch.loadingSearch
-                      ? Center(child: CircularProgressIndicator())
-                      : ListView.separated(
-                          controller: scrollListView,
-                          shrinkWrap: true,
-                          itemCount: myReportWatch.searched
-                              ? myReportWatch.searchRelPeople.length
-                              : myReportWatch.relPeopleData.length,
-                          itemBuilder: (context, index) {
-                            return Opacity(
-                              opacity: myReportWatch.searched
-                                  ? changeRoomWatch.curRoomPeople!.id ==
-                                          myReportWatch
-                                              .searchRelPeople[index].roomId
-                                      ? .5
-                                      : 1
-                                  : changeRoomWatch.curRoomPeople!.id ==
-                                          myReportWatch
-                                              .relPeopleData[index].roomId
-                                      ? .5
-                                      : 1,
-                              child: Container(
-                                height: 25,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                        width: query.width * .4,
-                                        child: Center(
-                                            child: Text(myReportWatch.searched
-                                                ? myReportWatch
-                                                    .searchRelPeople[index]
-                                                    .peopleName
-                                                : myReportWatch
-                                                    .relPeopleData[index]
-                                                    .peopleName))),
-                                    Container(
-                                      width: 2,
-                                      color: Colors.grey,
-                                    ),
-                                    Container(
-                                      width: query.width * .15,
+                SizedBox(
+                    width: query.width * .15,
+                    child: const Center(child: Text("Floor"))),
+                SizedBox(
+                    width: query.width * .15,
+                    child: const Center(child: Text("Room"))),
+                Container(
+                  width: 2,
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                    width: query.width * .2,
+                    child: const Center(child: Text("Change"))),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Divider(
+              thickness: 2,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: myReportWatch.myRelPeople.length > 20
+                  ? myReportWatch.loadNewRelPeopleData
+                      ? height * (height * .38 / 640)
+                      : height * (height * .5 / 640)
+                  : myReportWatch.loadNewRelPeopleData
+                      ? height * (height * .63 / 640)
+                      : height * (height * .8 / 640),
+              child: NotificationListener(
+                child: myReportWatch.loadingSearch
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.separated(
+                        controller: scrollListView,
+                        shrinkWrap: true,
+                        itemCount: myReportWatch.searched
+                            ? myReportWatch.searchRelPeople.length
+                            : myReportWatch.relPeopleData.length,
+                        itemBuilder: (context, index) {
+                          return Opacity(
+                            opacity: myReportWatch.searched
+                                ? changeRoomWatch.curRoomPeople!.id ==
+                                        myReportWatch
+                                            .searchRelPeople[index].roomId
+                                    ? .5
+                                    : 1
+                                : changeRoomWatch.curRoomPeople!.id ==
+                                        myReportWatch
+                                            .relPeopleData[index].roomId
+                                    ? .5
+                                    : 1,
+                            child: SizedBox(
+                              height: 25,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                      width: query.width * .4,
                                       child: Center(
-                                        child: Text(myReportWatch.searched
-                                            ? myReportWatch
-                                                .searchRelPeople[index].floor
-                                                .toString()
-                                            : myReportWatch
-                                                .relPeopleData[index].floor
-                                                .toString()),
-                                      ),
+                                          child: Text(myReportWatch.searched
+                                              ? myReportWatch
+                                                  .searchRelPeople[index]
+                                                  .peopleName
+                                              : myReportWatch
+                                                  .relPeopleData[index]
+                                                  .peopleName))),
+                                  Container(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: query.width * .15,
+                                    child: Center(
+                                      child: Text(myReportWatch.searched
+                                          ? myReportWatch
+                                              .searchRelPeople[index].floor
+                                              .toString()
+                                          : myReportWatch
+                                              .relPeopleData[index].floor
+                                              .toString()),
                                     ),
-                                    Container(
-                                      width: 2,
-                                      color: Colors.grey,
+                                  ),
+                                  Container(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: query.width * .15,
+                                    child: Center(
+                                      child: Text(myReportWatch.searched
+                                          ? allRoomsWatch.myRooms
+                                              .firstWhere((room) =>
+                                                  room.id ==
+                                                  myReportWatch
+                                                      .searchRelPeople[index]
+                                                      .roomId)
+                                              .name
+                                              .toString()
+                                          : allRoomsWatch.myRooms
+                                              .firstWhere((room) =>
+                                                  room.id ==
+                                                  myReportWatch
+                                                      .relPeopleData[index]
+                                                      .roomId)
+                                              .name
+                                              .toString()),
                                     ),
-                                    Container(
-                                      width: query.width * .15,
-                                      child: Center(
-                                        child: Text(myReportWatch.searched
-                                            ? allRoomsWatch.myRooms
-                                                .firstWhere((room) =>
-                                                    room.id ==
+                                  ),
+                                  Container(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: query.width * .2,
+                                    child: Center(
+                                      child: IconButton(
+                                        padding: const EdgeInsets.all(0),
+                                        icon: const Icon(Icons.change_circle),
+                                        onPressed: myReportWatch.searched
+                                            ? changeRoomWatch
+                                                        .curRoomPeople!.id ==
                                                     myReportWatch
                                                         .searchRelPeople[index]
-                                                        .roomId)
-                                                .name
-                                                .toString()
-                                            : allRoomsWatch.myRooms
-                                                .firstWhere((room) =>
-                                                    room.id ==
+                                                        .roomId
+                                                ? null
+                                                : () {
+                                                    changeRoomRead.changeRoom(
+                                                        project: myReportWatch
+                                                            .myProject!.id,
+                                                        peopleId:
+                                                            changeRoomWatch
+                                                                .curPeople!.id,
+                                                        roomId: myReportWatch
+                                                            .searchRelPeople[
+                                                                index]
+                                                            .roomId);
+
+                                                    changeRoomRead
+                                                        .changeRoom(
+                                                            project:
+                                                                myReportWatch
+                                                                    .myProject!
+                                                                    .id,
+                                                            peopleId: myReportWatch
+                                                                .searchRelPeople[
+                                                                    index]
+                                                                .id,
+                                                            roomId:
+                                                                changeRoomWatch
+                                                                    .curPeople!
+                                                                    .roomId)
+                                                        .then((response) async {
+                                                      var data = response.data;
+                                                      if (data['messages'][0] ==
+                                                          "People room updated") {
+                                                        DioHelper
+                                                                .postNotification()
+                                                            .then((_) async {
+                                                          changeRoomRead
+                                                              .loadingEnd();
+
+                                                          Navigator.pop(
+                                                              context);
+                                                          await Flushbar(
+                                                            title: 'Success',
+                                                            message: "Added",
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
+                                                          ).show(context);
+                                                        });
+                                                      } else {
+                                                        changeRoomRead
+                                                            .loadingEnd();
+                                                        List<dynamic> messages =
+                                                            data['messages'];
+                                                        for (int i = 0;
+                                                            i < messages.length;
+                                                            i++) {
+                                                          await Flushbar(
+                                                            title: 'Error',
+                                                            message:
+                                                                messages[i],
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
+                                                          ).show(context);
+                                                        }
+                                                      }
+                                                    });
+                                                  }
+                                            : changeRoomWatch
+                                                        .curRoomPeople!.id ==
                                                     myReportWatch
                                                         .relPeopleData[index]
-                                                        .roomId)
-                                                .name
-                                                .toString()),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 2,
-                                      color: Colors.grey,
-                                    ),
-                                    Container(
-                                      width: query.width * .2,
-                                      child: Center(
-                                        child: IconButton(
-                                          padding: EdgeInsets.all(0),
-                                          icon: Icon(Icons.change_circle),
-                                          onPressed: myReportWatch.searched
-                                              ? changeRoomWatch
-                                                          .curRoomPeople!.id ==
-                                                      myReportWatch
-                                                          .searchRelPeople[
-                                                              index]
-                                                          .roomId
-                                                  ? null
-                                                  : () {
-                                                      changeRoomRead.changeRoom(
-                                                          project: myReportWatch
-                                                              .myProject!.id,
-                                                          peopleId:
-                                                              changeRoomWatch
-                                                                  .curPeople!
-                                                                  .id,
-                                                          roomId: myReportWatch
-                                                              .searchRelPeople[
-                                                                  index]
-                                                              .roomId);
+                                                        .roomId
+                                                ? null
+                                                : () {
+                                                    changeRoomRead.changeRoom(
+                                                        project: myReportWatch
+                                                            .myProject!.id,
+                                                        peopleId:
+                                                            changeRoomWatch
+                                                                .curPeople!.id,
+                                                        roomId: myReportWatch
+                                                            .relPeopleData[
+                                                                index]
+                                                            .roomId);
 
-                                                      changeRoomRead
-                                                          .changeRoom(
-                                                              project:
-                                                                  myReportWatch
-                                                                      .myProject!
-                                                                      .id,
-                                                              peopleId:
-                                                                  myReportWatch
-                                                                      .searchRelPeople[
-                                                                          index]
-                                                                      .id,
-                                                              roomId:
-                                                                  changeRoomWatch
-                                                                      .curPeople!
-                                                                      .roomId)
-                                                          .then(
-                                                              (response) async {
-                                                        var data =
-                                                            response.data;
-                                                        if (data['messages']
-                                                                [0] ==
-                                                            "People room updated") {
-                                                          DioHelper
-                                                                  .postNotification()
-                                                              .then((_) async {
-                                                            changeRoomRead
-                                                                .loadingEnd();
-
-                                                            Navigator.pop(
-                                                                context);
-                                                            await Flushbar(
-                                                              title: 'Success',
-                                                              message: "Added",
-                                                              duration:
-                                                                  Duration(
-                                                                      seconds:
-                                                                          3),
-                                                            ).show(context);
-                                                          });
-                                                        } else {
+                                                    changeRoomRead
+                                                        .changeRoom(
+                                                            project:
+                                                                myReportWatch
+                                                                    .myProject!
+                                                                    .id,
+                                                            peopleId: myReportWatch
+                                                                .relPeopleData[
+                                                                    index]
+                                                                .id,
+                                                            roomId:
+                                                                changeRoomWatch
+                                                                    .curPeople!
+                                                                    .roomId)
+                                                        .then((response) async {
+                                                      var data = response.data;
+                                                      if (data['messages'][0] ==
+                                                          "People room updated") {
+                                                        DioHelper
+                                                                .postNotification()
+                                                            .then((_) async {
                                                           changeRoomRead
                                                               .loadingEnd();
-                                                          List<dynamic>
-                                                              messages =
-                                                              data['messages'];
-                                                          for (int i = 0;
-                                                              i <
-                                                                  messages
-                                                                      .length;
-                                                              i++) {
-                                                            await Flushbar(
-                                                              title: 'Error',
-                                                              message:
-                                                                  messages[i],
-                                                              duration:
-                                                                  Duration(
-                                                                      seconds:
-                                                                          3),
-                                                            ).show(context);
-                                                          }
+
+                                                          Navigator.pop(
+                                                              context);
+
+                                                          await Flushbar(
+                                                            title: 'Success',
+                                                            message: "Updated",
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
+                                                          ).show(context);
+                                                        });
+                                                      } else {
+                                                        changeRoomRead
+                                                            .loadingEnd();
+                                                        List<dynamic> messages =
+                                                            data['messages'];
+                                                        for (int i = 0;
+                                                            i < messages.length;
+                                                            i++) {
+                                                          await Flushbar(
+                                                            title: 'Error',
+                                                            message:
+                                                                messages[i],
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
+                                                          ).show(context);
                                                         }
-                                                      });
-                                                    }
-                                              : changeRoomWatch
-                                                          .curRoomPeople!.id ==
-                                                      myReportWatch
-                                                          .relPeopleData[index]
-                                                          .roomId
-                                                  ? null
-                                                  : () {
-                                                      changeRoomRead.changeRoom(
-                                                          project: myReportWatch
-                                                              .myProject!.id,
-                                                          peopleId:
-                                                              changeRoomWatch
-                                                                  .curPeople!
-                                                                  .id,
-                                                          roomId: myReportWatch
-                                                              .relPeopleData[
-                                                                  index]
-                                                              .roomId);
-
-                                                      changeRoomRead
-                                                          .changeRoom(
-                                                              project:
-                                                                  myReportWatch
-                                                                      .myProject!
-                                                                      .id,
-                                                              peopleId:
-                                                                  myReportWatch
-                                                                      .relPeopleData[
-                                                                          index]
-                                                                      .id,
-                                                              roomId:
-                                                                  changeRoomWatch
-                                                                      .curPeople!
-                                                                      .roomId)
-                                                          .then(
-                                                              (response) async {
-                                                        var data =
-                                                            response.data;
-                                                        if (data['messages']
-                                                                [0] ==
-                                                            "People room updated") {
-                                                          DioHelper
-                                                                  .postNotification()
-                                                              .then((_) async {
-                                                            changeRoomRead
-                                                                .loadingEnd();
-
-                                                            Navigator.pop(
-                                                                context);
-
-                                                            await Flushbar(
-                                                              title: 'Success',
-                                                              message:
-                                                                  "Updated",
-                                                              duration:
-                                                                  Duration(
-                                                                      seconds:
-                                                                          3),
-                                                            ).show(context);
-                                                          });
-                                                        } else {
-                                                          changeRoomRead
-                                                              .loadingEnd();
-                                                          List<dynamic>
-                                                              messages =
-                                                              data['messages'];
-                                                          for (int i = 0;
-                                                              i <
-                                                                  messages
-                                                                      .length;
-                                                              i++) {
-                                                            await Flushbar(
-                                                              title: 'Error',
-                                                              message:
-                                                                  messages[i],
-                                                              duration:
-                                                                  Duration(
-                                                                      seconds:
-                                                                          3),
-                                                            ).show(context);
-                                                          }
-                                                        }
-                                                      });
-                                                    },
-                                        ),
+                                                      }
+                                                    });
+                                                  },
                                       ),
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Divider(
-                              thickness: 2,
-                            );
-                          }),
-                  onNotification: (dynamic scroll) {
-                    if (scroll is ScrollEndNotification &&
-                        myReportWatch.curPage != myReportWatch.maxPage &&
-                        scrollListView.position.maxScrollExtent ==
-                            scroll.metrics.pixels) {
-                      myReportWatch.getNexPage();
-                    }
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+                            thickness: 2,
+                          );
+                        }),
+                onNotification: (dynamic scroll) {
+                  if (scroll is ScrollEndNotification &&
+                      myReportWatch.curPage != myReportWatch.maxPage &&
+                      scrollListView.position.maxScrollExtent ==
+                          scroll.metrics.pixels) {
+                    myReportWatch.getNexPage();
+                  }
 
-                    return true;
-                  },
-                ),
+                  return true;
+                },
               ),
-              myReportWatch.loadNewRelPeopleData
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      ],
-                    )
-                  : Container()
-            ],
-          ),
+            ),
+            myReportWatch.loadNewRelPeopleData
+                ? Column(
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                  )
+                : Container()
+          ],
         ),
       ),
     );

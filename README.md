@@ -1,6 +1,6 @@
 # book_now
 
-Book Now.
+A new Flutter project.
 
 ## Getting Started
 

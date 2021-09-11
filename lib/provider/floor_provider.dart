@@ -8,7 +8,7 @@ class FloorProvider with ChangeNotifier {
   Future getFloors(List<HouseModel> myHouses) async {
     myFloor = [];
 
-    myHouses.forEach((house) {
+    for (var house in myHouses) {
       List<int> floors = [];
       if (house.floor > 0) {
         for (int i = 0; i < house.floor; i++) {
@@ -18,7 +18,7 @@ class FloorProvider with ChangeNotifier {
         floors.add(0);
       }
       myFloor.add(FloorModel(houseId: house.id, floor: floors));
-    });
+    }
     notifyListeners();
   }
 }

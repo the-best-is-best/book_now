@@ -10,6 +10,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class ReportsScreen extends StatelessWidget {
+  const ReportsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final myReportRead = context.read<ReportsProvider>();
@@ -23,7 +25,7 @@ class ReportsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 10,
-          title: Text("${myReportWatch.myProject!.projectName}"),
+          title: Text(myReportWatch.myProject!.projectName),
           leading: IconButton(
             onPressed: () async {
               myCheckLoading.destroyListenProject();
@@ -35,15 +37,15 @@ class ReportsScreen extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
-                      duration: Duration(microseconds: 500),
+                      duration: const Duration(microseconds: 500),
                       type: PageTransitionType.fade,
-                      child: ProjectScreen()));
+                      child: const ProjectScreen()));
             },
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
           ),
         ),
         body: myCheckLoading.loading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : DoubleBackToCloseApp(
                 snackBar: const SnackBar(
                   content: Text('Tap back again to leave'),
@@ -62,12 +64,13 @@ class ReportsScreen extends StatelessWidget {
           unselectedItemColor: mainColor,
           selectedItemColor: secColor,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.report), label: "Report"),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.report), label: "Report"),
+            const BottomNavigationBarItem(
                 icon: Icon(Icons.home_filled), label: "Overnight stay"),
             if (myReportWatch.dateServer
                 .isBefore(myReportWatch.myProject!.endDate))
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                   icon: Icon(Icons.people), label: "People"),
           ],
         ),

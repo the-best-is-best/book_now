@@ -35,17 +35,17 @@ Widget selectProjectTab() {
                 "Select Project",
                 style: Theme.of(context).textTheme.headline1,
               )),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
               Center(
                 child: Container(
-                  child: myProjectWatch.myProject.length > 0
+                  child: myProjectWatch.myProject.isNotEmpty
                       ? ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: myProjectWatch.myProject.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -53,7 +53,7 @@ Widget selectProjectTab() {
                                 child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 12.0),
-                              child: Container(
+                              child: SizedBox(
                                   width: query.width,
                                   child: ElevatedButton(
                                     child: Text(myProjectWatch
@@ -62,10 +62,10 @@ Widget selectProjectTab() {
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(
-                                              duration:
-                                                  Duration(microseconds: 500),
+                                              duration: const Duration(
+                                                  microseconds: 500),
                                               type: PageTransitionType.fade,
-                                              child: ReportsScreen()));
+                                              child: const ReportsScreen()));
                                       reportsRead.getDataProject(
                                           myProjectWatch.myProject[index]);
                                       await checkDataRead
@@ -75,8 +75,7 @@ Widget selectProjectTab() {
                                           checkDataRead.displayLoading(true);
 
                                           if (checkDataRead
-                                                  .insertRelPeople.length >
-                                              0) {
+                                              .insertRelPeople.isNotEmpty) {
                                             await reportsRead
                                                 .getDataRelPeople(
                                                     checkDataWatch
@@ -109,7 +108,7 @@ Widget selectProjectTab() {
                             ));
                           },
                           separatorBuilder: (BuildContext context, int index) {
-                            return Divider(
+                            return const Divider(
                               thickness: 2,
                             );
                           },

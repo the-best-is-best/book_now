@@ -34,7 +34,6 @@ class ReportsProvider with ChangeNotifier {
     myProject = project;
     var getDate = await DioHelper.getData(url: "time.php", query: {});
     dateServer = DateTime.parse(getDate.data['data']);
-   
   }
 
   void backProject() {
@@ -47,9 +46,9 @@ class ReportsProvider with ChangeNotifier {
   Future getDataRelPeople(
       List<ListenDataModel> listenData, List<RoomsModel> myRoom) async {
     List<int> id = [];
-    listenData.forEach((val) {
+    for (var val in listenData) {
       id.add(val.recordId);
-    });
+    }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
     data["project_id"] = myProject!.id;
@@ -73,9 +72,9 @@ class ReportsProvider with ChangeNotifier {
   Future getUpdateDataRelPeople(
       List<ListenDataModel> listenData, List<RoomsModel> myRoom) async {
     List<int> id = [];
-    listenData.forEach((val) {
+    for (var val in listenData) {
       id.add(val.recordId);
-    });
+    }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
     data["project_id"] = myProject!.id;
@@ -108,7 +107,7 @@ class ReportsProvider with ChangeNotifier {
   Future getnumberofBedsRemaining() async {
     int key;
     numberofBedsRemaining = {};
-    myRelPeople.forEach((val) {
+    for (var val in myRelPeople) {
       key = val.roomId;
       if (numberofBedsRemaining.containsKey(key)) {
         int? value = numberofBedsRemaining[key];
@@ -116,14 +115,14 @@ class ReportsProvider with ChangeNotifier {
       } else {
         numberofBedsRemaining[key] = 1;
       }
-    });
+    }
     notifyListeners();
   }
 
   void calcMangmentData(List<TravelModel> travelData) {
     travelPlaceCount = {};
-    travelData.forEach((travel) {
-      myRelPeople.forEach((people) {
+    for (var travel in travelData) {
+      for (var people in myRelPeople) {
         if (people.travelId == travel.id) {
           if (travelPlaceCount.containsKey(travel.id)) {
             travelPlaceCount[travel.id] = travelPlaceCount[travel.id]! + 1;
@@ -131,18 +130,18 @@ class ReportsProvider with ChangeNotifier {
             travelPlaceCount[travel.id] = 1;
           }
         }
-      });
-    });
+      }
+    }
     totalPayments = 0;
     supportPayment = 0;
     couponReceived = 0;
-    myRelPeople.forEach((people) {
+    for (var people in myRelPeople) {
       totalPayments += people.paid;
       supportPayment += people.support;
       if (people.bones) {
         couponReceived++;
       }
-    });
+    }
     notifyListeners();
   }
 
@@ -171,7 +170,7 @@ class ReportsProvider with ChangeNotifier {
   void getMaxPage() {
     maxPage = 0;
     bool decimal = false;
-    if (myRelPeople.length > 0) {
+    if (myRelPeople.isNotEmpty) {
       if (((myRelPeople.length) / recInPage) % 1 != 0) {
         decimal = true;
       }
@@ -201,8 +200,8 @@ class ReportsProvider with ChangeNotifier {
     loadNewRelPeopleData = true;
     notifyListeners();
 
-    Future.delayed(Duration(milliseconds: 500), () {
-      if (myRelPeople.length > 0) {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (myRelPeople.isNotEmpty) {
         relPeopleData = myRelPeople
             .getRange(
                 0, page != maxPage ? page * recInPage : myRelPeople.length)

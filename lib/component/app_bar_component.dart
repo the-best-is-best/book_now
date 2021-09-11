@@ -13,7 +13,7 @@ AppBar buildAppBar(
         valueListenable: _advancedDrawerController,
         builder: (_, value, __) {
           return AnimatedSwitcher(
-            duration: Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 250),
             child: Icon(
               value.visible ? Icons.clear : Icons.menu,
               key: ValueKey<bool>(value.visible),

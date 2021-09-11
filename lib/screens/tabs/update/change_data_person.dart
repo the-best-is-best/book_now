@@ -15,11 +15,12 @@ class ChangeDataPerson extends StatelessWidget {
   final RelPeopleModel people;
   final RoomsModel room;
 
-  ChangeDataPerson(this.people, this.room);
   final formKey = GlobalKey<FormState>();
   final searchPeopleController = TextEditingController();
   final paidController = TextEditingController();
   final supportController = TextEditingController();
+
+  ChangeDataPerson(this.people, this.room, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class ChangeDataPerson extends StatelessWidget {
     paidController.text = people.paid.toString();
     supportController.text = people.support.toString();
     return Scaffold(
-      appBar: AppBar(title: Text("Change data person")),
+      appBar: AppBar(title: const Text("Change data person")),
       body: getDataServer(
         context: context,
         child: SingleChildScrollView(
@@ -54,10 +55,10 @@ class ChangeDataPerson extends StatelessWidget {
                   "Data Person - ${relPeopleWatch.curPeople!.peopleName}",
                   style: Theme.of(context).textTheme.headline3,
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Divider(
+                const Divider(
                   thickness: 3,
                 ),
                 Row(
@@ -69,7 +70,7 @@ class ChangeDataPerson extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Form(
@@ -92,7 +93,7 @@ class ChangeDataPerson extends StatelessWidget {
                             return null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         defaultFormField(
@@ -112,13 +113,13 @@ class ChangeDataPerson extends StatelessWidget {
                             return null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 3,
                         ),
                         Row(
@@ -130,25 +131,25 @@ class ChangeDataPerson extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 3,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black38),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(vertical: 4, horizontal: 25),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 25),
                           width: MediaQuery.of(context).size.width,
                           child: DropdownButtonFormField<int?>(
                               icon: null,
-                              hint: Text('Select Travel *'),
+                              hint: const Text('Select Travel *'),
                               value: relPeopleWatch.selectedTravel,
                               items: myTravelWatch.myTravel
                                   .map((travel) => DropdownMenuItem(
@@ -167,7 +168,7 @@ class ChangeDataPerson extends StatelessWidget {
                                 }
                               }),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Opacity(
@@ -181,24 +182,24 @@ class ChangeDataPerson extends StatelessWidget {
                                   "coupons :",
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 defaultRoundCheckBox(
                                     (val) =>
                                         relPeopleRead.changecouponsState(val),
                                     relPeopleWatch.coupons),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        Container(
+                        SizedBox(
                           width: query.width * .2,
                           child: Center(
                             child: ElevatedButton(
@@ -215,7 +216,7 @@ class ChangeDataPerson extends StatelessWidget {
                                     title: 'Error',
                                     message:
                                         "Paid + suppot > price !! ${reportWatch.myProject!.price}",
-                                    duration: Duration(seconds: 3),
+                                    duration: const Duration(seconds: 3),
                                   ).show(context);
                                   return;
                                 }
@@ -247,7 +248,7 @@ class ChangeDataPerson extends StatelessWidget {
                                         await Flushbar(
                                           title: 'Success',
                                           message: "Updated",
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       });
                                     });
@@ -260,7 +261,7 @@ class ChangeDataPerson extends StatelessWidget {
                                         await Flushbar(
                                           title: 'Error',
                                           message: messages[i],
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       }
                                     });
@@ -270,12 +271,13 @@ class ChangeDataPerson extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment
                                     .center, // Center the Widgets.
+                                // ignore: prefer_const_literals_to_create_immutables
                                 children: [
-                                  Text("Send"),
-                                  SizedBox(
+                                  const Text("Send"),
+                                  const SizedBox(
                                     width: 10,
                                   ),
-                                  Icon(Icons.send),
+                                  const Icon(Icons.send),
                                 ],
                               ),
                             ),
@@ -283,7 +285,7 @@ class ChangeDataPerson extends StatelessWidget {
                         ),
                       ],
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 )
               ],

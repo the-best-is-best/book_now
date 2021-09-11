@@ -12,7 +12,9 @@ class PeopleProvider with ChangeNotifier {
 
   Future getPeople(List<ListenDataModel> listenData) async {
     List<int> id = [];
-    listenData.forEach((val) => id.add(val.recordId));
+    for (var val in listenData) {
+      id.add(val.recordId);
+    }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 
@@ -32,7 +34,9 @@ class PeopleProvider with ChangeNotifier {
   Future getUpdatePeople(List<ListenDataModel> listenData) async {
     List<int> id = [];
 
-    listenData.forEach((val) => id.add(val.recordId));
+    for (var val in listenData) {
+      id.add(val.recordId);
+    }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
 

@@ -41,36 +41,36 @@ FutureBuilder getDataServer({
     future: checkDataRead.getMAinListenData().then((val) async {
       if (val == true) {
         checkDataRead.displayLoading(true);
-        if (checkDataWatch.insertProject.length > 0) {
+        if (checkDataWatch.insertProject.isNotEmpty) {
           await myProjectRead.getData(checkDataWatch.insertProject);
         }
-        if (checkDataWatch.insertHouses.length > 0) {
+        if (checkDataWatch.insertHouses.isNotEmpty) {
           await housesDataRead
               .getHouses(checkDataWatch.insertHouses)
               .then((_) => floorDataRead.getFloors(housesDataWatch.myHouses));
         }
-        if (checkDataWatch.updateHouses.length > 0) {
+        if (checkDataWatch.updateHouses.isNotEmpty) {
           await housesDataRead
               .getUpdateHouses(checkDataWatch.updateHouses)
               .then((_) => floorDataRead.getFloors(housesDataRead.myHouses));
         }
-        if (checkDataWatch.insertRooms.length > 0) {
+        if (checkDataWatch.insertRooms.isNotEmpty) {
           await roomsDataRead.getRooms(checkDataWatch.insertRooms);
         }
-        if (checkDataWatch.updateRooms.length > 0) {
+        if (checkDataWatch.updateRooms.isNotEmpty) {
           await roomsDataRead.getUpdateRoom(checkDataWatch.updateRooms);
         }
-        if (checkDataWatch.insertPeople.length > 0) {
+        if (checkDataWatch.insertPeople.isNotEmpty) {
           await peopleDataRead.getPeople(checkDataWatch.insertPeople);
         }
-        if (checkDataWatch.updatePeople.length > 0) {
+        if (checkDataWatch.updatePeople.isNotEmpty) {
           await peopleDataRead.getUpdatePeople(checkDataWatch.updatePeople);
         }
-        if (checkDataWatch.insertTravel.length > 0) {
+        if (checkDataWatch.insertTravel.isNotEmpty) {
           await travelDataRead.getTravel(checkDataWatch.insertTravel);
         }
 
-        if (checkDataWatch.updateTravel.length > 0) {
+        if (checkDataWatch.updateTravel.isNotEmpty) {
           await travelDataRead.getUpdateTravel(checkDataWatch.updateTravel);
         }
         checkDataRead.endMainList();
@@ -81,7 +81,7 @@ FutureBuilder getDataServer({
         checkDataRead.getRelListenData().then((val) async {
           if (val == true) {
             checkDataRead.displayLoading(true);
-            if (checkDataWatch.insertRelPeople.length > 0) {
+            if (checkDataWatch.insertRelPeople.isNotEmpty) {
               await myReportRead
                   .getDataRelPeople(
                       checkDataWatch.insertRelPeople, roomsDataWatch.myRooms)
@@ -91,7 +91,7 @@ FutureBuilder getDataServer({
                 myReportRead.getDataPage(1);
               });
             }
-            if (checkDataWatch.updateRelPeople.length > 0) {
+            if (checkDataWatch.updateRelPeople.isNotEmpty) {
               await myReportRead
                   .getUpdateDataRelPeople(
                       checkDataWatch.updateRelPeople, roomsDataWatch.myRooms)
@@ -108,6 +108,6 @@ FutureBuilder getDataServer({
       }
       checkDataRead.endedLoadDataFromServer();
     }),
-    builder: (context, snapshot) => Container(child: Center(child: child)),
+    builder: (context, snapshot) => Center(child: child),
   );
 }

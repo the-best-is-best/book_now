@@ -32,18 +32,18 @@ Widget selectHousesTab() {
               "Select Houses",
               style: Theme.of(context).textTheme.headline1,
             )),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Center(
               child: searchControllerController.text.isEmpty
-                  ? myHousesWatch.myHouses.length > 0
+                  ? myHousesWatch.myHouses.isNotEmpty
                       ? buildListView(
                           myHousesWatch: myHousesWatch,
                           query: query,
@@ -56,7 +56,7 @@ Widget selectHousesTab() {
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         )
-                  : myHousesWatch.searchMyHouse.length > 0
+                  : myHousesWatch.searchMyHouse.isNotEmpty
                       ? buildListView(
                           searchControllerController:
                               searchControllerController,
@@ -84,7 +84,7 @@ ListView buildListView({
 }) {
   return ListView.separated(
     shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     itemCount: searchControllerController.text.isEmpty
         ? myHousesWatch.myHouses.length
         : myHousesWatch.searchMyHouse.length,
@@ -93,8 +93,8 @@ ListView buildListView({
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: myHousesWatch.loadingSearch
-              ? CircularProgressIndicator()
-              : Container(
+              ? const CircularProgressIndicator()
+              : SizedBox(
                   width: query.width,
                   child: ExpandableNotifier(
                     child: ScrollOnExpand(
@@ -130,7 +130,7 @@ ListView buildListView({
       );
     },
     separatorBuilder: (BuildContext context, int index) {
-      return Divider(
+      return const Divider(
         thickness: 2,
       );
     },

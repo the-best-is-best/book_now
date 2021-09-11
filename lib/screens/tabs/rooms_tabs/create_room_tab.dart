@@ -28,13 +28,13 @@ Widget createRoomTab() {
             "Create Room",
             style: Theme.of(context).textTheme.headline1,
           )),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Divider(
+          const Divider(
             thickness: 3,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Center(
@@ -57,7 +57,7 @@ Widget createRoomTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   defaultFormField(
@@ -81,7 +81,7 @@ Widget createRoomTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   defaultFormField(
@@ -99,13 +99,13 @@ Widget createRoomTab() {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   myRoomWatch.loading
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          child: Text("Create"),
+                          child: const Text("Create"),
                           onPressed: () {
                             _keyForm.currentState!.save();
                             if (!_keyForm.currentState!.validate()) {
@@ -136,7 +136,7 @@ Widget createRoomTab() {
                                         await Flushbar(
                                           title: 'Success',
                                           message: "Added",
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       }));
                                 } else {
@@ -146,7 +146,7 @@ Widget createRoomTab() {
                                       await Flushbar(
                                         title: 'Error',
                                         message: messages[i],
-                                        duration: Duration(seconds: 3),
+                                        duration: const Duration(seconds: 3),
                                       ).show(context);
                                     }
                                   });
@@ -177,7 +177,7 @@ Widget createRoomTab() {
                                       await Flushbar(
                                         title: 'Success',
                                         message: "Added",
-                                        duration: Duration(seconds: 3),
+                                        duration: const Duration(seconds: 3),
                                       ).show(context);
                                     });
                                   } else {
@@ -189,7 +189,7 @@ Widget createRoomTab() {
                                         await Flushbar(
                                           title: 'Error',
                                           message: messages[i],
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ).show(context);
                                       }
                                     });
@@ -204,7 +204,7 @@ Widget createRoomTab() {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],

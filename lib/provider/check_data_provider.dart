@@ -70,34 +70,38 @@ class CheckDataProvider with ChangeNotifier {
     insertHouses = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "houses")
         .toList();
-    if (!firstTime)
+    if (!firstTime) {
       updateHouses = listenDataUpdated
           .where((e) => e.action == "updated" && e.tableName == "houses")
           .toList();
+    }
 
     insertRooms = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "rooms")
         .toList();
-    if (!firstTime)
+    if (!firstTime) {
       updateRooms = listenDataUpdated
           .where((e) => e.action == "updated" && e.tableName == "rooms")
           .toList();
+    }
 
     insertPeople = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "people")
         .toList();
-    if (!firstTime)
+    if (!firstTime) {
       updatePeople = listenDataUpdated
           .where((e) => e.action == "updated" && e.tableName == "people")
           .toList();
+    }
 
     insertTravel = listenDataUpdated
         .where((e) => e.action == "inserted" && e.tableName == "travel")
         .toList();
-    if (!firstTime)
+    if (!firstTime) {
       updateTravel = listenDataUpdated
           .where((e) => e.action == "updated" && e.tableName == "travel")
           .toList();
+    }
 
     return true;
   }
@@ -218,7 +222,7 @@ class CheckDataProvider with ChangeNotifier {
     }
     loadNewHistoryData = true;
     notifyListeners();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       history = listenData
           .getRange(0, page != maxPage ? page * recInPage : listenData.length)
           .toList();

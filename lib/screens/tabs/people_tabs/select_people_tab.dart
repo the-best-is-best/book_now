@@ -36,17 +36,17 @@ Widget selectPeopleTab() {
               "Select People",
               style: Theme.of(context).textTheme.headline1,
             )),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             searchPeopleController.text.isEmpty
-                ? myPeopleWatch.myPeople.length > 0
+                ? myPeopleWatch.myPeople.isNotEmpty
                     ? buildListView(
                         myPeopleWatch: myPeopleWatch,
                         query: query,
@@ -58,7 +58,7 @@ Widget selectPeopleTab() {
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       )
-                : myPeopleWatch.searchMypeople.length > 0
+                : myPeopleWatch.searchMypeople.isNotEmpty
                     ? buildListView(
                         searchPeopleController: searchPeopleController,
                         myPeopleWatch: myPeopleWatch,
@@ -84,7 +84,7 @@ ListView buildListView({
 }) {
   return ListView.separated(
     shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     itemCount: searchPeopleController.text.isEmpty
         ? myPeopleWatch.myPeople.length
         : myPeopleWatch.searchMypeople.length,
@@ -92,8 +92,8 @@ ListView buildListView({
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: myPeopleWatch.loadingSearch
-            ? Center(child: CircularProgressIndicator())
-            : Container(
+            ? const Center(child: CircularProgressIndicator())
+            : SizedBox(
                 width: query.width,
                 child: searchPeopleController.text.isEmpty
                     ? ElevatedButton(
@@ -101,7 +101,7 @@ ListView buildListView({
                           Navigator.push(
                               context,
                               PageTransition(
-                                  duration: Duration(microseconds: 500),
+                                  duration: const Duration(microseconds: 500),
                                   type: PageTransitionType.fade,
                                   child: PeopleDetailsScreen(
                                       people: myPeopleWatch.myPeople[index])));
@@ -113,7 +113,7 @@ ListView buildListView({
                           Navigator.push(
                               context,
                               PageTransition(
-                                  duration: Duration(microseconds: 500),
+                                  duration: const Duration(microseconds: 500),
                                   type: PageTransitionType.fade,
                                   child: PeopleDetailsScreen(
                                       people: myPeopleWatch
@@ -125,7 +125,7 @@ ListView buildListView({
       );
     },
     separatorBuilder: (BuildContext context, int index) {
-      return Divider(
+      return const Divider(
         thickness: 2,
       );
     },

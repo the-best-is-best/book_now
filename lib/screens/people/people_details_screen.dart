@@ -10,9 +10,7 @@ import 'package:provider/provider.dart';
 class PeopleDetailsScreen extends StatefulWidget {
   final PeopleModel people;
 
-  PeopleDetailsScreen({
-    required this.people,
-  });
+  const PeopleDetailsScreen({required this.people, Key? key}) : super(key: key);
 
   @override
   _PeopleDetailsScreenState createState() => _PeopleDetailsScreenState();
@@ -35,7 +33,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
     final myPeopleWatch = context.watch<PeopleProvider>();
 
     final myPeople = myPeopleRead.myPeople
-        .firstWhere((people) => people.id == this.widget.people.id);
+        .firstWhere((people) => people.id == widget.people.id);
     if (!firstload) {
       newNamePeopleController.text = widget.people.name;
       newTelController.text = widget.people.tel.toString();
@@ -48,8 +46,8 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
         actions: [
           IconButton(
             icon: myPeopleWatch.editRoomActive
-                ? FaIcon(FontAwesomeIcons.eye)
-                : FaIcon(FontAwesomeIcons.edit),
+                ? const FaIcon(FontAwesomeIcons.eye)
+                : const FaIcon(FontAwesomeIcons.edit),
             onPressed: () {
               myPeopleRead.inEdit();
             },
@@ -62,7 +60,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
               children: [
                 Center(
                   child: SingleChildScrollView(
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width / 1.1,
                       child: Card(
                         elevation: 20,
@@ -72,7 +70,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Form(
@@ -89,7 +87,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                         return null;
                                       }),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 defaultFormField(
@@ -107,7 +105,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                       }
                                       return null;
                                     }),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 defaultFormField(
@@ -121,13 +119,13 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                       }
                                       return null;
                                     }),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 myPeopleWatch.loading
-                                    ? CircularProgressIndicator()
+                                    ? const CircularProgressIndicator()
                                     : ElevatedButton(
-                                        child: Text("Edit"),
+                                        child: const Text("Edit"),
                                         onPressed: () {
                                           _keyForm.currentState!.save();
                                           if (!_keyForm.currentState!
@@ -164,8 +162,9 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                                           await Flushbar(
                                                             title: 'Success',
                                                             message: "Updated",
-                                                            duration: Duration(
-                                                                seconds: 3),
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
                                                           ).show(context);
                                                         }));
                                               } else {
@@ -180,8 +179,8 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                                     await Flushbar(
                                                       title: 'Error',
                                                       message: messages[i],
-                                                      duration:
-                                                          Duration(seconds: 3),
+                                                      duration: const Duration(
+                                                          seconds: 3),
                                                     ).show(context);
                                                   }
                                                 });
@@ -190,7 +189,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                           );
                                         },
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 )
                               ],
@@ -209,7 +208,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                 Center(
                   child: Card(
                     elevation: 20,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -217,7 +216,7 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               RichText(
@@ -228,13 +227,13 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                           .textTheme
                                           .headline3),
                                   TextSpan(
-                                    text: "${widget.people.name}",
+                                    text: widget.people.name,
                                     style:
                                         Theme.of(context).textTheme.headline4,
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RichText(
@@ -245,13 +244,13 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                           .textTheme
                                           .headline3),
                                   TextSpan(
-                                    text: "${widget.people.tel}",
+                                    text: widget.people.tel,
                                     style:
                                         Theme.of(context).textTheme.headline4,
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RichText(
@@ -262,13 +261,13 @@ class _PeopleDetailsScreenState extends State<PeopleDetailsScreen> {
                                           .textTheme
                                           .headline3),
                                   TextSpan(
-                                    text: "${widget.people.city}",
+                                    text: widget.people.city,
                                     style:
                                         Theme.of(context).textTheme.headline4,
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                             ],

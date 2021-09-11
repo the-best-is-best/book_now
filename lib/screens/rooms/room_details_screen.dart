@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 class RoomDetailsScreen extends StatefulWidget {
   final RoomsModel room;
 
-  const RoomDetailsScreen({
-    required this.room,
-  });
+  const RoomDetailsScreen({required this.room, Key? key}) : super(key: key);
 
   @override
   _RoomDetailsScreenState createState() => _RoomDetailsScreenState();
@@ -33,7 +31,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
     final myRoomRead = context.read<RoomsProvider>();
     final myRoomWatch = context.watch<RoomsProvider>();
     final myHouse = myHouseRead.myHouses
-        .firstWhere((house) => house.id == this.widget.room.houseId);
+        .firstWhere((house) => house.id == widget.room.houseId);
     if (!firstload) {
       newNumOfBedController.text = widget.room.numbersOfBed.toString();
       newNumOfBunkBedController.text = widget.room.bunkBed.toString();
@@ -45,8 +43,8 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
         actions: [
           IconButton(
             icon: myRoomWatch.editRoomActive
-                ? FaIcon(FontAwesomeIcons.eye)
-                : FaIcon(FontAwesomeIcons.edit),
+                ? const FaIcon(FontAwesomeIcons.eye)
+                : const FaIcon(FontAwesomeIcons.edit),
             onPressed: () {
               myRoomRead.inEdit();
             },
@@ -57,7 +55,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width / 1.1,
               child: Card(
                 elevation: 20,
@@ -66,7 +64,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       myRoomWatch.editRoomActive
@@ -92,7 +90,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                             }
                                             return null;
                                           }),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       defaultFormField(
@@ -121,13 +119,13 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 myRoomWatch.loading
-                                    ? CircularProgressIndicator()
+                                    ? const CircularProgressIndicator()
                                     : ElevatedButton(
-                                        child: Text("Edit"),
+                                        child: const Text("Edit"),
                                         onPressed: () {
                                           _keyForm.currentState!.save();
                                           if (!_keyForm.currentState!
@@ -163,8 +161,9 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                                           await Flushbar(
                                                             title: 'Success',
                                                             message: "Updated",
-                                                            duration: Duration(
-                                                                seconds: 3),
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
                                                           ).show(context);
                                                         }));
                                               } else {
@@ -179,8 +178,8 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                                     await Flushbar(
                                                       title: 'Error',
                                                       message: messages[i],
-                                                      duration:
-                                                          Duration(seconds: 3),
+                                                      duration: const Duration(
+                                                          seconds: 3),
                                                     ).show(context);
                                                   }
                                                 });
@@ -197,25 +196,25 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                   "Number of bed : ${widget.room.numbersOfBed}",
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
                                   "Number of Bunk Bed : ${widget.room.bunkBed}",
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
-                                Divider(),
-                                SizedBox(
+                                const Divider(),
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   "Singe bed : ${widget.room.numbersOfBed - (widget.room.bunkBed * 2)}",
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -224,7 +223,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                 ),
                               ],
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],

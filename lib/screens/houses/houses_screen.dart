@@ -1,5 +1,5 @@
-import 'package:book_now/component/appBar_component.dart';
-import 'package:book_now/component/menu/buildMenu.dart';
+import 'package:book_now/component/app_bar_component.dart';
+import 'package:book_now/component/menu/build_menu.dart';
 import 'package:book_now/listen_data/listen_data.dart';
 import 'package:book_now/provider/check_data_provider.dart';
 import 'package:book_now/provider/houses_provider.dart';
@@ -10,6 +10,8 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
 
 class HousesScreen extends StatefulWidget {
+  const HousesScreen({Key? key}) : super(key: key);
+
   @override
   _HousesScreenState createState() => _HousesScreenState();
 }
@@ -17,6 +19,7 @@ class HousesScreen extends StatefulWidget {
 class _HousesScreenState extends State<HousesScreen> {
   final _advancedDrawerController = AdvancedDrawerController();
 
+  @override
   Widget build(BuildContext context) {
     final myHousesRead = context.read<HousesProvider>();
     final myHousesWatch = context.watch<HousesProvider>();
@@ -37,20 +40,20 @@ class _HousesScreenState extends State<HousesScreen> {
               blurRadius: 5.0,
             ),
           ],
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         drawer: buildMenu(1, context),
         child: Scaffold(
           appBar: buildAppBar("Houses", _advancedDrawerController),
           body: myCheckLoading.loading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Center(
                   child: DoubleBackToCloseApp(
                     snackBar: const SnackBar(
                       content: Text('Tap back again to leave'),
                     ),
                     child: SingleChildScrollView(
-                      child: Container(
+                      child: SizedBox(
                         width: myHousesWatch.tabIndex == 0
                             ? MediaQuery.of(context).size.width / 1.1
                             : null,
@@ -77,12 +80,13 @@ class _HousesScreenState extends State<HousesScreen> {
             backgroundColor: mainColor,
             fixedColor: Colors.black,
             unselectedItemColor: Colors.brown,
+            // ignore: prefer_const_literals_to_create_immutables
             items: [
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.create),
                 label: 'Create',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.select_all),
                 label: 'Select',
               ),

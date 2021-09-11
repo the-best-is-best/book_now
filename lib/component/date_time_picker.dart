@@ -22,12 +22,12 @@ Widget defaultDateTimePicker({
     firstDate: DateTime(DateTime.now().year - 1000),
     lastDate: DateTime(DateTime.now().year + 1000),
     validator: validator,
-    icon: Icon(Icons.event),
+    icon: const Icon(Icons.event),
     dateLabelText: dateLabel,
     style: Theme.of(context).textTheme.bodyText1,
     timeLabelText: timeLabel,
     use24HourFormat: use24,
-    locale: Locale('en', 'US'),
+    locale: const Locale('en', 'US'),
     decoration: label != null
         ? InputDecoration(
             prefixIcon: Icon(
@@ -35,7 +35,7 @@ Widget defaultDateTimePicker({
             ),
             suffixIcon: suffix != null
                 ? IconButton(
-                    onPressed: suffixPressed != null ? suffixPressed : null,
+                    onPressed: suffixPressed,
                     icon: Icon(
                       suffix,
                     ),
@@ -43,7 +43,7 @@ Widget defaultDateTimePicker({
                 : null,
             labelText: label,
             labelStyle: Theme.of(context).textTheme.bodyText1,
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
           )
         : null,
   );

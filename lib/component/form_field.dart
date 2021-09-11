@@ -29,13 +29,13 @@ Widget defaultFormField({
       ),
       suffixIcon: suffix != null
           ? IconButton(
-              onPressed: suffixPressed != null ? suffixPressed : null,
+              onPressed: suffixPressed,
               icon: Icon(
                 suffix,
               ),
             )
           : null,
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
     ),
   );
 }

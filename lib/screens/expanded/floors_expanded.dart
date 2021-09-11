@@ -32,13 +32,13 @@ Widget buildFloorsExpanded(
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -50,17 +50,17 @@ Widget buildFloorsExpanded(
                     Navigator.push(
                         context,
                         PageTransition(
-                            duration: Duration(microseconds: 500),
+                            duration: const Duration(microseconds: 500),
                             type: PageTransitionType.fade,
                             child: FloorRoom(
                               myHouse: myHouses,
                             )));
                   },
-                  icon: FaIcon(FontAwesomeIcons.plusCircle),
+                  icon: const FaIcon(FontAwesomeIcons.plusCircle),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Container(
@@ -68,7 +68,7 @@ Widget buildFloorsExpanded(
                   ? StaggeredGridView.countBuilder(
                       shrinkWrap: true,
                       crossAxisCount: itemRowCount,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: floors.floor.length,
                       itemBuilder: (_, int index) {
                         return ElevatedButton(
@@ -80,7 +80,8 @@ Widget buildFloorsExpanded(
                                 .then((_) => Navigator.push(
                                     context,
                                     PageTransition(
-                                        duration: Duration(microseconds: 500),
+                                        duration:
+                                            const Duration(microseconds: 500),
                                         type: PageTransitionType.fade,
                                         child: RoomScreen(
                                           house: myHouses,
@@ -89,12 +90,12 @@ Widget buildFloorsExpanded(
                           },
                           child: Text(floors.floor[index].toString()),
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
+                            shape: const CircleBorder(),
                           ),
                         );
                       },
                       staggeredTileBuilder: (int index) =>
-                          StaggeredTile.count(1, 1),
+                          const StaggeredTile.count(1, 1),
                       mainAxisSpacing: 5.0,
                       crossAxisSpacing: 5.0,
                     )

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class TravelDetailsScreen extends StatefulWidget {
   final TravelModel travel;
 
-  TravelDetailsScreen({required this.travel});
+  const TravelDetailsScreen({required this.travel, Key? key}) : super(key: key);
 
   @override
   _TravelDetailsScreenState createState() => _TravelDetailsScreenState();
@@ -37,12 +37,12 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
     final myTravelWatch = context.watch<TravelProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit travel"),
+        title: const Text("Edit travel"),
         actions: [
           IconButton(
             icon: myTravelWatch.editTravelActive
-                ? FaIcon(FontAwesomeIcons.eye)
-                : FaIcon(FontAwesomeIcons.edit),
+                ? const FaIcon(FontAwesomeIcons.eye)
+                : const FaIcon(FontAwesomeIcons.edit),
             onPressed: () {
               myTravelRead.inEdit();
             },
@@ -53,7 +53,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width / 1.1,
               child: Card(
                 elevation: 20,
@@ -62,7 +62,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       myTravelWatch.editTravelActive
@@ -86,13 +86,13 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                         return null;
                                       }),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 myTravelWatch.loading
-                                    ? CircularProgressIndicator()
+                                    ? const CircularProgressIndicator()
                                     : ElevatedButton(
-                                        child: Text("Edit"),
+                                        child: const Text("Edit"),
                                         onPressed: () {
                                           _keyForm.currentState!.save();
                                           if (!_keyForm.currentState!
@@ -123,8 +123,9 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                                           await Flushbar(
                                                             title: 'Success',
                                                             message: "Updated",
-                                                            duration: Duration(
-                                                                seconds: 3),
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds: 3),
                                                           ).show(context);
                                                         }));
                                               } else {
@@ -139,8 +140,8 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                                                     await Flushbar(
                                                       title: 'Error',
                                                       message: messages[i],
-                                                      duration:
-                                                          Duration(seconds: 3),
+                                                      duration: const Duration(
+                                                          seconds: 3),
                                                     ).show(context);
                                                   }
                                                 });
@@ -155,7 +156,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                               "Name : ${widget.travel.name}",
                               style: Theme.of(context).textTheme.headline3,
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],
