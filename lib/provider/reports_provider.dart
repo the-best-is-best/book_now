@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:book_now/modals/create_project/projects_model.dart';
@@ -72,17 +73,20 @@ class ReportsProvider with ChangeNotifier {
   Future getUpdateDataRelPeople(
       List<ListenDataModel> listenData, List<RoomsModel> myRoom) async {
     List<int> id = [];
+
     for (var val in listenData) {
       id.add(val.recordId);
     }
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
     data["project_id"] = myProject!.id;
-
+    log(data.toString());
     var response = await DioHelper.getData(
         url: 'rel/get_data/get_rel_people.php', query: data);
+    // log(response.data['data'].toString());
     if (response.statusCode == 201) {
       var datas = response.data['data'];
+
       // update list
       datas.forEach((data) {
         data['floor'] = myRoom
@@ -90,8 +94,7 @@ class ReportsProvider with ChangeNotifier {
                 room.id == data['room_id'] && room.houseId == data['house_id'])
             .floor;
         RelPeopleModel getRelPeopleData = myRelPeople.firstWhere((people) =>
-            people.id == data['people_id'] &&
-            people.projectId == data['project_id']);
+            people.id == data['id'] && people.projectId == data['project_id']);
 
         getRelPeopleData.roomId = data['room_id'];
         getRelPeopleData.floor = data['floor'];
@@ -100,8 +103,11 @@ class ReportsProvider with ChangeNotifier {
         getRelPeopleData.bones = data['coupons'] == 1 ? true : false;
         getRelPeopleData.travelId = data['travel_id'];
         getRelPeopleData.note = data['note'];
+
+        log(getRelPeopleData.note);
       });
     }
+
     notifyListeners();
   }
 

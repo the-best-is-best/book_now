@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
+import 'package:book_now/provider/reports_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +36,6 @@ class CheckDataProvider with ChangeNotifier {
   List<ListenDataModel> insertTravel = [];
   List<ListenDataModel> updateTravel = [];
 
-  List<ListenDataModel> listenRelData = [];
-
-  List<ListenDataModel> listenRelDataUpdated = [];
-
-  List<ListenDataModel> insertRelPeople = [];
-  List<ListenDataModel> updateRelPeople = [];
-
   Future<bool> getMAinListenData() async {
     if (!GetDataListen.getData) {
       Map<String, dynamic> data = {'book_now_log_count': listenData.length};
@@ -51,6 +46,7 @@ class CheckDataProvider with ChangeNotifier {
         return await toMainList(data['data']);
       }
     }
+
     return false;
   }
 
@@ -143,6 +139,13 @@ class CheckDataProvider with ChangeNotifier {
 
     return false;
   }
+
+  List<ListenDataModel> listenRelData = [];
+
+  List<ListenDataModel> listenRelDataUpdated = [];
+
+  List<ListenDataModel> insertRelPeople = [];
+  List<ListenDataModel> updateRelPeople = [];
 
   Future<bool> toRelList(Map datas) async {
     datas.forEach((k, data) {

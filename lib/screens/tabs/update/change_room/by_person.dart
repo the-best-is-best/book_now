@@ -201,8 +201,7 @@ Widget byPerson() {
                                                             .myProject!.id,
                                                         peopleId:
                                                             changeRoomWatch
-                                                                .curPeople!
-                                                                .peopleId,
+                                                                .curPeople!.id,
                                                         roomId: myReportWatch
                                                             .searchRelPeople[
                                                                 index]
@@ -217,7 +216,7 @@ Widget byPerson() {
                                                             peopleId: myReportWatch
                                                                 .searchRelPeople[
                                                                     index]
-                                                                .peopleId,
+                                                                .id,
                                                             roomId:
                                                                 changeRoomWatch
                                                                     .curPeople!
@@ -274,8 +273,7 @@ Widget byPerson() {
                                                             .myProject!.id,
                                                         peopleId:
                                                             changeRoomWatch
-                                                                .curPeople!
-                                                                .peopleId,
+                                                                .curPeople!.id,
                                                         roomId: myReportWatch
                                                             .relPeopleData[
                                                                 index]
@@ -290,7 +288,7 @@ Widget byPerson() {
                                                             peopleId: myReportWatch
                                                                 .relPeopleData[
                                                                     index]
-                                                                .peopleId,
+                                                                .id,
                                                             roomId:
                                                                 changeRoomWatch
                                                                     .curPeople!

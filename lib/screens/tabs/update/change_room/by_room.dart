@@ -140,12 +140,11 @@ Widget byRoom() {
                                                 curRoomes[index].numbersOfBed
                                             ? () => changeRoomRead
                                                     .changeRoom(
-                                                        project:
-                                                            reportsWatch
-                                                                .myProject!.id,
-                                                        peopleId: changeRoomWatch
-                                                            .curPeople!
-                                                            .peopleId,
+                                                        project: reportsWatch
+                                                            .myProject!.id,
+                                                        peopleId:
+                                                            changeRoomWatch
+                                                                .curPeople!.id,
                                                         roomId:
                                                             curRoomes[index].id)
                                                     .then((response) async {
@@ -189,7 +188,7 @@ Widget byRoom() {
                                                     project: reportsWatch
                                                         .myProject!.id,
                                                     peopleId: changeRoomWatch
-                                                        .curPeople!.peopleId,
+                                                        .curPeople!.id,
                                                     roomId: curRoomes[index].id)
                                                 .then((response) async {
                                               var data = response.data;

@@ -1,6 +1,5 @@
 class RelPeopleModel {
   int id;
-  int peopleId;
   String peopleName;
   int projectId;
   int paid;
@@ -14,7 +13,6 @@ class RelPeopleModel {
 
   RelPeopleModel(
       {required this.id,
-      required this.peopleId,
       required this.peopleName,
       required this.projectId,
       required this.houseId,
@@ -36,6 +34,5 @@ class RelPeopleModel {
         houseId = int.parse(json['house_id'].toString()),
         roomId = int.parse(json['room_id'].toString()),
         floor = int.parse(json['floor'].toString()),
-        peopleId = int.parse(json['people_id'].toString()),
         note = json['note'];
 }

@@ -249,7 +249,7 @@ class _ChangeDataPersonState extends State<ChangeDataPerson> {
                                 }
                                 relPeopleRead
                                     .changePeopleData(
-                                  peopleId: widget.people.peopleId,
+                                  peopleId: widget.people.id,
                                   paid: paid,
                                   support: support,
                                   travelId: relPeopleWatch.selectedTravel!,
@@ -268,6 +268,7 @@ class _ChangeDataPersonState extends State<ChangeDataPerson> {
                                           .then((_) async {
                                         paidController.text =
                                             supportController.text = "";
+                                        noteController.text = "";
 
                                         relPeopleRead
                                             .changeSelectedTravel(null);
