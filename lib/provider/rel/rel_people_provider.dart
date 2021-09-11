@@ -1,4 +1,3 @@
-
 import 'package:book_now/modals/rel/people/create_rel_people_model.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
@@ -51,7 +50,6 @@ class RelPeopleProvider with ChangeNotifier {
   }
 
   Future getRooms(List<RoomsModel> room, ReportsProvider report) async {
-    log(report.myProject!.houseId.toString());
     relRoom = room
         .where((roomItem) => roomItem.houseId == report.myProject!.houseId)
         .toList();

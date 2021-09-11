@@ -79,7 +79,6 @@ class ReportsProvider with ChangeNotifier {
     Map<String, dynamic> data = {};
     data = id.toMap((e) => MapEntry("id[${e - 1}]", e));
     data["project_id"] = myProject!.id;
-    log(data.toString());
     var response = await DioHelper.getData(
         url: 'rel/get_data/get_rel_people.php', query: data);
     // log(response.data['data'].toString());
@@ -102,8 +101,6 @@ class ReportsProvider with ChangeNotifier {
         getRelPeopleData.bones = data['coupons'] == 1 ? true : false;
         getRelPeopleData.travelId = data['travel_id'];
         getRelPeopleData.note = data['note'];
-
-        log(getRelPeopleData.note);
       });
     }
 
