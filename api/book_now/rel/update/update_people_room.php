@@ -69,11 +69,11 @@ $people_id =$jsonData->people_id;
 
 try {
 
-    $query = $writeDB->prepare('UPDATE rel_people SET room_id = :room_id  WHERE project_id = :project_id AND people_id=:people_id ');
+    $query = $writeDB->prepare('UPDATE rel_people SET room_id = :room_id  WHERE project_id = :project_id AND id=:id ');
 
     $query->bindParam(':room_id', $room_id, PDO::PARAM_STR);
     $query->bindParam(':project_id', $project_id, PDO::PARAM_STR);
-    $query->bindParam(':people_id', $people_id, PDO::PARAM_STR);
+    $query->bindParam(':id', $people_id, PDO::PARAM_STR);
   
 
     $query->execute();
@@ -83,7 +83,7 @@ try {
         $response = new Response();
         $response->setHttpStatusCode(500);
         $response->setSuccess(false);
-        $response->addMessage('There was an issue update people room - please try again');
+        $response->addMessage('There was an issue update people room - please try again .');
         $response->send();
         exit;
     }

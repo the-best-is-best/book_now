@@ -46,7 +46,8 @@ if (!$jsonData = json_decode($rowPostData)) {
     exit;
 }
 
-if (!isset($jsonData->people_id) || !isset($jsonData->travel_id) || !isset($jsonData->project_id) || !isset($jsonData->house_id) || !isset($jsonData->room_id)) {
+if (!isset($jsonData->people_id) || !isset($jsonData->travel_id) || !isset($jsonData->project_id)
+ || !isset($jsonData->house_id) || !isset($jsonData->room_id) ) {
 
     $response = new Response();
     $response->setHttpStatusCode(400);
@@ -61,6 +62,7 @@ if (!isset($jsonData->people_id) || !isset($jsonData->travel_id) || !isset($json
 
     (!isset($jsonData->travel_id) ?  $response->addMessage("Travel issue") : false);
 
+    
     $response->send();
     exit;
 }
@@ -72,6 +74,8 @@ $travel_id = $jsonData->travel_id;
 $bones = $jsonData->bones;
 $house_id = $jsonData->house_id;
 $room_id = $jsonData->room_id;
+$note = $jsonData->note;
+
 
 
 try {
@@ -92,8 +96,8 @@ try {
         exit;
     }
 
-    $query = $writeDB->prepare('INSERT into rel_people (people_id , project_id , paid , support , travel_id , coupons , house_id , room_id ) 
-    VALUES (:people_id , :project_id , :paid , :support , :travel_id , :bones , :house_id , :room_id)');
+    $query = $writeDB->prepare('INSERT into rel_people (people_id , project_id , paid , support , travel_id , coupons , house_id , room_id , note) 
+    VALUES (:people_id , :project_id , :paid , :support , :travel_id , :bones , :house_id , :room_id , :note)');
 
     $query->bindParam(':people_id', $people_id, PDO::PARAM_STR);
     $query->bindParam(':project_id', $project_id, PDO::PARAM_STR);
@@ -103,6 +107,7 @@ try {
     $query->bindParam(':bones', $bones, PDO::PARAM_STR);
     $query->bindParam(':house_id', $house_id, PDO::PARAM_STR);
     $query->bindParam(':room_id', $room_id, PDO::PARAM_STR);
+    $query->bindParam(':note', $note, PDO::PARAM_STR);
 
     $query->execute();
     $rowCount = $query->rowCount();

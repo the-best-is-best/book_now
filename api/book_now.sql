@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2021 at 08:45 PM
+-- Generation Time: Sep 11, 2021 at 08:22 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.22
 
@@ -151,7 +151,8 @@ CREATE TABLE `rel_people` (
   `travel_id` int(11) NOT NULL,
   `coupons` tinyint(1) NOT NULL,
   `house_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL
+  `room_id` int(11) NOT NULL,
+  `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -166,7 +167,7 @@ CREATE TRIGGER `insert_rel_person` AFTER INSERT ON `rel_people` FOR EACH ROW INS
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_rel_person` AFTER UPDATE ON `rel_people` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null , NEW.id , "updated" ,"rel_people" , NOW())
+CREATE TRIGGER `update_rel_person` AFTER UPDATE ON `rel_people` FOR EACH ROW INSERT INTO book_now_rel_log VALUES(null,NEW.id,"updated" ,"rel_people",NOW() )
 $$
 DELIMITER ;
 
