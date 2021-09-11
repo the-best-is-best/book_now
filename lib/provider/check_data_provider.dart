@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:book_now/modals/listen_model/listen_data_model.dart';
 import 'package:book_now/network/dio_helper.dart';
@@ -123,7 +122,7 @@ class CheckDataProvider with ChangeNotifier {
   }
 
   Future<bool> getRelListenData({bool fromProject = false}) async {
-    if (!GetDataListen.getData || fromProject) {
+    if (!GetDataListen.getData) {
       Map<String, dynamic> data = {
         'book_now_rel_log_count': listenRelData.length
       };
@@ -136,7 +135,9 @@ class CheckDataProvider with ChangeNotifier {
         return await toRelList(data['data']);
       }
     }
-
+    if (fromProject) {
+      return true;
+    }
     return false;
   }
 

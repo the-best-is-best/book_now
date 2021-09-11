@@ -1,7 +1,9 @@
+
 import 'package:book_now/modals/rel/people/create_rel_people_model.dart';
 import 'package:book_now/modals/rel/people/rel_people_model.dart';
 import 'package:book_now/modals/rooms/rooms_model.dart';
 import 'package:book_now/network/dio_helper.dart';
+import 'package:book_now/provider/reports_provider.dart';
 import 'package:book_now/screens/tabs/update/change_room/by_person.dart';
 import 'package:book_now/screens/tabs/update/change_room/by_room.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,9 +50,12 @@ class RelPeopleProvider with ChangeNotifier {
     coupons = val;
   }
 
-  Future getRooms(List<RoomsModel> room) async {
-    relRoom =
-        room.where((roomItem) => roomItem.houseId == selectedhouseId).toList();
+  Future getRooms(List<RoomsModel> room, ReportsProvider report) async {
+    log(report.myProject!.houseId.toString());
+    relRoom = room
+        .where((roomItem) => roomItem.houseId == report.myProject!.houseId)
+        .toList();
+
     notifyListeners();
   }
 

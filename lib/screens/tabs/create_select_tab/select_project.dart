@@ -16,6 +16,7 @@ Widget selectProjectTab() {
         builder: (context) {
           final myProjectWatch = context.watch<MyProjectProvider>();
 
+          final reportsWatch = context.read<ReportsProvider>();
           final reportsRead = context.read<ReportsProvider>();
           final relPeopleRead = context.read<RelPeopleProvider>();
 
@@ -96,8 +97,9 @@ Widget selectProjectTab() {
                                           relPeopleRead.myHouse(myProjectWatch
                                               .myProject[index].houseId);
 
-                                          relPeopleRead
-                                              .getRooms(myRoomWatch.myRooms);
+                                          relPeopleRead.getRooms(
+                                              myRoomWatch.myRooms,
+                                              reportsWatch);
 
                                           reportsRead.calcMangmentData(
                                               travelDataWatch.myTravel);
